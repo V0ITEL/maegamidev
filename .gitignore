@@ -14,3 +14,7 @@ desktop.ini
 
 # Vercel
 .vercel
+
+# Локальные внутренние файлы — только в рабочей папке, не в репо
+PLAN.md
+chat-radar-shots/
