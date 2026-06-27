@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; height:100%; background:#0a0e12; overflow:hidden; }
+    @keyframes cinBeam{ to{ transform:rotate(360deg); } }
+    @keyframes cinPing{ 0%{ transform:translate(-50%,-50%) scale(.4); opacity:.7; } 70%{ opacity:0; } 100%{ transform:translate(-50%,-50%) scale(2.6); opacity:0; } }
+    @keyframes cinCore{ 0%,100%{ opacity:.55; box-shadow:0 0 10px #22d3ee; } 50%{ opacity:1; box-shadow:0 0 22px #22d3ee; } }
+    @keyframes cinLive{ 0%{ opacity:.4; transform:scale(.8); } 100%{ opacity:1; transform:scale(1); } }
+
+    /* upright overlay elements, revealed per phase */
+    #cin [data-el=scan]{ opacity:0; transition:opacity .6s ease; }
+    #cin[data-phase=scan] [data-el=scan]{ opacity:1; }
+    #cin [data-el=flagcard]{ opacity:0; transform:translateY(14px) scale(.97); transition:opacity .5s ease, transform .5s cubic-bezier(.2,.7,.3,1); }
+    #cin[data-phase=flag] [data-el=flagcard], #cin[data-phase=verdict] [data-el=flagcard]{ opacity:1; transform:none; }
+    #cin [data-el=verdict]{ opacity:0; transform:translateY(26px); transition:opacity .6s cubic-bezier(.2,.7,.3,1), transform .6s cubic-bezier(.2,.7,.3,1); }
+    #cin[data-phase=verdict] [data-el=verdict]{ opacity:1; transform:none; }
+    #cin [data-dim]{ opacity:0; transition:opacity .6s ease; }
+    #cin[data-phase=scan] [data-dim]{ opacity:.55; }
+    #cin[data-phase=flag] [data-dim], #cin[data-phase=verdict] [data-dim]{ opacity:.32; }
+
+    /* flagged message on the plane */
+    #cin [data-flag]{ transition:border-color .5s ease, box-shadow .5s ease, background-color .5s ease; }
+    #cin[data-phase=flag] [data-flag], #cin[data-phase=verdict] [data-flag]{
+      border-color:rgba(239,68,68,.85) !important;
+      box-shadow:inset 3px 0 0 #ef4444, 0 16px 38px -18px rgba(239,68,68,.28) !important;
+    }
+
+    /* reduced motion → flat, readable, no 3D / parallax */
+    @keyframes cinBlip{ 0%,100%{ opacity:0; transform:scale(.35); } 45%,55%{ opacity:1; transform:scale(1); } }
+
+    @media (prefers-reduced-motion: reduce){
+      #cin [data-cam]{ transform:none !important; }
+      #cin [data-plane]{ transform:translate(-50%,-50%) !important; width:min(680px,94%) !important; height:auto !important; }
+      #cin [data-track]{ transform:none !important; position:static !important; padding:4vh 4vw !important; }
+      #cin [data-dof]{ display:none !important; }
+      #cin [data-haze]{ opacity:.35 !important; }
+      #cin [data-beam], #cin [data-core], #cin [data-ping], #cin [data-ring], #cin [data-blip], #cin [data-live]{ animation:none !important; }
+    }
+  </style>
+</helmet>
+<div id="cin" ref="{{ rootRef }}" data-screen-label="Chat Radar — кинематографичный детектор" style="position:relative; width:100%; height:100svh; min-height:520px; overflow:hidden; background:#0a0e12; font-family:'IBM Plex Sans',system-ui,sans-serif; color:#e6e9ee; -webkit-font-smoothing:antialiased;">
+
+  <!-- background depth: cyan glow receding to the vanishing point -->
+  <div aria-hidden="true" style="position:absolute; inset:0; z-index:0; pointer-events:none; background:
+      radial-gradient(120% 80% at 50% 120%, rgba(34,211,238,.16), transparent 55%),
+      radial-gradient(80% 60% at 50% 18%, rgba(34,211,238,.10), transparent 60%),
+      radial-gradient(60% 50% at 50% 4%, rgba(6,24,32,.55), transparent 70%),
+      linear-gradient(#0d121a, #0a0e14);"></div>
+  <div aria-hidden="true" style="position:absolute; left:50%; top:24%; width:46vw; height:46vh; transform:translate(-50%,-50%); z-index:0; pointer-events:none; background:radial-gradient(closest-side, rgba(34,211,238,.12), transparent 70%); filter:blur(14px);"></div>
+
+  <!-- 3D stage -->
+  <div style="position:absolute; inset:0; z-index:1; perspective:1300px; perspective-origin:50% 32%;">
+    <div data-cam style="position:absolute; inset:0; transform-style:preserve-3d; will-change:transform;">
+      <!-- tilted chat plane (stays angled) -->
+      <div data-plane style="position:absolute; left:50%; top:50%; width:108%; height:176%; transform:translate(-50%,-50%) rotateX(12deg) rotateY(-18deg); transform-origin:50% 50%; transform-style:preserve-3d;">
+        <div data-track style="position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; padding:2% 0; will-change:transform;">
+          <div style="width:min(880px,66vw); margin:0 auto; display:flex; flex-direction:column; gap:18px;">
+
+            <div style="display:flex; justify-content:flex-start;">
+              <div data-b style="max-width:86%; background:rgba(26,34,45,.95); border:1px solid #2a3645; border-radius:20px 20px 20px 7px; padding:13px 19px; font-size:clamp(15px,1.45vw,24px); line-height:1.4; box-shadow:0 16px 38px -14px rgba(0,0,0,.72);">Привет! Продам USDT по курсу ниже рынка.</div>
+            </div>
+            <div style="display:flex; justify-content:flex-end;">
+              <div data-b style="max-width:86%; background:rgba(34,211,238,.16); border:1px solid rgba(34,211,238,.32); border-radius:20px 20px 7px 20px; padding:13px 19px; font-size:clamp(15px,1.45vw,24px); line-height:1.4; color:#dff6fb; box-shadow:0 16px 38px -14px rgba(34,211,238,.38);">Ок. Давай через гаранта / эскроу?</div>
+            </div>
+            <div style="display:flex; justify-content:flex-start;">
+              <div data-b style="max-width:86%; background:rgba(26,34,45,.95); border:1px solid #2a3645; border-radius:20px 20px 20px 7px; padding:13px 19px; font-size:clamp(15px,1.45vw,24px); line-height:1.4; box-shadow:0 16px 38px -14px rgba(0,0,0,.72);">Без гаранта, по-братски. Гарант только время тянет.</div>
+            </div>
+            <div style="display:flex; justify-content:flex-start;">
+              <div data-b style="max-width:86%; background:rgba(26,34,45,.95); border:1px solid #2a3645; border-radius:20px 20px 20px 7px; padding:13px 19px; font-size:clamp(15px,1.45vw,24px); line-height:1.4; box-shadow:0 16px 38px -14px rgba(0,0,0,.72);">У меня очередь из желающих, бери сейчас.</div>
+            </div>
+            <div style="display:flex; justify-content:flex-end;">
+              <div data-b style="max-width:86%; background:rgba(34,211,238,.16); border:1px solid rgba(34,211,238,.32); border-radius:20px 20px 7px 20px; padding:13px 19px; font-size:clamp(15px,1.45vw,24px); line-height:1.4; color:#dff6fb; box-shadow:0 16px 38px -14px rgba(34,211,238,.38);">Я не против — но только через защиту сделки.</div>
+            </div>
+            <div style="display:flex; justify-content:flex-start;">
+              <div data-b style="max-width:86%; background:rgba(26,34,45,.95); border:1px solid #2a3645; border-radius:20px 20px 20px 7px; padding:13px 19px; font-size:clamp(15px,1.45vw,24px); line-height:1.4; box-shadow:0 16px 38px -14px rgba(0,0,0,.72);">Защита — лишняя комиссия. Доверься, я давно в теме.</div>
+            </div>
+            <div style="display:flex; justify-content:flex-start;">
+              <div data-b data-flag style="max-width:90%; background:rgba(26,34,45,.97); border:1px solid #2a3645; border-radius:20px 20px 20px 7px; padding:15px 21px; font-size:clamp(16px,1.55vw,26px); line-height:1.4; box-shadow:0 18px 44px -14px rgba(0,0,0,.78);">Скинь первым на карту, я сразу отправлю USDT.</div>
+            </div>
+            <div style="display:flex; justify-content:flex-start;">
+              <div data-b style="max-width:86%; background:rgba(26,34,45,.95); border:1px solid #2a3645; border-radius:20px 20px 20px 7px; padding:13px 19px; font-size:clamp(15px,1.45vw,24px); line-height:1.4; box-shadow:0 16px 38px -14px rgba(0,0,0,.72);">Курс держу 10 минут, потом уходит. Решай быстрее.</div>
+            </div>
+            <div style="display:flex; justify-content:flex-end;">
+              <div data-b style="max-width:86%; background:rgba(34,211,238,.16); border:1px solid rgba(34,211,238,.32); border-radius:20px 20px 7px 20px; padding:13px 19px; font-size:clamp(15px,1.45vw,24px); line-height:1.4; color:#dff6fb; box-shadow:0 16px 38px -14px rgba(34,211,238,.38);">Так не работаю. Только через гаранта.</div>
+            </div>
+            <div style="display:flex; justify-content:flex-start;">
+              <div data-b style="max-width:86%; background:rgba(26,34,45,.95); border:1px solid #2a3645; border-radius:20px 20px 20px 7px; padding:13px 19px; font-size:clamp(15px,1.45vw,24px); line-height:1.4; box-shadow:0 16px 38px -14px rgba(0,0,0,.72);">Карта временно заблокирована — переведи на друга.</div>
+            </div>
+            <div style="display:flex; justify-content:flex-start;">
+              <div data-b style="max-width:86%; background:rgba(26,34,45,.95); border:1px solid #2a3645; border-radius:20px 20px 20px 7px; padding:13px 19px; font-size:clamp(15px,1.45vw,24px); line-height:1.4; box-shadow:0 16px 38px -14px rgba(0,0,0,.72);">Ну что, по рукам? Время идёт.</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- depth-of-field haze (screen space, sits above plane) -->
+  <div data-haze aria-hidden="true" style="position:absolute; inset:0; z-index:2; pointer-events:none; background:linear-gradient(to top, transparent 18%, rgba(10,14,18,.14) 70%, rgba(8,11,15,.32) 99%);"></div>
+  <div data-dof aria-hidden="true" style="position:absolute; left:0; right:0; top:0; height:58%; z-index:2; pointer-events:none; backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); -webkit-mask:linear-gradient(to top, transparent 0%, #000 82%); mask:linear-gradient(to top, transparent 0%, #000 82%);"></div>
+  <div data-haze aria-hidden="true" style="position:absolute; inset:0; z-index:2; pointer-events:none; background:radial-gradient(120% 90% at 50% 116%, transparent 60%, rgba(6,9,13,.42) 100%);"></div>
+  <!-- scan dim -->
+  <div data-dim aria-hidden="true" style="position:absolute; inset:0; z-index:2; pointer-events:none; background:rgba(6,10,14,.62);"></div>
+
+  <!-- upright overlay layer (kept flat & readable) -->
+  <div style="position:absolute; inset:0; z-index:3; pointer-events:none;">
+
+    <!-- brand -->
+    <div style="position:absolute; left:max(20px,3vw); top:max(18px,3vh); display:flex; align-items:center; gap:10px;">
+      <span style="width:14px; height:14px; border-radius:50%; border:2px solid #22d3ee; display:inline-block; box-shadow:0 0 10px rgba(34,211,238,.6);"></span>
+      <span style="font-size:15px; font-weight:600; letter-spacing:.05em;">Chat&nbsp;Radar</span>
+    </div>
+
+    <!-- attached pop-it (bright, lives above the dim, tracks the flagged message) -->
+    <div data-popit aria-hidden="true" style="position:absolute; left:0; top:0; opacity:0; z-index:7; pointer-events:none; transition:opacity .25s ease; will-change:transform;">
+      <div data-popcard style="position:relative; transform-origin:26px bottom; width:max-content; max-width:300px;">
+        <div style="position:relative; background:#151d27; border:1px solid rgba(239,68,68,.55); border-radius:22px; padding:11px 16px 12px; box-shadow:0 22px 46px -18px rgba(0,0,0,.85), 0 0 38px -10px rgba(239,68,68,.6);">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; flex:none; background:#ef4444; color:#fff; font-size:12px; font-weight:700; box-shadow:0 0 13px -2px rgba(239,68,68,.85);">!</span>
+            <span style="font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:#f87171;">Ред-флаг</span>
+          </div>
+          <div style="margin-top:6px; font-size:clamp(13px,1.2vw,16px); font-weight:600; color:#f4f6f8; line-height:1.3;">Просьба отправить первым</div>
+          <div style="position:absolute; left:26px; bottom:-7px; width:14px; height:14px; background:#151d27; border-right:1px solid rgba(239,68,68,.55); border-bottom:1px solid rgba(239,68,68,.55); transform:rotate(45deg);"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- radar scope (scan) -->
+    <div data-el="scan" style="position:absolute; left:50%; top:46%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center;">
+      <div style="position:relative; width:clamp(150px,17vw,210px); aspect-ratio:1;">
+        <svg viewBox="0 0 184 184" width="100%" height="100%" style="position:absolute; inset:0; display:block;">
+          <circle cx="92" cy="92" r="86" fill="none" stroke="rgba(34,211,238,.2)" stroke-width="1"></circle>
+          <circle cx="92" cy="92" r="58" fill="none" stroke="rgba(34,211,238,.16)" stroke-width="1"></circle>
+          <circle cx="92" cy="92" r="30" fill="none" stroke="rgba(34,211,238,.14)" stroke-width="1"></circle>
+          <line x1="6" y1="92" x2="178" y2="92" stroke="rgba(34,211,238,.12)" stroke-width="1"></line>
+          <line x1="92" y1="6" x2="92" y2="178" stroke="rgba(34,211,238,.12)" stroke-width="1"></line>
+        </svg>
+        <div data-beam style="position:absolute; inset:0; border-radius:50%; background:conic-gradient(from 0deg, rgba(34,211,238,0) 0deg, rgba(34,211,238,.12) 30deg, rgba(34,211,238,.55) 58deg, #6ef2ff 66deg, rgba(34,211,238,0) 69deg); animation:cinBeam 2.2s linear infinite; -webkit-mask:radial-gradient(circle, #000 calc(50% - 6px), transparent calc(50% - 5px)); mask:radial-gradient(circle, #000 calc(50% - 6px), transparent calc(50% - 5px));"></div>
+        <div data-ping style="position:absolute; left:50%; top:50%; width:18px; height:18px; border-radius:50%; border:1px solid #22d3ee; transform:translate(-50%,-50%); animation:cinPing 1.9s ease-out infinite;"></div>
+        <div data-core style="position:absolute; left:50%; top:50%; width:9px; height:9px; margin:-4.5px 0 0 -4.5px; border-radius:50%; background:#22d3ee; animation:cinCore 1.6s ease-in-out infinite;"></div>
+        <div data-ring style="position:absolute; left:50%; top:50%; width:26px; height:26px; border-radius:50%; border:1px solid rgba(34,211,238,.55); transform:translate(-50%,-50%); animation:cinPing 2.6s ease-out infinite;"></div>
+        <div data-ring style="position:absolute; left:50%; top:50%; width:26px; height:26px; border-radius:50%; border:1px solid rgba(34,211,238,.5); transform:translate(-50%,-50%); animation:cinPing 2.6s ease-out infinite 1.3s;"></div>
+        <div data-blip style="position:absolute; left:70%; top:36%; width:7px; height:7px; border-radius:50%; background:#22d3ee; box-shadow:0 0 11px #22d3ee; animation:cinBlip 3s ease-in-out infinite;"></div>
+        <div data-blip style="position:absolute; left:30%; top:60%; width:6px; height:6px; border-radius:50%; background:#22d3ee; box-shadow:0 0 9px #22d3ee; animation:cinBlip 3s ease-in-out infinite .8s;"></div>
+        <div data-blip style="position:absolute; left:62%; top:67%; width:8px; height:8px; border-radius:50%; background:#ef4444; box-shadow:0 0 13px #ef4444; animation:cinBlip 3s ease-in-out infinite 1.7s;"></div>
+      </div>
+      <div style="margin-top:16px; font-family:'IBM Plex Mono',monospace; font-size:clamp(11px,1vw,13px); letter-spacing:.12em; text-transform:uppercase; color:#22d3ee; text-shadow:0 2px 12px rgba(0,0,0,.8);">Сканирую переписку…</div>
+    </div>
+
+    <!-- red-flag callout (flag) -->
+    <!-- pop-it now lives attached above the flagged message on the plane -->
+
+    <!-- verdict card (verdict) — near camera, bottom -->
+    <div data-el="verdict" style="position:absolute; left:50%; bottom:clamp(64px,9vh,108px); transform:translateX(-50%); width:min(680px,90vw); background:rgba(16,22,30,.92); border:1px solid #222b36; border-radius:18px; padding:18px 22px; box-shadow:0 40px 90px -28px rgba(0,0,0,.95), 0 0 0 1px rgba(239,68,68,.14); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); display:flex; gap:24px; align-items:center; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:14px; flex:none;">
+        <div style="position:relative; width:60px; height:60px; flex:none;">
+          <svg width="60" height="60" viewBox="0 0 60 60" style="display:block;">
+            <circle cx="30" cy="30" r="24" fill="none" stroke="rgba(127,140,160,.18)" stroke-width="5"></circle>
+            <circle data-gauge cx="30" cy="30" r="24" fill="none" stroke="#ef4444" stroke-width="5" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="150.8" transform="rotate(-90 30 30)" style="filter:drop-shadow(0 0 5px rgba(239,68,68,.6));"></circle>
+          </svg>
+          <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:19px; font-weight:700; color:#f87171;">88</div>
+        </div>
+        <div>
+          <div style="font-size:clamp(18px,1.9vw,24px); font-weight:700; color:#f87171; letter-spacing:-.01em;">Высокий риск</div>
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8a93a0; margin-top:3px;">OTC-обмен · 6 ред-флагов</div>
+        </div>
+      </div>
+      <div style="flex:1; min-width:220px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; align-items:center; gap:10px; font-size:clamp(13px,1.2vw,15px); color:#e6e9ee;"><svg width="16" height="16" viewBox="0 0 24 24" style="flex:none;"><circle cx="12" cy="12" r="10" fill="none" stroke="#22d3ee" stroke-width="1.6"></circle><path d="M8 12 l2.6 2.6 l5.4 -6" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Не отправляйте деньги первым</div>
+        <div style="display:flex; align-items:center; gap:10px; font-size:clamp(13px,1.2vw,15px); color:#e6e9ee;"><svg width="16" height="16" viewBox="0 0 24 24" style="flex:none;"><circle cx="12" cy="12" r="10" fill="none" stroke="#22d3ee" stroke-width="1.6"></circle><path d="M8 12 l2.6 2.6 l5.4 -6" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Только через эскроу или гаранта</div>
+        <div style="display:flex; align-items:center; gap:10px; font-size:clamp(13px,1.2vw,15px); color:#e6e9ee;"><svg width="16" height="16" viewBox="0 0 24 24" style="flex:none;"><circle cx="12" cy="12" r="10" fill="none" stroke="#22d3ee" stroke-width="1.6"></circle><path d="M8 12 l2.6 2.6 l5.4 -6" fill="none" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>Игнорируйте искусственный дедлайн</div>
+      </div>
+    </div>
+
+    <!-- caption -->
+    <div style="position:absolute; left:50%; bottom:max(18px,2.6vh); transform:translateX(-50%); display:flex; align-items:center; gap:11px;">
+      <span data-live style="flex:none; width:8px; height:8px; border-radius:50%; background:#22d3ee; box-shadow:0 0 10px rgba(34,211,238,.8); animation:cinLive 1.9s ease-in-out infinite alternate;"></span>
+      <div style="display:flex; align-items:center; gap:9px; flex-wrap:wrap; justify-content:center; font-family:'IBM Plex Mono',monospace; font-size:clamp(11px,1vw,13px); letter-spacing:.02em; color:#8a93a0;">
+        <span>Десктоп</span><span style="color:#22d3ee;">·</span><span>локальный AI-анализ</span><span style="color:#22d3ee;">·</span><span>данные не уходят на сервер</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:720},&quot;loopSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.6,&quot;max&quot;:1.6,&quot;step&quot;:0.1,&quot;unit&quot;:&quot;×&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Анимация&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.rootRef = React.createRef();
+    this.camRef = React.createRef();
+    this.trackRef = React.createRef();
+    this._t = [];
+    this._stopped = false;
+    this._loopStart = 0;
+    this._tick = this._tick.bind(this);
+  }
+  componentDidMount() {
+    const reduce = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const root = this.rootRef.current;
+    if (reduce) {
+      this._reduce = true;
+      if (root) root.dataset.mode = 'flat';
+      this._setPhase('verdict');
+      requestAnimationFrame(() => this._positionPopit());
+      return;
+    }
+    if (root) root.dataset.mode = '3d';
+    this._loopDur = 11200 / (this.props.loopSpeed || 1);
+    this._floatDist = 96;
+    this._raf = requestAnimationFrame(this._tick);
+    this._runLoop();
+  }
+  componentWillUnmount() { this._stopped = true; this._t.forEach(clearTimeout); if (this._raf) cancelAnimationFrame(this._raf); }
+
+  _setPhase(p) {
+    const root = this.rootRef.current; if (!root) return;
+    root.dataset.phase = p;
+    const op = (sel, v) => { const e = root.querySelector(sel); if (e) e.style.opacity = String(v); };
+    op('[data-el=scan]', p === 'scan' ? 1 : 0);
+    op('[data-el=flagcard]', (p === 'flag' || p === 'verdict') ? 1 : 0);
+    op('[data-el=verdict]', p === 'verdict' ? 1 : 0);
+    op('[data-dim]', p === 'scan' ? 0.55 : (p === 'flag' || p === 'verdict') ? 0.32 : 0);
+    const fl = root.querySelector('[data-flag]');
+    if (fl) {
+      const on = (p === 'flag' || p === 'verdict');
+      fl.style.borderColor = on ? 'rgba(239,68,68,.85)' : '';
+      fl.style.boxShadow = on ? 'inset 3px 0 0 #ef4444, 0 16px 38px -18px rgba(239,68,68,.28)' : '';
+      fl.style.backgroundColor = '';
+    }
+    op('[data-popit]', (p === 'flag' || p === 'verdict') ? 1 : 0);
+    if (this._pop) { this._pop.cancel(); this._pop = null; }
+    if (p === 'flag' && !this._reduce) {
+      const pc = root.querySelector('[data-popcard]');
+      if (pc) { try { this._pop = pc.animate([
+        { opacity: 0, transform: 'scale(.5) translateY(8px)' },
+        { opacity: 1, transform: 'scale(1.08) translateY(0)', offset: .7 },
+        { opacity: 1, transform: 'scale(1) translateY(0)' }
+      ], { duration: 520, easing: 'cubic-bezier(.34,1.56,.5,1)', fill: 'backwards' }); } catch (e) {} }
+    }
+    if (this._gauge) { this._gauge.cancel(); this._gauge = null; }
+    if (p === 'verdict') {
+      const g = root.querySelector('[data-gauge]');
+      if (g) {
+        if (this._reduce) { g.style.strokeDashoffset = '18.1'; }
+        else { try { this._gauge = g.animate([{ strokeDashoffset: 150.8 }, { strokeDashoffset: 18.1 }], { duration: 1100, delay: 120, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' }); } catch (e) {} }
+      }
+    }
+  }
+  _at(ms, fn) { this._t.push(setTimeout(fn, ms)); }
+
+  _tick(now) {
+    if (this._stopped) return;
+    const t = now / 1000;
+    const cam = this.camRef.current;
+    if (cam) {
+      const ry = Math.sin(t * 0.17) * 1.9;
+      const rx = Math.sin(t * 0.11) * 0.9;
+      const tx = Math.sin(t * 0.13) * 14;
+      const ty = Math.cos(t * 0.15) * 7;
+      cam.style.transform = 'translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0) rotateY(' + ry.toFixed(2) + 'deg) rotateX(' + rx.toFixed(2) + 'deg)';
+    }
+    const track = this.trackRef ? this.trackRef.current : null;
+    if (track) {
+      const loopT = Math.min(1, (now - this._loopStart) / this._loopDur);
+      track.style.transform = 'translateY(' + (-loopT * this._floatDist).toFixed(2) + 'px)';
+    }
+    this._positionPopit();
+    this._raf = requestAnimationFrame(this._tick);
+  }
+  _positionPopit() {
+    const root = this.rootRef.current; if (!root) return;
+    const ph = root.dataset.phase;
+    if (ph !== 'flag' && ph !== 'verdict') return;
+    const popit = root.querySelector('[data-popit]');
+    const fmsg = root.querySelector('[data-flag]');
+    if (!popit || !fmsg) return;
+    const rr = root.getBoundingClientRect();
+    const mr = fmsg.getBoundingClientRect();
+    const x = (mr.left - rr.left) + 16;
+    const y = (mr.top - rr.top) - 12;
+    popit.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) translateY(-100%)';
+  }
+
+  _animMessages() {
+    const root = this.rootRef.current; if (!root) return;
+    const bs = [...root.querySelectorAll('[data-b]')];
+    bs.forEach((b, i) => {
+      try {
+        b.animate(
+          [{ opacity: 0, transform: 'translateY(26px) scale(.96)' }, { opacity: 1, transform: 'translateY(0) scale(1)' }],
+          { duration: 640, delay: 260 + i * 165, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'backwards' }
+        );
+      } catch (e) {}
+    });
+  }
+
+  _runLoop() {
+    const k = 1 / (this.props.loopSpeed || 1);
+    const run = () => {
+      this._t.forEach(clearTimeout); this._t = [];
+      this._loopStart = performance.now();
+      this._setPhase('enter');
+      this._animMessages();
+      this._at(2900 * k, () => this._setPhase('scan'));
+      this._at(5700 * k, () => this._setPhase('flag'));
+      this._at(7500 * k, () => this._setPhase('verdict'));
+      this._at(11200 * k, run);
+    };
+    run();
+  }
+
+  renderVals() {
+    return { rootRef: this.rootRef, camRef: this.camRef, trackRef: this.trackRef };
+  }
+}
+</script>
+</body>
+</html>

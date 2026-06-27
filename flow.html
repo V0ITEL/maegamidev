@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#0C0D10}
+  body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+
+  /* ---- bubbles: staggered pop every loop, common sweep-out ---- */
+  @keyframes bubA{
+    0%,3%{opacity:0;transform:translateY(1.8cqh) scale(.85) rotate(var(--r))}
+    8%{opacity:1;transform:translateY(-0.3cqh) scale(1.06) rotate(var(--r))}
+    11%{opacity:1;transform:translateY(0) scale(1) rotate(var(--r))}
+    40%{opacity:1;transform:translateY(0) scale(1) rotate(var(--r))}
+    48%{opacity:0;transform:translate(13cqw,-4cqh) scale(.5) rotate(calc(var(--r)*.2))}
+    100%{opacity:0;transform:translate(13cqw,-4cqh) scale(.5) rotate(calc(var(--r)*.2))}
+  }
+  @keyframes bubB{
+    0%,13%{opacity:0;transform:translateY(1.8cqh) scale(.85) rotate(var(--r))}
+    18%{opacity:1;transform:translateY(-0.3cqh) scale(1.06) rotate(var(--r))}
+    21%{opacity:1;transform:translateY(0) scale(1) rotate(var(--r))}
+    40%{opacity:1;transform:translateY(0) scale(1) rotate(var(--r))}
+    48%{opacity:0;transform:translate(12cqw,-3cqh) scale(.5) rotate(calc(var(--r)*.2))}
+    100%{opacity:0;transform:translate(12cqw,-3cqh) scale(.5) rotate(calc(var(--r)*.2))}
+  }
+  @keyframes bubC{
+    0%,23%{opacity:0;transform:translateY(1.8cqh) scale(.85) rotate(var(--r))}
+    28%{opacity:1;transform:translateY(-0.3cqh) scale(1.06) rotate(var(--r))}
+    31%{opacity:1;transform:translateY(0) scale(1) rotate(var(--r))}
+    41%{opacity:1;transform:translateY(0) scale(1) rotate(var(--r))}
+    49%{opacity:0;transform:translate(12cqw,-2cqh) scale(.5) rotate(calc(var(--r)*.2))}
+    100%{opacity:0;transform:translate(12cqw,-2cqh) scale(.5) rotate(calc(var(--r)*.2))}
+  }
+  @keyframes bubD{
+    0%,32%{opacity:0;transform:translateY(1.8cqh) scale(.85) rotate(var(--r))}
+    37%{opacity:1;transform:translateY(-0.3cqh) scale(1.06) rotate(var(--r))}
+    40%{opacity:1;transform:translateY(0) scale(1) rotate(var(--r))}
+    43%{opacity:1;transform:translateY(0) scale(1) rotate(var(--r))}
+    50%{opacity:0;transform:translate(11cqw,-1cqh) scale(.5) rotate(calc(var(--r)*.2))}
+    100%{opacity:0;transform:translate(11cqw,-1cqh) scale(.5) rotate(calc(var(--r)*.2))}
+  }
+
+  /* ---- notification toasts ---- */
+  @keyframes toast1{
+    0%,6%{opacity:0;transform:translateY(-1.4cqh) scale(.92)}
+    11%{opacity:1;transform:translateY(0) scale(1)}
+    40%{opacity:1;transform:translateY(0) scale(1)}
+    46%{opacity:0;transform:translateX(3cqw) translateY(-.6cqh) scale(.96)}
+    100%{opacity:0;transform:translateY(-1.4cqh) scale(.92)}
+  }
+  @keyframes toast2{
+    0%,14%{opacity:0;transform:translateY(-1.4cqh) scale(.92)}
+    19%{opacity:1;transform:translateY(0) scale(1)}
+    40%{opacity:1;transform:translateY(0) scale(1)}
+    46%{opacity:0;transform:translateX(3cqw) translateY(-.6cqh) scale(.96)}
+    100%{opacity:0;transform:translateY(-1.4cqh) scale(.92)}
+  }
+  @keyframes toast3{
+    0%,22%{opacity:0;transform:translateY(-1.4cqh) scale(.92)}
+    27%{opacity:1;transform:translateY(0) scale(1)}
+    40%{opacity:1;transform:translateY(0) scale(1)}
+    46%{opacity:0;transform:translateX(3cqw) translateY(-.6cqh) scale(.96)}
+    100%{opacity:0;transform:translateY(-1.4cqh) scale(.92)}
+  }
+
+  /* ---- unread odometer + badge (anxiety, climbs in chaos) ---- */
+  @keyframes unreadRoll{
+    0%,6%{transform:translateY(0)}
+    11%{transform:translateY(-3cqh)}
+    17%{transform:translateY(-6cqh)}
+    23%{transform:translateY(-9cqh)}
+    29%{transform:translateY(-12cqh)}
+    35%{transform:translateY(-15cqh)}
+    41%{transform:translateY(-18cqh)}
+    86%{transform:translateY(-18cqh)}
+    100%{transform:translateY(-18cqh)}
+  }
+  @keyframes unreadIn{
+    0%{opacity:0;transform:scale(.5)}
+    7%{opacity:1;transform:scale(1.18)}
+    11%{transform:scale(1)}
+    100%{opacity:1;transform:scale(1)}
+  }
+
+  /* ---- revenue odometer + badge (mirror: climbs in store phase) ---- */
+  @keyframes revRoll{
+    0%,54%{transform:translateY(0)}
+    59%{transform:translateY(-2.6cqh)}
+    64%{transform:translateY(-5.2cqh)}
+    69%{transform:translateY(-7.8cqh)}
+    74%{transform:translateY(-10.4cqh)}
+    79%{transform:translateY(-13cqh)}
+    84%,100%{transform:translateY(-15.6cqh)}
+  }
+  @keyframes revPop{
+    0%,52%{opacity:0;transform:scale(.6)}
+    58%{opacity:1;transform:scale(1.1)}
+    62%{opacity:1;transform:scale(1)}
+    84%{opacity:1;transform:scale(1.07)}
+    90%{opacity:0;transform:scale(.85)}
+    100%{opacity:0;transform:scale(.6)}
+  }
+
+  /* ---- chat window nervous jitter during chaos ---- */
+  @keyframes chatShake{
+    0%{transform:translate(0,0) rotate(0)}
+    9%{transform:translate(.18cqw,-.1cqh) rotate(.18deg)}
+    18%{transform:translate(-.2cqw,.12cqh) rotate(-.2deg)}
+    26%{transform:translate(.16cqw,.1cqh) rotate(.16deg)}
+    34%{transform:translate(-.16cqw,-.08cqh) rotate(-.14deg)}
+    41%{transform:translate(.08cqw,0) rotate(.08deg)}
+    45%,100%{transform:translate(0,0) rotate(0)}
+  }
+
+  /* ---- arrow + burst ---- */
+  @keyframes arrowPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+  @keyframes arrowGlow{
+    0%,40%{filter:drop-shadow(0 0 0 rgba(0,0,0,0))}
+    47%{filter:drop-shadow(0 0 1.6cqh var(--hot))}
+    56%,100%{filter:drop-shadow(0 0 0 rgba(0,0,0,0))}
+  }
+  @keyframes burst{
+    0%,42%{opacity:0;transform:translate(-50%,-50%) scale(.35)}
+    45%{opacity:.55;transform:translate(-50%,-50%) scale(.6)}
+    57%{opacity:0;transform:translate(-50%,-50%) scale(1.9)}
+    100%{opacity:0;transform:translate(-50%,-50%) scale(.35)}
+  }
+  @keyframes flow{
+    0%{opacity:0;transform:translateX(0) scale(.55);background:var(--hot)}
+    14%{opacity:.85}
+    50%{opacity:.85}
+    85%{opacity:0}
+    100%{opacity:0;transform:translateX(11.5cqw) scale(.55);background:var(--cool)}
+  }
+
+  /* ---- morph: a chat bubble flies through the arrow and becomes a card ---- */
+  @keyframes morph{
+    0%,43%{opacity:0;transform:translate(0,0) scale(.5);border-radius:1.8cqh 1.8cqh 1.8cqh .4cqh;background:var(--hot)}
+    48%{opacity:1;transform:translate(0,0) scale(.62);border-radius:1.8cqh 1.8cqh 1.8cqh .4cqh;background:var(--hot)}
+    61%{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1);border-radius:1.3cqh;background:#14161A}
+    67%{opacity:.8;transform:translate(var(--tx),var(--ty)) scale(.84);border-radius:1.1cqh;background:#14161A}
+    75%{opacity:0;transform:translate(var(--tx),calc(var(--ty) + 1cqh)) scale(.55);border-radius:.85cqh;background:#14161A}
+    100%{opacity:0;transform:translate(var(--tx),calc(var(--ty) + 1cqh)) scale(.55);background:#14161A}
+  }
+
+  /* ---- recipient card accepts the pour-in ---- */
+  @keyframes recvPulse{
+    0%,60%{opacity:0;box-shadow:0 0 0 0 rgba(201,167,92,0)}
+    64%{opacity:1;box-shadow:0 0 0 .5cqh rgba(201,167,92,.16)}
+    73%{opacity:0;box-shadow:0 0 0 1.2cqh rgba(201,167,92,0)}
+    100%{opacity:0;box-shadow:0 0 0 0 rgba(201,167,92,0)}
+  }
+  /* ---- flying rectangle shows a mini product face on the white stage ---- */
+  @keyframes spriteFace{0%,52%{opacity:0}59%{opacity:1}68%{opacity:1}74%{opacity:0}100%{opacity:0}}
+
+  /* ---- store cards assemble ---- */
+  @keyframes cardA{
+    0%,43%{opacity:.16;transform:translateY(1.6cqh) scale(.94)}
+    49%{opacity:1;transform:translateY(-0.4cqh) scale(1.02)}
+    53%{opacity:1;transform:translateY(0) scale(1)}
+    84%{opacity:1;transform:translateY(0) scale(1)}
+    92%{opacity:.16;transform:translateY(1.2cqh) scale(.96)}
+    100%{opacity:.16;transform:translateY(1.6cqh) scale(.94)}
+  }
+  @keyframes cardB{
+    0%,46%{opacity:.16;transform:translateY(1.6cqh) scale(.94)}
+    52%{opacity:1;transform:translateY(-0.4cqh) scale(1.02)}
+    56%{opacity:1;transform:translateY(0) scale(1)}
+    84%{opacity:1;transform:translateY(0) scale(1)}
+    92%{opacity:.16;transform:translateY(1.2cqh) scale(.96)}
+    100%{opacity:.16;transform:translateY(1.6cqh) scale(.94)}
+  }
+  @keyframes cardC{
+    0%,49%{opacity:.16;transform:translateY(1.6cqh) scale(.94)}
+    55%{opacity:1;transform:translateY(-0.4cqh) scale(1.02)}
+    59%{opacity:1;transform:translateY(0) scale(1)}
+    84%{opacity:1;transform:translateY(0) scale(1)}
+    92%{opacity:.16;transform:translateY(1.2cqh) scale(.96)}
+    100%{opacity:.16;transform:translateY(1.6cqh) scale(.94)}
+  }
+  @keyframes shimmer{
+    0%,57%{opacity:0;transform:translateX(-8cqw) skewX(-12deg)}
+    63%{opacity:.45}
+    80%{opacity:.45}
+    87%{opacity:0;transform:translateX(40cqw) skewX(-12deg)}
+    100%{opacity:0;transform:translateX(-8cqw) skewX(-12deg)}
+  }
+
+  /* ---- cursor + add-to-cart ---- */
+  @keyframes cursorMove{
+    0%,56%{opacity:0;transform:translate(31cqw,62cqh)}
+    61%{opacity:1;transform:translate(27cqw,58cqh)}
+    70%{opacity:1;transform:translate(20.4cqw,53.5cqh)}
+    73%{opacity:1;transform:translate(20.4cqw,53.5cqh) scale(.82)}
+    76%{opacity:1;transform:translate(20.4cqw,53.5cqh) scale(1)}
+    84%{opacity:1;transform:translate(24cqw,57cqh)}
+    89%{opacity:0;transform:translate(29cqw,61cqh)}
+    100%{opacity:0;transform:translate(31cqw,62cqh)}
+  }
+  @keyframes addBtnPress{
+    0%,72%{transform:scale(1);background:var(--cool)}
+    74%{transform:scale(.8)}
+    77%{transform:scale(1);background:var(--ok)}
+    87%{background:var(--ok)}
+    90%,100%{transform:scale(1);background:var(--cool)}
+  }
+  @keyframes addedTag{
+    0%,73%{opacity:0;transform:translateY(.8cqh) scale(.7)}
+    77%{opacity:1;transform:translateY(0) scale(1)}
+    87%{opacity:1;transform:translateY(0) scale(1)}
+    91%{opacity:0;transform:translateY(-.4cqh) scale(.92)}
+    100%{opacity:0;transform:translateY(.8cqh) scale(.7)}
+  }
+
+  /* ---- slogan crossfade ---- */
+  @keyframes slogA{0%{opacity:1}40%{opacity:1}47%{opacity:0}90%{opacity:0}97%{opacity:1}100%{opacity:1}}
+  @keyframes slogB{0%{opacity:0}50%{opacity:0}58%{opacity:1}86%{opacity:1}93%{opacity:0}100%{opacity:0}}
+
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</helmet>
+
+<div data-screen-label="Из хаоса в магазин" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0C0D10;container-type:size;padding:2.5vmin">
+  <div ref="{{ frameRef }}" style="--T:8s;--hot:#E2575A;--cool:#C9A75C;--ink:#F2EFE8;--card:#14161A;--cream:#101216;--line:rgba(255,255,255,.07);--muted:#76787E;--bub:#1B1E24;--ok:#4FB07A;position:relative;width:min(100cqw,177.78cqh);aspect-ratio:16/9;container-type:size;background:radial-gradient(120% 140% at 18% 10%, #15171C 0%, var(--cream) 60%);border-radius:1.6cqh;overflow:hidden;box-shadow:0 3cqh 7cqh -2cqh rgba(0,0,0,.22),0 .6cqh 1.6cqh rgba(0,0,0,.06);color:var(--ink)">
+
+    <!-- ===================== WINDOWS ROW ===================== -->
+    <div style="position:absolute;top:0;left:0;right:0;height:84cqh;display:flex;align-items:center;justify-content:space-between;gap:2cqw;padding:0 5cqw">
+
+      <!-- ----- LEFT · CHAT (chaos) ----- -->
+      <div style="flex:0 0 36cqw;height:76cqh;position:relative;transform-origin:center;animation:chatShake var(--T) ease-in-out infinite">
+        <div style="position:absolute;inset:0;background:var(--card);border:1px solid var(--line);border-radius:2.4cqh;box-shadow:0 2cqh 4cqh -1cqh rgba(0,0,0,.16),0 .4cqh 1cqh rgba(0,0,0,.05);display:flex;flex-direction:column;overflow:hidden">
+          <!-- header -->
+          <div style="flex:0 0 auto;display:flex;align-items:center;gap:1.2cqw;padding:1.7cqh 2cqw;border-bottom:1px solid var(--line)">
+            <div style="position:relative;width:5.4cqh;height:5.4cqh;border-radius:50%;background:linear-gradient(135deg,#EC7E80,var(--hot));flex:0 0 auto"></div>
+            <div style="min-width:0;flex:1 1 auto">
+              <div style="font-weight:700;font-size:2cqw;line-height:1.1">Личные сообщения</div>
+              <div style="display:flex;align-items:center;gap:.6cqw;font-size:1.5cqw;color:var(--muted);margin-top:.3cqh">
+                <span style="width:1.1cqh;height:1.1cqh;border-radius:50%;background:var(--ok);animation:blink 1.6s ease-in-out infinite"></span>
+                <span>печатают…</span>
+              </div>
+            </div>
+            <!-- bell + unread badge -->
+            <div style="position:relative;flex:0 0 auto;width:6cqh;height:6cqh;border-radius:50%;background:#1B1E24;display:flex;align-items:center;justify-content:center">
+              <div style="width:2.6cqh;height:2.6cqh;border:.42cqh solid var(--muted);border-radius:1.3cqh 1.3cqh .5cqh .5cqh;border-bottom:none"></div>
+              <div style="position:absolute;top:-.4cqh;right:-.4cqh;min-width:3.6cqh;height:3.6cqh;padding:0 .5cqh;border-radius:1.8cqh;background:var(--hot);color:#fff;font-weight:800;font-size:1.7cqw;display:flex;align-items:center;justify-content:center;box-shadow:0 .4cqh 1cqh rgba(226,87,90,.5);overflow:hidden;transform-origin:center;animation:unreadIn var(--T) ease-out forwards">
+                <div style="height:3cqh;overflow:hidden">
+                  <div style="display:flex;flex-direction:column;align-items:center;line-height:3cqh;transform:translateY(-18cqh);animation:unreadRoll var(--T) cubic-bezier(.6,0,.2,1) forwards">
+                    <span style="height:3cqh">0</span><span style="height:3cqh">9</span><span style="height:3cqh">23</span><span style="height:3cqh">41</span><span style="height:3cqh">63</span><span style="height:3cqh">85</span><span style="height:3cqh">99+</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- body: piling bubbles -->
+          <div style="flex:1 1 auto;position:relative;overflow:hidden;padding:1.8cqh 2.2cqw;display:flex;flex-direction:column;align-items:flex-start">
+            <div style="max-width:24cqw;margin-left:1cqw;margin-top:0;padding:1.2cqh 1.5cqw;font-size:1.95cqw;font-weight:500;line-height:1.2;border-radius:1.8cqh 1.8cqh 1.8cqh .5cqh;background:var(--bub);box-shadow:0 .6cqh 1.2cqh rgba(0,0,0,.07);align-self:flex-start;transform-origin:left bottom;white-space:nowrap;--r:-4deg;animation:bubA var(--T) cubic-bezier(.34,1.4,.5,1) infinite">скиньте фото 🙏</div>
+            <div style="max-width:24cqw;margin-left:7cqw;margin-top:-.4cqh;padding:1.2cqh 1.5cqw;font-size:1.95cqw;font-weight:500;line-height:1.2;border-radius:1.8cqh 1.8cqh 1.8cqh .5cqh;background:var(--bub);box-shadow:0 .6cqh 1.2cqh rgba(0,0,0,.07);align-self:flex-start;transform-origin:left bottom;white-space:nowrap;--r:3deg;animation:bubA var(--T) cubic-bezier(.34,1.4,.5,1) infinite">сколько?</div>
+            <div style="max-width:24cqw;margin-right:1cqw;margin-top:-.2cqh;padding:1.2cqh 1.5cqw;font-size:1.95cqw;font-weight:500;line-height:1.2;border-radius:1.8cqh 1.8cqh .5cqh 1.8cqh;background:var(--hot);color:#fff;box-shadow:0 .6cqh 1.2cqh rgba(226,87,90,.22);align-self:flex-end;transform-origin:right bottom;white-space:nowrap;--r:-2deg;animation:bubB var(--T) cubic-bezier(.34,1.4,.5,1) infinite">секунду…</div>
+            <div style="max-width:24cqw;margin-left:3cqw;margin-top:-.3cqh;padding:1.2cqh 1.5cqw;font-size:1.95cqw;font-weight:500;line-height:1.2;border-radius:1.8cqh 1.8cqh 1.8cqh .5cqh;background:var(--bub);box-shadow:0 .6cqh 1.2cqh rgba(0,0,0,.07);align-self:flex-start;transform-origin:left bottom;white-space:nowrap;--r:5deg;animation:bubB var(--T) cubic-bezier(.34,1.4,.5,1) infinite">куда оплатить?</div>
+            <div style="max-width:24cqw;margin-left:9cqw;margin-top:-.3cqh;padding:1.2cqh 1.5cqw;font-size:1.95cqw;font-weight:500;line-height:1.2;border-radius:1.8cqh 1.8cqh 1.8cqh .5cqh;background:var(--bub);box-shadow:0 .6cqh 1.2cqh rgba(0,0,0,.07);align-self:flex-start;transform-origin:left bottom;white-space:nowrap;--r:-3deg;animation:bubC var(--T) cubic-bezier(.34,1.4,.5,1) infinite">ещё размер M есть?</div>
+            <div style="max-width:24cqw;margin-left:2cqw;margin-top:-.3cqh;padding:1.2cqh 1.5cqw;font-size:1.95cqw;font-weight:500;line-height:1.2;border-radius:1.8cqh 1.8cqh 1.8cqh .5cqh;background:var(--bub);box-shadow:0 .6cqh 1.2cqh rgba(0,0,0,.07);align-self:flex-start;transform-origin:left bottom;white-space:nowrap;--r:4deg;animation:bubC var(--T) cubic-bezier(.34,1.4,.5,1) infinite">в наличии?</div>
+            <div style="max-width:24cqw;margin-right:2cqw;margin-top:-.2cqh;padding:1.2cqh 1.5cqw;font-size:1.95cqw;font-weight:500;line-height:1.2;border-radius:1.8cqh 1.8cqh .5cqh 1.8cqh;background:var(--hot);color:#fff;box-shadow:0 .6cqh 1.2cqh rgba(226,87,90,.22);align-self:flex-end;transform-origin:right bottom;white-space:nowrap;--r:-3deg;animation:bubD var(--T) cubic-bezier(.34,1.4,.5,1) infinite">уже считаю…</div>
+            <div style="max-width:24cqw;margin-left:6cqw;margin-top:-.3cqh;padding:1.2cqh 1.5cqw;font-size:1.95cqw;font-weight:500;line-height:1.2;border-radius:1.8cqh 1.8cqh 1.8cqh .5cqh;background:var(--bub);box-shadow:0 .6cqh 1.2cqh rgba(0,0,0,.07);align-self:flex-start;transform-origin:left bottom;white-space:nowrap;--r:3deg;animation:bubD var(--T) cubic-bezier(.34,1.4,.5,1) infinite">скидка будет?</div>
+          </div>
+
+          <!-- input bar -->
+          <div style="flex:0 0 auto;display:flex;align-items:center;gap:1cqw;padding:1.4cqh 2cqw;border-top:1px solid var(--line)">
+            <div style="flex:1 1 auto;height:4.6cqh;border-radius:2.3cqh;background:#1B1E24;display:flex;align-items:center;padding:0 1.4cqw;font-size:1.6cqw;color:var(--muted)">Сообщение…</div>
+            <div style="flex:0 0 auto;width:4.6cqh;height:4.6cqh;border-radius:50%;background:var(--hot);display:flex;align-items:center;justify-content:center;box-shadow:0 .5cqh 1.2cqh rgba(226,87,90,.3)"><svg viewBox="0 0 24 24" width="50%" height="50%" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20 L12 5"></path><path d="M6 11 L12 5 L18 11"></path></svg></div>
+          </div>
+        </div>
+
+        <!-- notification toasts (spill over the window) -->
+        <div style="position:absolute;top:8.5cqh;right:-4cqw;width:20cqw;display:flex;align-items:center;gap:1cqw;padding:1.1cqh 1.2cqw;background:var(--card);border:1px solid var(--line);border-radius:1.6cqh;box-shadow:0 1.4cqh 3cqh -.6cqh rgba(0,0,0,.22);transform-origin:top right;animation:toast1 var(--T) ease-in-out infinite">
+          <div style="flex:0 0 auto;width:3.6cqh;height:3.6cqh;border-radius:50%;background:linear-gradient(135deg,#EC8385,#E2575A)"></div>
+          <div style="min-width:0"><div style="font-weight:700;font-size:1.5cqw;line-height:1.1">Аня</div><div style="font-size:1.4cqw;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">это ещё продаётся?</div></div>
+        </div>
+        <div style="position:absolute;top:14.5cqh;right:-3cqw;width:20cqw;display:flex;align-items:center;gap:1cqw;padding:1.1cqh 1.2cqw;background:var(--card);border:1px solid var(--line);border-radius:1.6cqh;box-shadow:0 1.4cqh 3cqh -.6cqh rgba(0,0,0,.2);transform-origin:top right;animation:toast2 var(--T) ease-in-out infinite">
+          <div style="flex:0 0 auto;width:3.6cqh;height:3.6cqh;border-radius:50%;background:linear-gradient(135deg,#D98A7E,#C75C52)"></div>
+          <div style="min-width:0"><div style="font-weight:700;font-size:1.5cqw;line-height:1.1">Иван</div><div style="font-size:1.4cqw;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">забронируйте, заберу</div></div>
+        </div>
+        <div style="position:absolute;top:20.5cqh;right:-2cqw;width:20cqw;display:flex;align-items:center;gap:1cqw;padding:1.1cqh 1.2cqw;background:var(--card);border:1px solid var(--line);border-radius:1.6cqh;box-shadow:0 1.4cqh 3cqh -.6cqh rgba(0,0,0,.18);transform-origin:top right;animation:toast3 var(--T) ease-in-out infinite">
+          <div style="flex:0 0 auto;width:3.6cqh;height:3.6cqh;border-radius:50%;background:linear-gradient(135deg,#E0A07E,#CC6A48)"></div>
+          <div style="min-width:0"><div style="font-weight:700;font-size:1.5cqw;line-height:1.1">Марина</div><div style="font-size:1.4cqw;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">+1, тоже хочу</div></div>
+        </div>
+      </div>
+
+      <!-- ----- CENTER · ARROW ----- -->
+      <div style="flex:1 1 auto;align-self:stretch;position:relative;display:flex;align-items:center;justify-content:center;min-width:11cqw">
+        <div style="position:absolute;inset:0;overflow:visible">
+          <div style="position:absolute;left:0;top:30%;width:1.3cqh;height:1.3cqh;border-radius:50%;animation:flow 1.5s linear infinite;animation-delay:-.2s"></div>
+          <div style="position:absolute;left:0;top:44%;width:1cqh;height:1cqh;border-radius:50%;animation:flow 1.9s linear infinite;animation-delay:-.9s"></div>
+          <div style="position:absolute;left:0;top:56%;width:1.5cqh;height:1.5cqh;border-radius:50%;animation:flow 1.7s linear infinite;animation-delay:-1.3s"></div>
+          <div style="position:absolute;left:0;top:38%;width:.9cqh;height:.9cqh;border-radius:50%;animation:flow 2.1s linear infinite;animation-delay:-.5s"></div>
+          <div style="position:absolute;left:0;top:64%;width:1.2cqh;height:1.2cqh;border-radius:50%;animation:flow 1.3s linear infinite;animation-delay:-1.0s"></div>
+          <div style="position:absolute;left:0;top:50%;width:1.1cqh;height:1.1cqh;border-radius:50%;animation:flow 2.3s linear infinite;animation-delay:-1.7s"></div>
+        </div>
+        <div style="position:absolute;left:50%;top:50%;width:12cqh;height:12cqh;border-radius:50%;border:.55cqh solid var(--hot);opacity:0;animation:burst var(--T) ease-out infinite;pointer-events:none"></div>
+        <div style="position:relative;width:11cqh;height:11cqh;border-radius:50%;background:color-mix(in srgb,var(--hot) 13%,transparent);display:flex;align-items:center;justify-content:center;animation:arrowPulse 2.6s ease-in-out infinite">
+          <span style="font-size:6cqh;font-weight:800;color:var(--hot);line-height:1;transform:translateY(-.3cqh);animation:arrowGlow var(--T) ease-in-out infinite">→</span>
+        </div>
+      </div>
+
+      <!-- ----- RIGHT · STORE (order) ----- -->
+      <div style="flex:0 0 36cqw;height:76cqh;position:relative">
+        <div style="position:absolute;inset:0;background:var(--card);border:1px solid var(--line);border-radius:2.4cqh;box-shadow:0 2cqh 4cqh -1cqh rgba(0,0,0,.14),0 .4cqh 1cqh rgba(0,0,0,.05);display:flex;flex-direction:column;overflow:hidden">
+          <!-- browser header with revenue badge -->
+          <div style="flex:0 0 auto;display:flex;align-items:center;gap:1cqw;padding:1.5cqh 1.6cqw;border-bottom:1px solid var(--line)">
+            <div style="display:flex;gap:.7cqw;flex:0 0 auto">
+              <span style="width:1.5cqh;height:1.5cqh;border-radius:50%;background:#C25C52"></span>
+              <span style="width:1.5cqh;height:1.5cqh;border-radius:50%;background:#C99A4E"></span>
+              <span style="width:1.5cqh;height:1.5cqh;border-radius:50%;background:#4FB07A"></span>
+            </div>
+            <div style="flex:1 1 auto;display:flex;align-items:center;justify-content:center;height:4cqh;border-radius:2cqh;background:#1B1E24;font-family:ui-monospace,monospace;font-size:1.4cqw;color:var(--muted);overflow:hidden;white-space:nowrap">shop.example / каталог</div>
+            <div style="flex:0 0 auto;display:flex;align-items:center;gap:.6cqw;padding:.5cqh 1cqw;border-radius:1.8cqh;background:color-mix(in srgb,var(--cool) 18%,#14161A);border:1px solid color-mix(in srgb,var(--cool) 40%,#14161A);color:var(--cool);font-weight:800;font-size:1.7cqw;transform-origin:center;animation:revPop var(--T) ease-in-out infinite">
+              <span style="width:0;height:0;border-left:.7cqh solid transparent;border-right:.7cqh solid transparent;border-bottom:1cqh solid var(--cool)"></span>
+              <div style="height:2.6cqh;overflow:hidden">
+                <div style="display:flex;flex-direction:column;line-height:2.6cqh;transform:translateY(-15.6cqh);animation:revRoll var(--T) cubic-bezier(.6,0,.2,1) infinite">
+                  <span style="height:2.6cqh;white-space:nowrap">$0</span><span style="height:2.6cqh;white-space:nowrap">$24</span><span style="height:2.6cqh;white-space:nowrap">$73</span><span style="height:2.6cqh;white-space:nowrap">$92</span><span style="height:2.6cqh;white-space:nowrap">$104</span><span style="height:2.6cqh;white-space:nowrap">$112</span><span style="height:2.6cqh;white-space:nowrap">$117</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- toolbar -->
+          <div style="flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:1cqw;padding:1.4cqh 1.6cqw .4cqh">
+            <span style="font-weight:800;font-size:2.3cqw;flex:0 0 auto">Каталог</span>
+            <div style="display:flex;gap:.5cqw;flex:0 0 auto">
+              <span style="padding:.5cqh .8cqw;border-radius:1.4cqh;background:var(--cool);color:#14161A;font-size:1.25cqw;font-weight:600;white-space:nowrap">Все</span>
+              <span style="padding:.5cqh .8cqw;border-radius:1.4cqh;background:#1B1E24;color:var(--muted);font-size:1.25cqw;font-weight:600;white-space:nowrap">Новинки</span>
+              <span style="padding:.5cqh .8cqw;border-radius:1.4cqh;background:#1B1E24;color:var(--muted);font-size:1.25cqw;font-weight:600;white-space:nowrap">Хиты</span>
+            </div>
+          </div>
+          <!-- grid -->
+          <div style="flex:1 1 auto;position:relative;overflow:hidden;padding:1.2cqh 1.6cqw 1.8cqh">
+            <div style="height:100%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:1.2cqw 1cqw">
+
+              <div style="position:relative;display:flex;flex-direction:column;gap:.7cqh;background:var(--card);border:1px solid var(--line);border-radius:1.4cqh;padding:.9cqh;box-shadow:0 .6cqh 1.4cqh rgba(0,0,0,.05);transform-origin:center;animation:cardA var(--T) cubic-bezier(.34,1.3,.5,1) infinite">
+                <div style="position:absolute;inset:0;border-radius:1.4cqh;border:.3cqh solid var(--cool);opacity:0;pointer-events:none;animation:recvPulse var(--T) ease-out infinite"></div>
+                <div style="flex:1 1 auto;border-radius:1cqh;background:repeating-linear-gradient(135deg,#1B1E24,#1B1E24 6px,#23272E 6px,#23272E 12px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:1.3cqw;color:#5C5E64">фото</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:.6cqw">
+                  <div style="min-width:0"><div style="font-weight:600;font-size:1.6cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Кружка</div><div style="font-weight:800;font-size:1.7cqw">$12</div></div>
+                  <div style="flex:0 0 auto;width:4cqh;height:4cqh;border-radius:1.1cqh;background:var(--cool);display:flex;align-items:center;justify-content:center;box-shadow:0 .5cqh 1.2cqh rgba(201,167,92,.32)"><span style="position:relative;width:1.7cqh;height:1.7cqh;display:block"><span style="position:absolute;top:50%;left:0;right:0;height:.4cqh;margin-top:-.2cqh;border-radius:.2cqh;background:#14161A"></span><span style="position:absolute;left:50%;top:0;bottom:0;width:.4cqh;margin-left:-.2cqh;border-radius:.2cqh;background:#14161A"></span></span></div>
+                </div>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:.7cqh;background:var(--card);border:1px solid var(--line);border-radius:1.4cqh;padding:.9cqh;box-shadow:0 .6cqh 1.4cqh rgba(0,0,0,.05);transform-origin:center;animation:cardA var(--T) cubic-bezier(.34,1.3,.5,1) infinite">
+                <div style="flex:1 1 auto;border-radius:1cqh;background:repeating-linear-gradient(135deg,#1B1E24,#1B1E24 6px,#23272E 6px,#23272E 12px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:1.3cqw;color:#5C5E64">фото</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:.6cqw">
+                  <div style="min-width:0"><div style="font-weight:600;font-size:1.6cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Шопер</div><div style="font-weight:800;font-size:1.7cqw">$19</div></div>
+                  <div style="flex:0 0 auto;width:4cqh;height:4cqh;border-radius:1.1cqh;background:var(--cool);display:flex;align-items:center;justify-content:center;box-shadow:0 .5cqh 1.2cqh rgba(201,167,92,.32)"><span style="position:relative;width:1.7cqh;height:1.7cqh;display:block"><span style="position:absolute;top:50%;left:0;right:0;height:.4cqh;margin-top:-.2cqh;border-radius:.2cqh;background:#14161A"></span><span style="position:absolute;left:50%;top:0;bottom:0;width:.4cqh;margin-left:-.2cqh;border-radius:.2cqh;background:#14161A"></span></span></div>
+                </div>
+              </div>
+
+              <div style="position:relative;display:flex;flex-direction:column;gap:.7cqh;background:var(--card);border:1px solid var(--line);border-radius:1.4cqh;padding:.9cqh;box-shadow:0 .6cqh 1.4cqh rgba(0,0,0,.05);transform-origin:center;animation:cardB var(--T) cubic-bezier(.34,1.3,.5,1) infinite">
+                <div style="position:absolute;inset:0;border-radius:1.4cqh;border:.3cqh solid var(--cool);opacity:0;pointer-events:none;animation:recvPulse var(--T) ease-out infinite"></div>
+                <div style="flex:1 1 auto;border-radius:1cqh;background:repeating-linear-gradient(135deg,#1B1E24,#1B1E24 6px,#23272E 6px,#23272E 12px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:1.3cqw;color:#5C5E64">фото</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:.6cqw">
+                  <div style="min-width:0"><div style="font-weight:600;font-size:1.6cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Свитшот</div><div style="font-weight:800;font-size:1.7cqw">$49</div></div>
+                  <div style="flex:0 0 auto;width:4cqh;height:4cqh;border-radius:1.1cqh;background:var(--cool);display:flex;align-items:center;justify-content:center;box-shadow:0 .5cqh 1.2cqh rgba(201,167,92,.32)"><span style="position:relative;width:1.7cqh;height:1.7cqh;display:block"><span style="position:absolute;top:50%;left:0;right:0;height:.4cqh;margin-top:-.2cqh;border-radius:.2cqh;background:#14161A"></span><span style="position:absolute;left:50%;top:0;bottom:0;width:.4cqh;margin-left:-.2cqh;border-radius:.2cqh;background:#14161A"></span></span></div>
+                </div>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:.7cqh;background:var(--card);border:1px solid var(--line);border-radius:1.4cqh;padding:.9cqh;box-shadow:0 .6cqh 1.4cqh rgba(0,0,0,.05);transform-origin:center;animation:cardB var(--T) cubic-bezier(.34,1.3,.5,1) infinite">
+                <div style="flex:1 1 auto;border-radius:1cqh;background:repeating-linear-gradient(135deg,#1B1E24,#1B1E24 6px,#23272E 6px,#23272E 12px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:1.3cqw;color:#5C5E64">фото</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:.6cqw">
+                  <div style="min-width:0"><div style="font-weight:600;font-size:1.6cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Стикеры</div><div style="font-weight:800;font-size:1.7cqw">$5</div></div>
+                  <div style="flex:0 0 auto;width:4cqh;height:4cqh;border-radius:1.1cqh;background:var(--cool);display:flex;align-items:center;justify-content:center;box-shadow:0 .5cqh 1.2cqh rgba(201,167,92,.32)"><span style="position:relative;width:1.7cqh;height:1.7cqh;display:block"><span style="position:absolute;top:50%;left:0;right:0;height:.4cqh;margin-top:-.2cqh;border-radius:.2cqh;background:#14161A"></span><span style="position:absolute;left:50%;top:0;bottom:0;width:.4cqh;margin-left:-.2cqh;border-radius:.2cqh;background:#14161A"></span></span></div>
+                </div>
+              </div>
+
+              <!-- target card (cursor adds this) -->
+              <div style="position:relative;display:flex;flex-direction:column;gap:.7cqh;background:var(--card);border:1px solid var(--line);border-radius:1.4cqh;padding:.9cqh;box-shadow:0 .6cqh 1.4cqh rgba(0,0,0,.05);transform-origin:center;animation:cardC var(--T) cubic-bezier(.34,1.3,.5,1) infinite">
+                <div style="position:absolute;inset:0;border-radius:1.4cqh;border:.3cqh solid var(--cool);opacity:0;pointer-events:none;animation:recvPulse var(--T) ease-out infinite"></div>
+                <div style="flex:1 1 auto;border-radius:1cqh;background:repeating-linear-gradient(135deg,#1B1E24,#1B1E24 6px,#23272E 6px,#23272E 12px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:1.3cqw;color:#5C5E64">фото</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:.6cqw">
+                  <div style="min-width:0"><div style="font-weight:600;font-size:1.6cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Кепка</div><div style="font-weight:800;font-size:1.7cqw">$24</div></div>
+                  <div style="flex:0 0 auto;width:4cqh;height:4cqh;border-radius:1.1cqh;background:var(--cool);display:flex;align-items:center;justify-content:center;box-shadow:0 .5cqh 1.2cqh rgba(201,167,92,.32);transform-origin:center;animation:addBtnPress var(--T) ease-in-out infinite"><span style="position:relative;width:1.7cqh;height:1.7cqh;display:block"><span style="position:absolute;top:50%;left:0;right:0;height:.4cqh;margin-top:-.2cqh;border-radius:.2cqh;background:#14161A"></span><span style="position:absolute;left:50%;top:0;bottom:0;width:.4cqh;margin-left:-.2cqh;border-radius:.2cqh;background:#14161A"></span></span></div>
+                </div>
+                <div style="position:absolute;top:.7cqh;left:0;right:0;display:flex;justify-content:center;pointer-events:none"><div style="display:flex;align-items:center;gap:.5cqw;padding:.5cqh 1cqw;border-radius:1.4cqh;background:var(--ok);color:#fff;font-size:1.4cqw;font-weight:700;white-space:nowrap;box-shadow:0 .6cqh 1.4cqh rgba(79,176,122,.4);opacity:0;animation:addedTag var(--T) ease-in-out infinite">✓ В корзине</div></div>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:.7cqh;background:var(--card);border:1px solid var(--line);border-radius:1.4cqh;padding:.9cqh;box-shadow:0 .6cqh 1.4cqh rgba(0,0,0,.05);transform-origin:center;animation:cardC var(--T) cubic-bezier(.34,1.3,.5,1) infinite">
+                <div style="flex:1 1 auto;border-radius:1cqh;background:repeating-linear-gradient(135deg,#1B1E24,#1B1E24 6px,#23272E 6px,#23272E 12px);display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-size:1.3cqw;color:#5C5E64">фото</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:.6cqw">
+                  <div style="min-width:0"><div style="font-weight:600;font-size:1.6cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Носки</div><div style="font-weight:800;font-size:1.7cqw">$8</div></div>
+                  <div style="flex:0 0 auto;width:4cqh;height:4cqh;border-radius:1.1cqh;background:var(--cool);display:flex;align-items:center;justify-content:center;box-shadow:0 .5cqh 1.2cqh rgba(201,167,92,.32)"><span style="position:relative;width:1.7cqh;height:1.7cqh;display:block"><span style="position:absolute;top:50%;left:0;right:0;height:.4cqh;margin-top:-.2cqh;border-radius:.2cqh;background:#14161A"></span><span style="position:absolute;left:50%;top:0;bottom:0;width:.4cqh;margin-left:-.2cqh;border-radius:.2cqh;background:#14161A"></span></span></div>
+                </div>
+              </div>
+
+            </div>
+            <div style="position:absolute;top:0;left:0;width:7cqw;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent);opacity:0;animation:shimmer var(--T) ease-in-out infinite;pointer-events:none"></div>
+            <div style="position:absolute;top:0;left:0;width:4.4cqh;height:4.4cqh;opacity:0;pointer-events:none;filter:drop-shadow(0 .4cqh .8cqh rgba(0,0,0,.3));animation:cursorMove var(--T) cubic-bezier(.5,0,.2,1) infinite">
+              <svg viewBox="0 0 24 24" width="100%" height="100%"><path d="M4 2 L4 19 L9 14.5 L12.3 21 L15 19.7 L11.8 13.5 L18 13 Z" fill="#F2EFE8" stroke="#101216" stroke-width="1.3" stroke-linejoin="round"></path></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===================== MORPH LAYER (bubbles → cards) ===================== -->
+    <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden">
+      <div style="--tx:25.4cqw;--ty:-9.8cqh;position:absolute;left:37cqw;top:34cqh;width:7cqw;height:9cqh;border:1px solid var(--line);box-shadow:0 1cqh 2.4cqh rgba(0,0,0,.16);opacity:0;transform-origin:center;animation:morph var(--T) cubic-bezier(.4,0,.2,1) infinite"><div style="position:absolute;inset:.5cqh;display:flex;flex-direction:column;gap:.35cqh;opacity:0;animation:spriteFace var(--T) ease-in-out infinite"><div style="flex:1 1 auto;border-radius:.6cqh;background:repeating-linear-gradient(135deg,#1B1E24,#1B1E24 4px,#23272E 4px,#23272E 8px)"></div><div style="height:.8cqh;width:72%;border-radius:.4cqh;background:#23272E"></div></div></div>
+      <div style="--tx:47.6cqw;--ty:-21.8cqh;position:absolute;left:37cqw;top:46cqh;width:7cqw;height:9cqh;border:1px solid var(--line);box-shadow:0 1cqh 2.4cqh rgba(0,0,0,.16);opacity:0;transform-origin:center;animation:morph var(--T) cubic-bezier(.4,0,.2,1) infinite"><div style="position:absolute;inset:.5cqh;display:flex;flex-direction:column;gap:.35cqh;opacity:0;animation:spriteFace var(--T) ease-in-out infinite"><div style="flex:1 1 auto;border-radius:.6cqh;background:repeating-linear-gradient(135deg,#1B1E24,#1B1E24 4px,#23272E 4px,#23272E 8px)"></div><div style="height:.8cqh;width:72%;border-radius:.4cqh;background:#23272E"></div></div></div>
+      <div style="--tx:36.5cqw;--ty:14.5cqh;position:absolute;left:37cqw;top:40cqh;width:7cqw;height:9cqh;border:1px solid var(--line);box-shadow:0 1cqh 2.4cqh rgba(0,0,0,.16);opacity:0;transform-origin:center;animation:morph var(--T) cubic-bezier(.4,0,.2,1) infinite"><div style="position:absolute;inset:.5cqh;display:flex;flex-direction:column;gap:.35cqh;opacity:0;animation:spriteFace var(--T) ease-in-out infinite"><div style="flex:1 1 auto;border-radius:.6cqh;background:repeating-linear-gradient(135deg,#1B1E24,#1B1E24 4px,#23272E 4px,#23272E 8px)"></div><div style="height:.8cqh;width:72%;border-radius:.4cqh;background:#23272E"></div></div></div>
+    </div>
+
+    <!-- ===================== SLOGAN ===================== -->
+    <div style="position:absolute;left:0;right:0;bottom:0;height:16cqh;display:flex;align-items:center;justify-content:center">
+      <div style="position:relative;display:flex;align-items:center;justify-content:center;height:100%;width:100%">
+        <div style="position:absolute;font-size:2.5cqw;font-weight:700;letter-spacing:-.01em;opacity:0;animation:slogA var(--T) ease-in-out infinite">Личка <span style="color:var(--hot);font-weight:800">не масштабируется</span></div>
+        <div style="position:absolute;display:flex;align-items:center;gap:.8cqw;font-size:2.5cqw;font-weight:700;letter-spacing:-.01em;opacity:1;animation:slogB var(--T) ease-in-out infinite">Магазин <span style="color:var(--cool);font-weight:800">масштабируется</span><span style="display:inline-flex;align-items:center;justify-content:center;width:2.6cqh;height:2.6cqh;border-radius:50%;background:var(--ok);color:#fff;font-size:1.5cqw;margin-left:.4cqw">✓</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 720 },
+  &quot;speed&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1, &quot;min&quot;: 0.5, &quot;max&quot;: 2, &quot;step&quot;: 0.1, &quot;unit&quot;: &quot;\u00d7&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Движение&quot; },
+  &quot;accentHot&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#E2575A&quot;, &quot;options&quot;: [&quot;#E2575A&quot;, &quot;#E8714C&quot;, &quot;#EE8A3C&quot;, &quot;#E85C8A&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Цвета&quot; },
+  &quot;accentCool&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#C9A75C&quot;, &quot;options&quot;: [&quot;#C9A75C&quot;, &quot;#B8924A&quot;, &quot;#D8C18A&quot;, &quot;#C08A52&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Цвета&quot; }
+}">
+class Component extends DCLogic {
+  constructor(props){ super(props); this.frameRef = React.createRef(); }
+  componentDidMount(){ this.applyVars(); }
+  componentDidUpdate(){ this.applyVars(); }
+  applyVars(){
+    const el = this.frameRef.current; if(!el) return;
+    const p = this.props || {};
+    const spd = (typeof p.speed === 'number' && p.speed > 0) ? p.speed : 1;
+    el.style.setProperty('--T', (8 / spd).toFixed(3) + 's');
+    if(p.accentHot) el.style.setProperty('--hot', p.accentHot);
+    if(p.accentCool) el.style.setProperty('--cool', p.accentCool);
+  }
+  renderVals(){ return { frameRef: this.frameRef }; }
+}
+</script>
+</body>
+</html>

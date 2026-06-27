@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+ <style>
+  :root{ --bg:#0C0D10; --gold:#C9A75C; --gold-bright:#D4AF6A; --cream:#F2EFE8; --muted:#C3C5CB; --faint:#76787E; --line:#23262C; --ink:#0C0D10; --panel:#14161A; --panel2:#101216; }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  html{scrollbar-width:none;-ms-overflow-style:none;}
+  html::-webkit-scrollbar{width:0;height:0;display:none;}
+  body{background:#0C0D10;overflow:hidden;}
+  ::selection{background:rgba(201,167,92,.28);color:#fff;}
+ </style>
+</helmet>
+
+<div style="background:var(--bg);color:var(--cream);font-family:'Manrope',ui-sans-serif,system-ui,sans-serif;display:flex;justify-content:center;align-items:flex-start;padding:clamp(28px,6vw,56px) 20px 56px;position:relative;overflow:hidden;-webkit-font-smoothing:antialiased;">
+ <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(58% 34% at 50% -4%, rgba(201,167,92,.05), transparent 62%);z-index:1;"></div>
+ <div style="width:100%;max-width:600px;position:relative;z-index:2;">
+
+  <p style="font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 20px;max-width:46ch;">Отметьте нужные опции — вилка цены и ориентир по сроку обновятся ниже.</p>
+
+  <div style="{{ baseStyle }}">
+   <span style="{{ baseBoxStyle }}"><span style="{{ baseCheckStyle }}"></span></span>
+   <span style="flex:1;min-width:0;">
+     <span style="display:flex;justify-content:space-between;gap:12px;align-items:baseline;">
+       <span style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;">
+         <span style="font-size:15.5px;font-weight:600;color:var(--cream);">{{ baseName }}</span>
+         <span style="font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:rgba(201,167,92,.14);padding:3px 8px;border-radius:5px;">База</span>
+       </span>
+       <span style="{{ basePriceStyle }}">{{ basePrice }}</span>
+     </span>
+     <span style="display:block;font-size:13px;color:var(--muted);line-height:1.5;margin-top:5px;">Бот-витрина с каталогом, карточками товаров и приёмом заказов.</span>
+   </span>
+  </div>
+
+  <div style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:24px 4px 12px;">Дополнительно</div>
+
+  <div style="display:flex;flex-direction:column;gap:10px;">
+   <sc-for list="{{ cards }}" as="card" hint-placeholder-count="5">
+    <label style="{{ card.cardStyle }}" style-hover="box-shadow:0 8px 22px -12px rgba(0,0,0,.75);">
+      <input type="checkbox" checked="{{ card.isSelected }}" onChange="{{ card.toggle }}" style="position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none;"/>
+      <span style="{{ card.boxStyle }}"><span style="{{ card.checkStyle }}"></span></span>
+      <span style="flex:1;min-width:0;">
+        <span style="display:flex;justify-content:space-between;gap:12px;align-items:baseline;">
+          <span style="{{ card.titleStyle }}">{{ card.name }}</span>
+          <span style="{{ card.priceStyle }}">{{ card.priceLabel }}</span>
+        </span>
+        <sc-if value="{{ showDesc }}" hint-placeholder-val="{{ true }}"><span style="{{ card.descStyle }}">{{ card.desc }}</span></sc-if>
+      </span>
+    </label>
+   </sc-for>
+  </div>
+
+  <div style="margin-top:26px;background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;box-shadow:0 30px 60px -34px rgba(0,0,0,.8);">
+    <sc-if value="{{ showBreakdown }}" hint-placeholder-val="{{ true }}">
+     <div style="margin-bottom:16px;">
+       <div style="font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:11px;">Входит в расчёт</div>
+       <div style="display:flex;flex-direction:column;gap:9px;">
+        <sc-for list="{{ breakdown }}" as="row" hint-placeholder-count="1">
+          <div style="display:flex;justify-content:space-between;gap:14px;align-items:baseline;">
+            <span style="font-size:13.5px;color:#C3C5CB;line-height:1.35;">{{ row.name }}</span>
+            <span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--faint);white-space:nowrap;">{{ row.range }}</span>
+          </div>
+        </sc-for>
+       </div>
+     </div>
+    </sc-if>
+
+    <div style="height:1px;background:var(--line);margin:4px 0 16px;"></div>
+
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px;">
+      <div>
+        <div style="font-size:12.5px;color:var(--faint);margin-bottom:5px;">Примерно</div>
+        <div style="font-size:clamp(28px,7vw,36px);font-weight:700;letter-spacing:-.025em;line-height:1;font-variant-numeric:tabular-nums;color:var(--cream);">{{ totalLow }} <span style="color:var(--gold);font-weight:500;">–</span> {{ totalHigh }}</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:12.5px;color:var(--faint);margin-bottom:5px;">Срок</div>
+        <div style="font-size:18px;font-weight:600;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--cream);">~{{ weeksText }}</div>
+      </div>
+    </div>
+
+    <a href="{{ ctaHref }}" target="_blank" rel="noopener noreferrer" style="{{ ctaStyle }}" style-hover="filter:brightness(1.06);">Обсудить в Telegram <span style="font-size:17px;line-height:0;">→</span></a>
+
+    <p style="text-align:center;font-size:12.5px;color:var(--faint);line-height:1.5;margin:13px 0 0;">Ориентир, точную смету назову после брифа.</p>
+  </div>
+
+ </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+ &quot;$preview&quot;: {&quot;width&quot;: 640, &quot;height&quot;: 880},
+ &quot;accent&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#C9A75C&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#C9A75C&quot;, &quot;#D9B25E&quot;, &quot;#B8893A&quot;, &quot;#C8B073&quot;]},
+ &quot;showBreakdown&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;},
+ &quot;compact&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}
+}">
+class Component extends DCLogic {
+  state = { selected: {}, dispLow: 800, dispHigh: 1200, dispWeeks: 1 };
+
+  BASE = { name: 'Telegram-магазин', low: 800, high: 1200, weeks: 1 };
+  OPTIONS = [
+    { id: 'site', name: 'Полноценный сайт-магазин', desc: 'Отдельный сайт с каталогом, корзиной и страницами товаров — не только бот.', low: 2500, high: 4000, weeks: 2 },
+    { id: 'admin', name: 'Админ-панель и учёт', desc: 'Управление заказами, товарами и остатками из удобной панели.', low: 400, high: 700, weeks: 1 },
+    { id: 'seo', name: 'Блог и SEO', desc: 'Раздел статей и SEO-оптимизация под поиск Google — чтобы магазин находили в выдаче.', low: 500, high: 800, weeks: 1 },
+    { id: 'mkt', name: 'Маркетинг и аналитика', desc: 'Пиксели, цели и наглядные дашборды — видно, откуда приходят клиенты.', low: 500, high: 800, weeks: 1 },
+    { id: 'pay', name: 'Интеграция оплаты', desc: 'Онлайн-оплата картой, Apple Pay и Google Pay — приём платежей прямо в боте или на сайте.', low: 300, high: 500, weeks: 1 },
+  ];
+
+  componentWillUnmount() { if (this._raf) cancelAnimationFrame(this._raf); clearTimeout(this._fb); }
+
+  toggle(id) {
+    this.setState(s => ({ selected: { ...s.selected, [id]: !s.selected[id] } }), () => this.animate());
+  }
+
+  targets() {
+    let low = this.BASE.low, high = this.BASE.high, weeks = this.BASE.weeks;
+    for (const o of this.OPTIONS) { if (this.state.selected[o.id]) { low += o.low; high += o.high; weeks += o.weeks; } }
+    return { low, high, weeks };
+  }
+
+  animate() {
+    const t = this.targets();
+    const s0 = { low: this.state.dispLow, high: this.state.dispHigh, weeks: this.state.dispWeeks };
+    const t0 = performance.now(), dur = 420;
+    const ease = x => 1 - Math.pow(1 - x, 3);
+    if (this._raf) cancelAnimationFrame(this._raf);
+    const step = now => {
+      const k = Math.min(1, (now - t0) / dur), e = ease(k);
+      this.setState({
+        dispLow: Math.round(s0.low + (t.low - s0.low) * e),
+        dispHigh: Math.round(s0.high + (t.high - s0.high) * e),
+        dispWeeks: s0.weeks + (t.weeks - s0.weeks) * e,
+      });
+      if (k < 1) { this._raf = requestAnimationFrame(step); }
+      else { this._raf = null; this.setState({ dispLow: t.low, dispHigh: t.high, dispWeeks: t.weeks }); }
+    };
+    clearTimeout(this._fb);
+    this._fb = setTimeout(() => this.setState({ dispLow: t.low, dispHigh: t.high, dispWeeks: t.weeks }), 520);
+    this._raf = requestAnimationFrame(step);
+  }
+
+  fmt(n) { return Math.round(n).toLocaleString('ru-RU'); }
+  plural(n, f) { const a = n % 10, b = n % 100; if (a === 1 && b !== 11) return f[0]; if (a >= 2 && a <= 4 && (b < 10 || b >= 20)) return f[1]; return f[2]; }
+
+  hexToRgb(h) { h = String(h).replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); const n = parseInt(h, 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+  mix(a, b, t) { const A = this.hexToRgb(a), B = this.hexToRgb(b); return 'rgb(' + Math.round(A[0] + (B[0] - A[0]) * t) + ',' + Math.round(A[1] + (B[1] - A[1]) * t) + ',' + Math.round(A[2] + (B[2] - A[2]) * t) + ')'; }
+
+  renderVals() {
+    const accent = this.props.accent || '#C9A75C';
+    const showBreakdown = this.props.showBreakdown !== false;
+    const showDesc = !this.props.compact;
+    const bg = '#0C0D10', panel = '#14161A';
+    const tint = this.mix(panel, accent, 0.14);
+    const tintBase = this.mix(panel, accent, 0.17);
+    const selBorder = this.mix(bg, accent, 0.5);
+    const bright = this.mix(accent, '#ffffff', 0.3);
+
+    const mkBox = sel => ({ flex: '0 0 auto', width: '22px', height: '22px', borderRadius: '7px', border: '1.5px solid ' + (sel ? accent : '#3A3E46'), background: sel ? accent : 'rgba(255,255,255,.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .2s', marginTop: '1px' });
+    const mkCheck = sel => ({ width: '5px', height: '9px', borderRight: '2px solid #0C0D10', borderBottom: '2px solid #0C0D10', transform: sel ? 'rotate(45deg)' : 'rotate(45deg) scale(.4)', opacity: sel ? 1 : 0, transition: 'all .2s', marginTop: '-2px' });
+
+    const cards = this.OPTIONS.map(o => {
+      const sel = !!this.state.selected[o.id];
+      return {
+        id: o.id, name: o.name, desc: o.desc, isSelected: sel,
+        priceLabel: 'от $' + this.fmt(o.low),
+        toggle: () => this.toggle(o.id),
+        cardStyle: { display: 'flex', gap: '14px', alignItems: 'flex-start', padding: '15px 17px', borderRadius: '14px', border: '1px solid ' + (sel ? selBorder : '#23262C'), background: sel ? tint : panel, cursor: 'pointer', transition: 'border-color .2s, background .2s, box-shadow .2s', position: 'relative', userSelect: 'none', textAlign: 'left' },
+        boxStyle: mkBox(sel),
+        checkStyle: mkCheck(sel),
+        titleStyle: { fontSize: '15.5px', fontWeight: 600, color: '#F2EFE8', lineHeight: 1.3 },
+        descStyle: { display: 'block', fontSize: '13px', color: '#C3C5CB', lineHeight: 1.5, marginTop: '5px' },
+        priceStyle: { fontFamily: "'Space Mono',monospace", fontSize: '12.5px', fontWeight: 500, color: sel ? bright : '#76787E', whiteSpace: 'nowrap' },
+      };
+    });
+
+    const breakdown = [{ name: this.BASE.name, range: '$' + this.fmt(this.BASE.low) + ' – ' + this.fmt(this.BASE.high) }];
+    for (const o of this.OPTIONS) { if (this.state.selected[o.id]) breakdown.push({ name: o.name, range: '$' + this.fmt(o.low) + ' – ' + this.fmt(o.high) }); }
+
+    const wkLow = Math.round(this.state.dispWeeks);
+    const wkHigh = wkLow + Math.max(1, Math.ceil(wkLow * 0.4));
+
+    return {
+      cards, showBreakdown, showDesc, breakdown,
+      baseName: this.BASE.name,
+      basePrice: 'от $' + this.fmt(this.BASE.low),
+      baseStyle: { display: 'flex', gap: '14px', alignItems: 'flex-start', padding: '15px 17px', borderRadius: '14px', border: '1px solid ' + selBorder, background: tintBase },
+      baseBoxStyle: mkBox(true),
+      baseCheckStyle: mkCheck(true),
+      basePriceStyle: { fontFamily: "'Space Mono',monospace", fontSize: '12.5px', fontWeight: 500, color: bright, whiteSpace: 'nowrap' },
+      totalLow: '$' + this.fmt(this.state.dispLow),
+      totalHigh: this.fmt(this.state.dispHigh),
+      weeksText: wkLow + '–' + wkHigh + ' ' + this.plural(wkHigh, ['неделя', 'недели', 'недель']),
+      ctaStyle: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', boxSizing: 'border-box', padding: '15px 22px', borderRadius: '12px', background: accent, color: '#0C0D10', fontSize: '15.5px', fontWeight: 700, textDecoration: 'none', cursor: 'pointer', transition: 'filter .15s', boxShadow: '0 14px 30px -16px ' + this.mix(accent, '#000000', 0.05) },
+      ctaHref: 'https://t.me/maegamidev',
+    };
+  }
+}
+</script>
+</body>
+</html>
