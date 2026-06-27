@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.className += ' js';</script>
+
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  ИЗМЕНИ ЗДЕСЬ ПЕРЕД ОТПРАВКОЙ КЛИЕНТАМ:                       ║
+  ║  1) @USERNAME  → твой реальный Telegram-логин (по всему файлу)║
+  ║  2) Бренд "VOITEL" в шапке/подвале — на своё имя, если хочешь ║
+  ║  3) Ссылка живого магазина уже стоит:                        ║
+  ║     https://t.me/euphoria_orders1_bot/Shop                   ║
+  ╚══════════════════════════════════════════════════════════════╝
+-->
+
+<title>MaegamiDev — интернет-магазины под ключ · кейс Euphoria</title>
+<meta name="description" content="Разработка интернет-магазинов под ключ: e-commerce платформа, витрина в Telegram, приём онлайн-платежей, интеграция служб доставки, аналитика. Реализованный проект — Euphoria.">
+<meta name="theme-color" content="#0C0D10">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230C0D10'/%3E%3Ccircle cx='16' cy='16' r='6.5' fill='%23C9A75C'/%3E%3C/svg%3E">
+
+<!-- Превью при отправке ссылки -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://maegamidev.vercel.app/">
+<meta property="og:site_name" content="MaegamiDev">
+<meta property="og:title" content="MaegamiDev — интернет-магазины под ключ">
+<meta property="og:description" content="E-commerce платформа: сайт + Telegram, онлайн-платежи, интеграция доставки. Реализованный проект внутри.">
+<meta property="og:image" content="https://maegamidev.vercel.app/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="MaegamiDev — интернет-магазины под ключ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MaegamiDev — интернет-магазины под ключ">
+<meta name="twitter:description" content="E-commerce платформа: сайт + Telegram, онлайн-платежи, интеграция доставки. Реализованный проект внутри.">
+<meta name="twitter:image" content="https://maegamidev.vercel.app/assets/og-cover.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0C0D10;
+    --bg-2:#14161A;
+    --bg-3:#1B1E24;
+    --ink:#F2EFE8;
+    --ink-soft:#C3C5CB;
+    --ink-faint:#76787E;
+    --gold:#C9A75C;
+    --gold-bright:#D4AF6A;
+    --line:rgba(201,167,92,.24);
+    --line-soft:rgba(242,239,232,.10);
+    --maxw:1140px;
+    --serif:"Space Grotesk",system-ui,sans-serif;
+    --sans:"Manrope",system-ui,-apple-system,sans-serif;
+    --mono:"Space Mono",ui-monospace,monospace;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  ::selection{background:var(--gold);color:#0C0D10}
+
+  /* ---------- shared ---------- */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .eyebrow{
+    font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--gold);font-weight:400;display:inline-block;
+  }
+  .eyebrow::before{content:"";display:inline-block;width:26px;height:1px;
+    background:var(--gold);vertical-align:middle;margin-right:14px;opacity:.7}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.06;letter-spacing:-.02em}
+  h2{font-size:clamp(30px,4.4vw,52px)}
+  .lead{color:var(--ink-soft);font-size:clamp(16px,1.5vw,19px);max-width:56ch}
+  em{font-style:normal;color:var(--gold-bright)}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--sans);font-weight:600;font-size:15px;
+    padding:15px 26px;border-radius:2px;cursor:pointer;border:1px solid transparent;
+    transition:transform .25s ease,background .25s ease,border-color .25s ease,color .25s ease;
+  }
+  .btn-gold{background:var(--gold);color:#0C0D10}
+  .btn-gold:hover{background:var(--gold-bright);transform:translateY(-2px)}
+  .btn-ghost{border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright);transform:translateY(-2px)}
+  .btn svg{width:16px;height:16px}
+
+  /* embedded animations (Claude Design) */
+  .flow-embed{max-width:1000px;margin:0 auto;border:1px solid var(--line-soft);border-radius:10px;overflow:hidden;background:var(--bg)}
+  .flow-embed iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+  .demo-mini{margin-bottom:18px;border:1px solid var(--line-soft);border-radius:8px;overflow:hidden;background:var(--bg)}
+  .demo-mini iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+  .calc-embed{max-width:680px;margin:0 auto}
+  .calc-embed iframe{width:100%;height:1180px;border:0;display:block;background:var(--bg)}
+
+  :focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}
+
+  section{padding:clamp(70px,9vw,120px) 0}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(10px);
+    background:linear-gradient(to bottom,rgba(16,13,10,.92),rgba(16,13,10,.6));
+    border-bottom:1px solid var(--line-soft);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{font-family:var(--serif);font-size:21px;font-weight:700;letter-spacing:.02em}
+  .brand b{color:var(--gold)}
+  .nav .btn{padding:11px 20px}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;padding-top:clamp(60px,8vw,96px);overflow:hidden}
+  .hero-glow{
+    position:absolute;width:760px;height:760px;border-radius:50%;
+    top:-280px;right:-220px;pointer-events:none;z-index:0;
+    background:radial-gradient(circle,rgba(201,162,74,.20),rgba(201,162,74,0) 62%);
+    filter:blur(8px);
+  }
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center}
+  .hero h1{font-size:clamp(40px,6.2vw,76px);margin:22px 0 24px}
+  .hero .lead{margin-bottom:34px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+
+  /* signature: vitrine (boutique display case) */
+  .vitrine{
+    position:relative;border:1px solid var(--line);border-radius:4px;
+    padding:14px;background:linear-gradient(160deg,var(--bg-3),var(--bg-2));
+    box-shadow:0 40px 90px -50px rgba(0,0,0,.9),inset 0 1px 0 rgba(231,203,124,.08);
+  }
+  .vitrine::after{
+    content:"";position:absolute;inset:0;border-radius:4px;pointer-events:none;
+    background:radial-gradient(120% 60% at 50% -10%,rgba(231,203,124,.10),transparent 60%);
+  }
+  .vitrine img{border-radius:2px;width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top center}
+  .vitrine .tag{
+    position:absolute;left:50%;bottom:-13px;transform:translateX(-50%);
+    background:var(--bg);border:1px solid var(--line);color:var(--ink-soft);
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    padding:6px 16px;border-radius:2px;white-space:nowrap;
+  }
+
+  /* ---------- trust strip ---------- */
+  .trust{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);margin-top:clamp(56px,7vw,90px)}
+  .trust-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .trust-item{padding:26px 22px;text-align:center;border-right:1px solid var(--line-soft)}
+  .trust-item:last-child{border-right:0}
+  .trust-item b{display:block;font-family:var(--serif);font-size:22px;color:var(--gold-bright)}
+  .trust-item span{font-size:12.5px;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase}
+
+  /* ---------- live demo (montage of real usage) ---------- */
+  .demo{max-width:980px;margin:0 auto;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg-2);box-shadow:0 50px 110px -60px rgba(0,0,0,.9)}
+  .demo-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--bg-3);border-bottom:1px solid var(--line-soft)}
+  .demo-bar .dot{width:10px;height:10px;border-radius:50%}
+  .demo-bar .dot:nth-child(1){background:#C0563E}.demo-bar .dot:nth-child(2){background:#C9923E}.demo-bar .dot:nth-child(3){background:#5C7A4E}
+  .demo-url{margin-left:14px;flex:1;font-size:12.5px;letter-spacing:.04em;color:var(--ink-faint);background:var(--bg);border:1px solid var(--line-soft);border-radius:4px;padding:5px 14px;text-align:center}
+  .demo-screen{position:relative;aspect-ratio:16/10;overflow:hidden;background:#000}
+  .demo-screen .frame{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;opacity:0;transition:opacity .7s ease}
+  .demo-screen .frame.active{opacity:1}
+  .cursor{position:absolute;left:40%;top:50%;width:26px;height:26px;transform:translate(-3px,-3px);transition:left 1s cubic-bezier(.5,0,.2,1),top 1s cubic-bezier(.5,0,.2,1);z-index:3;filter:drop-shadow(0 3px 5px rgba(0,0,0,.55));pointer-events:none}
+  .cursor svg{width:100%;height:100%}
+  .cursor.click::after{content:"";position:absolute;left:-2px;top:-2px;width:30px;height:30px;border:2px solid var(--gold-bright);border-radius:50%;animation:ring .6s ease-out}
+  @keyframes ring{from{transform:scale(.3);opacity:.9}to{transform:scale(1.7);opacity:0}}
+  .demo-steps{display:flex;border-top:1px solid var(--line-soft)}
+  .demo-steps .step{flex:1;background:var(--bg-2);border:0;border-right:1px solid var(--line-soft);color:var(--ink-soft);font-family:var(--sans);font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:14px 8px;cursor:pointer;transition:color .3s,background .3s}
+  .demo-steps .step:last-child{border-right:0}
+  .demo-steps .step.active{color:var(--gold-bright);background:var(--bg-3)}
+  .demo-steps .step:hover{color:var(--ink)}
+
+  /* embedded Claude Design demo (self-contained iframe) */
+  .demo-embed{max-width:1060px;margin:0 auto}
+  .demo-embed iframe{width:100%;height:680px;border:0;display:block;border-radius:8px;background:var(--bg)}
+  @media(max-width:760px){ .demo-embed iframe{height:560px} }
+  @media(max-width:430px){ .demo-embed iframe{height:520px} }
+
+  /* ---------- problem ---------- */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .pains{list-style:none;margin-top:30px;display:grid;gap:2px}
+  .pains li{padding:18px 20px;background:var(--bg-2);border-left:2px solid var(--line);color:var(--ink-soft)}
+  .pains li b{color:var(--ink);font-weight:600;font-family:var(--sans)}
+
+  /* ---------- gallery ---------- */
+  .section-head{max-width:62ch;margin-bottom:clamp(40px,5vw,64px)}
+  .section-head h2{margin-top:18px}
+  .section-head p{margin-top:18px}
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .shot{align-self:start;border:1px solid var(--line-soft);border-radius:6px;overflow:hidden;background:var(--bg-2);transition:transform .35s ease,border-color .35s ease}
+  .shot:hover{transform:translateY(-4px);border-color:var(--line)}
+  .shot img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;object-position:top center}
+  .shot.feature{grid-column:1 / -1}
+  .shot.feature img{aspect-ratio:2.4/1}
+  .shot figcaption{padding:18px 20px;font-size:14px;color:var(--ink-soft);border-top:1px solid var(--line-soft)}
+  .shot figcaption b{color:var(--ink);font-family:var(--sans);font-weight:600;display:block;margin-bottom:3px}
+
+  /* ---------- capabilities ---------- */
+  .caps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
+  .cap{background:var(--bg);padding:34px 30px;transition:background .3s ease}
+  .cap:hover{background:var(--bg-2)}
+  .cap .n{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:.1em}
+  .cap h3{font-size:22px;margin:14px 0 10px}
+  .cap p{font-size:15px;color:var(--ink-soft)}
+
+  /* ---------- offer ---------- */
+  .offer{background:var(--bg)}
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:clamp(40px,5vw,60px)}
+  .plan{border:1px solid var(--line-soft);border-radius:4px;padding:34px 30px;background:var(--bg);display:flex;flex-direction:column}
+  .plan.feature{border-color:var(--gold);background:linear-gradient(180deg,rgba(201,162,74,.06),var(--bg));position:relative}
+  .plan.feature::before{content:"Чаще берут";position:absolute;top:-12px;left:30px;background:var(--gold);color:#0C0D10;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:2px}
+  .plan .pname{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
+  .plan .price{font-family:var(--serif);font-size:38px;margin:14px 0 4px;color:var(--ink)}
+  .plan .price small{font-size:15px;color:var(--ink-faint);font-family:var(--sans)}
+  .plan ul{list-style:none;margin:22px 0 28px;display:grid;gap:11px}
+  .plan li{font-size:14.5px;color:var(--ink-soft);padding-left:24px;position:relative}
+  .plan li::before{content:"";position:absolute;left:0;top:9px;width:10px;height:1px;background:var(--gold)}
+  .plan .btn{margin-top:auto;justify-content:center}
+
+  /* ---------- also ---------- */
+  .also{display:grid;grid-template-columns:1fr;gap:28px;margin-top:36px}
+  .also-card{border:1px solid var(--line-soft);border-radius:4px;padding:28px 30px;background:var(--bg-2)}
+  .also-card .k{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+  .also-card h3{font-size:21px;margin:10px 0 8px}
+  .also-card p{font-size:14.5px;color:var(--ink-soft)}
+
+  /* ---------- final cta ---------- */
+  .final{text-align:center;position:relative;overflow:hidden}
+  .final .hero-glow{top:auto;bottom:-360px;right:50%;transform:translateX(50%)}
+  .final h2{position:relative;z-index:1;margin-bottom:18px}
+  .final p{position:relative;z-index:1;color:var(--ink-soft);max-width:46ch;margin:0 auto 32px}
+  .final .btn{position:relative;z-index:1}
+
+  footer{border-top:1px solid var(--line-soft);padding:40px 0;color:var(--ink-faint);font-size:14px}
+  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  footer a:hover{color:var(--gold-bright)}
+
+  /* ---------- reveal (visible by default; hidden only when JS is present) ---------- */
+  .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- responsive ---------- */
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:46px}
+    .two{grid-template-columns:1fr;gap:36px}
+    .caps{grid-template-columns:1fr 1fr}
+    .plans{grid-template-columns:1fr}
+    .also{grid-template-columns:1fr}
+    .gallery{grid-template-columns:1fr}
+    .shot.feature img{aspect-ratio:16/9}
+    .trust-row{grid-template-columns:1fr 1fr}
+    .trust-item:nth-child(2){border-right:0}
+    .trust-item{border-bottom:1px solid var(--line-soft)}
+  }
+  @media(max-width:520px){
+    body{font-size:16px}
+    .wrap{padding:0 20px}
+    .caps{grid-template-columns:1fr}
+    .nav .brand{font-size:18px}
+    .demo-steps .step{font-size:11px;letter-spacing:.03em;padding:11px 3px}
+    .demo-url{font-size:11px}
+    .also-card{padding:16px}
+    .demo-mini{margin-bottom:16px}
+    .trust-row{grid-template-columns:1fr}
+    .trust-item{border-right:0;border-bottom:1px solid var(--line-soft)}
+    .trust-item:last-child{border-bottom:0}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto !important}
+    .reveal{opacity:1;transform:none;transition:none}
+    .btn:hover,.shot:hover{transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">Maegami<b>Dev</b></div>
+    <a class="btn btn-gold" href="https://t.me/maegamidev">Написать в Telegram</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">Разработка интернет-магазинов под ключ</span>
+      <h1>Интернет-магазин, который продаёт <em>сам</em> — пока вы заняты делом.</h1>
+      <p class="lead">Полноценная e-commerce платформа: каталог, корзина, онлайн-оплата и интеграция служб доставки. Дополнительная витрина в Telegram — покупка завершается прямо в мессенджере, а заказы поступают в реальном времени. Реализованный проект — Euphoria, нишевая арабская парфюмерия.</p>
+      <div class="hero-cta">
+        <a class="btn btn-gold" href="https://t.me/maegamidev">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.4 18.6 20c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6 14 1.1 12.5c-1-.3-1.1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.4z"/></svg>
+          Написать в Telegram
+        </a>
+        <a class="btn btn-ghost" href="https://www.euphoria-parfum.com.ua" target="_blank" rel="noopener">Открыть живой магазин →</a>
+      </div>
+    </div>
+    <div class="reveal">
+      <figure class="vitrine">
+        <img src="assets/home-desktop.png" alt="Главная страница интернет-магазина Euphoria — тёмный премиальный дизайн с золотом">
+        <figcaption class="tag">Euphoria · вживую</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- TRUST -->
+  <div class="trust">
+    <div class="wrap trust-row">
+      <div class="trust-item"><b>В&nbsp;продакшене</b><span>действующий коммерческий проект</span></div>
+      <div class="trust-item"><b>332</b><span>автоматических теста</span></div>
+      <div class="trust-item"><b>Доставка</b><span>интеграция служб и трекинг</span></div>
+      <div class="trust-item"><b>Омниканально</b><span>сайт и Telegram из единой базы</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE DEMO -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Демонстрация</span>
+      <h2>Магазин в&nbsp;действии.</h2>
+      <p class="lead">Реальный пользовательский сценарий Euphoria — путь покупателя от витрины до оформления заказа. Полностью самостоятельно, без ручного участия с вашей стороны.</p>
+    </div>
+    <div class="demo-embed reveal">
+      <iframe src="demo.html" title="Демонстрация магазина Euphoria: каталог, товар, корзина, оплата" loading="lazy" scrolling="no"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section>
+  <div class="wrap two">
+    <div class="reveal">
+      <span class="eyebrow">Знакомая ситуация</span>
+      <h2>Продажи в переписке<br>упираются в потолок.</h2>
+      <p class="lead" style="margin-top:18px">Аудитория есть, но каждая продажа — это ручная переписка. Заказы собираются вручную, а часть клиентов уходит, не дождавшись ответа.</p>
+    </div>
+    <ul class="pains reveal">
+      <li>«Скиньте фото», «сколько стоит?», «куда оплатить?» — <b>десятки раз в день вручную.</b></li>
+      <li>Оплата и логистика оформляются руками: реквизиты, ТТН, подтверждения. <b>Медленно, и часть заказов теряется.</b></li>
+      <li>Переход из мессенджера на сторонний сайт — <b>обрывает покупку.</b></li>
+      <li>Заказы и остатки живут в переписке. <b>Нет учёта — есть потери.</b></li>
+    </ul>
+  </div>
+  <div class="wrap" style="margin-top:clamp(38px,5vw,58px)">
+    <div class="flow-embed reveal"><iframe src="flow.html" title="Из личной переписки — в магазин" loading="lazy" scrolling="no"></iframe></div>
+  </div>
+</section>
+
+<!-- CASE / GALLERY -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Интерфейс</span>
+      <h2>Внимание к каждому экрану.</h2>
+      <p class="lead">Реальные экраны Euphoria: каталог, карточка товара, оформление заказа и интерактивный подбор. Каждый экран проработан до детали.</p>
+    </div>
+
+    <div class="gallery">
+      <figure class="shot feature reveal">
+        <img src="assets/catalogue-desktop.png" alt="Каталог магазина с фильтрами и категориями" loading="lazy" decoding="async">
+        <figcaption><b>Каталог</b>Поиск, категории и фильтрация — нужный товар находится за секунды.</figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <img src="assets/product-desktop.png" alt="Карточка товара" loading="lazy" decoding="async">
+        <figcaption><b>Карточка товара</b>Галерея, характеристики, цена и добавление в корзину на одном экране.</figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <img src="assets/cart-desktop.png" alt="Корзина и оформление заказа" loading="lazy" decoding="async">
+        <figcaption><b>Корзина и оформление</b>Интеграция служб доставки — отделение подтягивается автоматически.</figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <img src="assets/quiz-desktop.png" alt="Интерактивный подбор аромата" loading="lazy" decoding="async">
+        <figcaption><b>Интерактивный подбор</b>Помогает выбрать товар, вовлекает и повышает конверсию.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Функциональность</span>
+      <h2>Не просто сайт — инструмент продаж.</h2>
+    </div>
+    <div class="caps">
+      <div class="cap reveal"><div class="n">01</div><h3>Витрина и каталог</h3><p>Каталог, карточки, поиск, блог и подбор по параметрам. Адаптивно и быстро на любом устройстве.</p></div>
+      <div class="cap reveal"><div class="n">02</div><h3>Telegram Mini App</h3><p>Полноценная витрина внутри мессенджера — продажа там, где клиент уже находится.</p></div>
+      <div class="cap reveal"><div class="n">03</div><h3>Приём платежей</h3><p>Онлайн-оплата картой (LiqPay/эквайринг) и альтернативные методы — под ваш бизнес и юридический статус.</p></div>
+      <div class="cap reveal"><div class="n">04</div><h3>Интеграция доставки</h3><p>Поиск отделения, автозаполнение, формирование ТТН. Минимум ручных операций по каждому заказу.</p></div>
+      <div class="cap reveal"><div class="n">05</div><h3>Админ-панель и учёт</h3><p>Товары, заказы, промокоды, рассылки. Уведомление о заказе — в Telegram с быстрыми действиями.</p></div>
+      <div class="cap reveal"><div class="n">06</div><h3>Маркетинг и аналитика</h3><p>Брошенные корзины, email-цепочки, SEO и сквозная аналитика — чтобы возвращать тех, кто не купил.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section class="offer">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Форматы</span>
+      <h2>Выберите масштаб.</h2>
+      <p class="lead">Стоимость зависит от объёма каталога и набора функций. Точную смету назову после короткого брифа по вашему проекту.</p>
+    </div>
+    <div class="calc-embed reveal"><iframe src="calc.html" title="Калькулятор услуг — соберите свой проект" loading="lazy"></iframe></div>
+    <p class="lead" style="text-align:center;max-width:none;margin:24px auto 0;color:var(--ink-faint)">Нужна поддержка и развитие после запуска? Ретейнер — <strong style="color:var(--ink-soft)">от&nbsp;$300/мес</strong>, по желанию.</p>
+  </div>
+</section>
+
+<!-- ALSO -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Не только e-commerce</span>
+      <h2>Решаю и сложные задачи.</h2>
+    </div>
+    <div class="also">
+      <div class="also-card reveal">
+        <div class="demo-mini"><iframe src="roborio.html" title="Roborio — Solana dApp" loading="lazy" scrolling="no"></iframe></div>
+        <div class="k">Web3 · Solana</div>
+        <h3>Roborio</h3>
+        <p>Full-stack dApp на Solana со смарт-контрактом escrow (Rust): подключение кошельков, on-chain логика, безопасные сделки.</p>
+      </div>
+      <div class="also-card reveal">
+        <div class="demo-mini"><iframe src="chatradar.html" title="Chat Radar — детектор мошенничества" loading="lazy" scrolling="no"></iframe></div>
+        <div class="k">Desktop · AI</div>
+        <h3>Chat Radar</h3>
+        <p>Десктопное приложение (Tauri/Rust) с интеграцией AI — локальный анализ переписок на признаки мошенничества.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="hero-glow"></div>
+  <div class="wrap">
+    <h2 class="reveal">Расскажите о вашем проекте.</h2>
+    <p class="reveal">Напишите, чем торгуете и где продаёте сейчас — отвечу в течение дня и предложу, как это будет работать у вас.</p>
+    <a class="btn btn-gold reveal" href="https://t.me/maegamidev">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.4 18.6 20c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6 14 1.1 12.5c-1-.3-1.1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.4z"/></svg>
+      Написать в Telegram
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div class="brand">Maegami<b>Dev</b></div>
+    <div>Разработка интернет-магазинов под ключ · сайт + Telegram · <a href="https://t.me/maegamidev">@maegamidev</a></div>
+  </div>
+</footer>
+
+<script>
+  // мягкое появление при прокрутке (уважает prefers-reduced-motion)
+  const items = document.querySelectorAll('.reveal');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    items.forEach(el => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('in'), (i % 4) * 70);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(el => io.observe(el));
+  }
+
+  // живой демо-монтаж: смена реальных кадров + курсор
+  (function(){
+    const demo = document.querySelector('.demo');
+    if(!demo) return;
+    const frames = demo.querySelectorAll('.frame');
+    const steps = demo.querySelectorAll('.step');
+    const cursor = demo.querySelector('.cursor');
+    const targets = [[38,55],[72,74],[82,62]]; // % положения курсора по кадрам
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0, timer = null;
+    function show(n){
+      frames.forEach((f,k)=>f.classList.toggle('active', k===n));
+      steps.forEach((s,k)=>s.classList.toggle('active', k===n));
+      if(!reduce){
+        const [x,y] = targets[n];
+        cursor.style.left = x+'%'; cursor.style.top = y+'%';
+        cursor.classList.remove('click'); void cursor.offsetWidth; cursor.classList.add('click');
+      }
+      i = n;
+    }
+    function next(){ show((i+1) % frames.length); }
+    function restart(){ clearInterval(timer); timer = setInterval(next, reduce ? 4500 : 2700); }
+    steps.forEach(s => s.addEventListener('click', () => { show(+s.dataset.i); restart(); }));
+    if(reduce){ cursor.style.display = 'none'; }
+    const io = new IntersectionObserver((e) => {
+      if(e[0].isIntersecting){ restart(); } else { clearInterval(timer); }
+    }, { threshold: 0.3 });
+    io.observe(demo);
+  })();
+
+  // авто-высота калькулятора: iframe ровно по контенту (без внутреннего скролла)
+  (function(){
+    const fr = document.querySelector('.calc-embed iframe');
+    if(!fr) return;
+    function fit(){
+      try{
+        const d = fr.contentDocument || (fr.contentWindow && fr.contentWindow.document);
+        if(!d || !d.documentElement) return;
+        const h = (d.body && d.body.scrollHeight) ? d.body.scrollHeight : d.documentElement.scrollHeight;
+        if(h > 0) fr.style.height = h + 'px';
+      }catch(e){}
+    }
+    function hook(){
+      fit();
+      let n = 0; const iv = setInterval(() => { fit(); if(++n > 12) clearInterval(iv); }, 220);
+      try{
+        const d = fr.contentDocument;
+        if(window.ResizeObserver && d && d.body){ new ResizeObserver(fit).observe(d.body); }
+        if(fr.contentWindow){ fr.contentWindow.addEventListener('resize', fit); }
+      }catch(e){}
+    }
+    fr.addEventListener('load', hook);
+    try{ if(fr.contentDocument && fr.contentDocument.readyState === 'complete'){ hook(); } }catch(e){}
+  })();
+
+  // Демо Roborio/Chat Radar: сцены фиксированного дизайна (~1000px). На узких экранах
+  // рендерим в десктопном размере и масштабируем вниз в 16/9-рамку — иначе кропаются.
+  (function(){
+    const LW = 1000, LH = 562, BP = 768;
+    const items = [...document.querySelectorAll('.demo-mini')]
+      .map(box => ({ box, fr: box.querySelector('iframe') }))
+      .filter(x => x.fr && /roborio|chatradar/.test(x.fr.getAttribute('src') || ''));
+    function applyOne({ box, fr }){
+      if(window.innerWidth <= BP){
+        const s = box.clientWidth / LW;            // box остаётся ~ширины колонки (iframe absolute не раздувает)
+        box.style.position = 'relative';
+        box.style.height = Math.round(LH * s) + 'px';
+        fr.style.position = 'absolute';
+        fr.style.top = '0'; fr.style.left = '0';
+        fr.style.aspectRatio = 'auto';
+        fr.style.width = LW + 'px';
+        fr.style.height = LH + 'px';
+        fr.style.transformOrigin = 'top left';
+        fr.style.transform = 'scale(' + s + ')';
+      } else {
+        box.style.position = ''; box.style.height = '';
+        fr.style.position = ''; fr.style.top = ''; fr.style.left = '';
+        fr.style.aspectRatio = ''; fr.style.width = ''; fr.style.height = '';
+        fr.style.transformOrigin = ''; fr.style.transform = '';
+      }
+    }
+    const applyAll = () => items.forEach(applyOne);
+    items.forEach(x => x.fr.addEventListener('load', () => applyOne(x)));
+    let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(applyAll, 150); });
+    applyAll();
+  })();
+</script>
+</body>
+</html>
