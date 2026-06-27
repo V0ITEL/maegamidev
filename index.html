@@ -275,6 +275,54 @@
     .trust-item{border-right:0;border-bottom:1px solid var(--line-soft)}
     .trust-item:last-child{border-bottom:0}
   }
+  /* ===== iOS-вид на мобиле: крупные скругления, pill-кнопки, мягкие «поп»-тени, тактильность ===== */
+  @media(max-width:640px){
+    /* Кнопки — pill + мягкое свечение + press-feedback */
+    .btn{border-radius:999px;padding:16px 30px;font-size:15.5px}
+    .btn-gold{box-shadow:0 12px 28px -8px rgba(201,167,92,.5)}
+    .btn-ghost{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12)}
+    .btn:active{transform:scale(.96)}
+    .nav .btn{padding:11px 20px}
+
+    /* Навбар — матовое стекло (frosted) */
+    header{
+      backdrop-filter:blur(22px) saturate(150%);
+      -webkit-backdrop-filter:blur(22px) saturate(150%);
+      background:linear-gradient(to bottom,rgba(12,13,16,.8),rgba(12,13,16,.46));
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+
+    /* Eyebrow — pill-чип */
+    .eyebrow{background:rgba(201,167,92,.12);border:1px solid rgba(201,167,92,.24);border-radius:999px;padding:6px 14px}
+    .eyebrow::before{display:none}
+
+    /* Hero-мокап — крупный радиус */
+    .vitrine{border-radius:20px;overflow:hidden}
+    .vitrine::after{border-radius:20px}
+
+    /* Боли — отдельные тактильные карточки */
+    .pains{gap:12px}
+    .pains li{border-left:0;border:1px solid rgba(255,255,255,.07);border-radius:18px;background:var(--bg-2);padding:18px 20px;box-shadow:0 8px 22px -12px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.05)}
+
+    /* Функции — pop-it карточки (убираем grid-дивайдеры) */
+    .caps{grid-template-columns:1fr;gap:14px;background:transparent;border:0}
+    .cap{border-radius:20px;padding:24px 22px;background:var(--bg-2);border:1px solid rgba(255,255,255,.07);box-shadow:0 8px 22px -12px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.05)}
+
+    /* Галерея — крупный радиус + тень */
+    .shot{border-radius:22px;box-shadow:0 12px 30px -14px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.05)}
+
+    /* «Сложные задачи» — мягкие карточки */
+    .also-card{border-radius:24px;padding:18px;box-shadow:0 12px 32px -16px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.05)}
+
+    /* Встроенные демо/анимации — скруглить рамки */
+    .demo,.demo-mini,.flow-embed{border-radius:20px}
+    .demo-embed iframe{border-radius:18px}
+
+    /* Блок статистики — отдельные карточки-«поп» вместо линий */
+    .trust{border:0;margin-top:clamp(40px,7vw,90px)}
+    .trust-row{grid-template-columns:1fr;gap:12px}
+    .trust-item{border:1px solid rgba(255,255,255,.08)!important;border-radius:18px;background:var(--bg-2);padding:22px;box-shadow:0 8px 22px -12px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.05)}
+  }
   @media(prefers-reduced-motion:reduce){
     *{scroll-behavior:auto !important}
     .reveal{opacity:1;transform:none;transition:none}
