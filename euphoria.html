@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.className += ' js';</script>
+
+<title>Кейс Euphoria — интернет-магазин нишевой парфюмерии · MaegamiDev</title>
+<meta name="description" content="Кейс: Euphoria — действующий интернет-магазин арабской парфюмерии. Next.js + TypeScript, сайт + Telegram Mini App из единой базы, 88 ароматов, 332 автотеста. Построил и оперирую сам.">
+<meta name="theme-color" content="#0C0D10">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230C0D10'/%3E%3Ccircle cx='16' cy='16' r='6.5' fill='%23C9A75C'/%3E%3C/svg%3E">
+
+<!-- Превью при отправке ссылки -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://maegamidev.vercel.app/euphoria.html">
+<meta property="og:site_name" content="MaegamiDev">
+<meta property="og:title" content="Кейс Euphoria — интернет-магазин нишевой парфюмерии">
+<meta property="og:description" content="Действующий магазин: сайт + Telegram Mini App, 88 ароматов, 332 автотеста. Построил и оперирую сам.">
+<meta property="og:image" content="https://maegamidev.vercel.app/assets/home-desktop.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Кейс Euphoria — интернет-магазин нишевой парфюмерии">
+<meta name="twitter:description" content="Действующий магазин: сайт + Telegram Mini App, 88 ароматов, 332 автотеста. Построил и оперирую сам.">
+<meta name="twitter:image" content="https://maegamidev.vercel.app/assets/home-desktop.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0C0D10;
+    --bg-2:#14161A;
+    --bg-3:#1B1E24;
+    --ink:#F2EFE8;
+    --ink-soft:#C3C5CB;
+    --ink-faint:#76787E;
+    --gold:#C9A75C;
+    --gold-bright:#D4AF6A;
+    --line:rgba(201,167,92,.24);
+    --line-soft:rgba(242,239,232,.10);
+    --maxw:1140px;
+    --serif:"Space Grotesk",system-ui,sans-serif;
+    --sans:"Manrope",system-ui,-apple-system,sans-serif;
+    --mono:"Space Mono",ui-monospace,monospace;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  ::selection{background:var(--gold);color:#0C0D10}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .eyebrow{
+    font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--gold);font-weight:400;display:inline-block;
+  }
+  .eyebrow::before{content:"";display:inline-block;width:26px;height:1px;
+    background:var(--gold);vertical-align:middle;margin-right:14px;opacity:.7}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.06;letter-spacing:-.02em}
+  h2{font-size:clamp(30px,4.4vw,52px)}
+  .lead{color:var(--ink-soft);font-size:clamp(16px,1.5vw,19px);max-width:56ch}
+  em{font-style:normal;color:var(--gold-bright)}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--sans);font-weight:600;font-size:15px;
+    padding:15px 26px;border-radius:2px;cursor:pointer;border:1px solid transparent;
+    transition:transform .25s ease,background .25s ease,border-color .25s ease,color .25s ease;
+  }
+  .btn-gold{background:var(--gold);color:#0C0D10}
+  .btn-gold:hover{background:var(--gold-bright);transform:translateY(-2px)}
+  .btn-ghost{border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright);transform:translateY(-2px)}
+  .btn svg{width:16px;height:16px}
+
+  :focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}
+
+  section{padding:clamp(70px,9vw,120px) 0}
+
+  header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(10px);
+    background:linear-gradient(to bottom,rgba(16,13,10,.92),rgba(16,13,10,.6));
+    border-bottom:1px solid var(--line-soft);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{font-family:var(--serif);font-size:21px;font-weight:700;letter-spacing:.02em}
+  .brand b{color:var(--gold)}
+  .nav .btn{padding:11px 20px}
+
+  .hero{position:relative;padding-top:clamp(60px,8vw,96px);overflow:hidden}
+  .hero-glow{
+    position:absolute;width:760px;height:760px;border-radius:50%;
+    top:-280px;right:-220px;pointer-events:none;z-index:0;
+    background:radial-gradient(circle,rgba(201,162,74,.20),rgba(201,162,74,0) 62%);
+    filter:blur(8px);
+  }
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center}
+  .hero h1{font-size:clamp(38px,5.6vw,68px);margin:22px 0 24px}
+  .hero .lead{margin-bottom:34px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+
+  .vitrine{
+    position:relative;border:1px solid var(--line);border-radius:4px;
+    padding:14px;background:linear-gradient(160deg,var(--bg-3),var(--bg-2));
+    box-shadow:0 40px 90px -50px rgba(0,0,0,.9),inset 0 1px 0 rgba(231,203,124,.08);
+  }
+  .vitrine::after{
+    content:"";position:absolute;inset:0;border-radius:4px;pointer-events:none;
+    background:radial-gradient(120% 60% at 50% -10%,rgba(231,203,124,.10),transparent 60%);
+  }
+  .vitrine img{border-radius:2px;width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top center}
+  .vitrine .tag{
+    position:absolute;left:50%;bottom:-13px;transform:translateX(-50%);
+    background:var(--bg);border:1px solid var(--line);color:var(--ink-soft);
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    padding:6px 16px;border-radius:2px;white-space:nowrap;
+  }
+
+  .trust{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);margin-top:clamp(56px,7vw,90px)}
+  .trust-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+  .trust-item{padding:26px 22px;text-align:center;border-right:1px solid var(--line-soft)}
+  .trust-item:last-child{border-right:0}
+  .trust-item b{display:block;font-family:var(--serif);font-size:22px;color:var(--gold-bright)}
+  .trust-item span{font-size:12.5px;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+  .pains{list-style:none;margin-top:30px;display:grid;gap:2px}
+  .pains li{padding:18px 20px;background:var(--bg-2);border-left:2px solid var(--line);color:var(--ink-soft)}
+  .pains li b{color:var(--ink);font-weight:600;font-family:var(--sans)}
+
+  .section-head{max-width:62ch;margin-bottom:clamp(40px,5vw,64px)}
+  .section-head h2{margin-top:18px}
+  .section-head p{margin-top:18px}
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .shot{align-self:start;border:1px solid var(--line-soft);border-radius:6px;overflow:hidden;background:var(--bg-2);transition:transform .35s ease,border-color .35s ease}
+  .shot:hover{transform:translateY(-4px);border-color:var(--line)}
+  .shot img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;object-position:top center}
+  .shot.feature{grid-column:1 / -1}
+  .shot.feature img{aspect-ratio:2.4/1}
+  .shot figcaption{padding:18px 20px;font-size:14px;color:var(--ink-soft);border-top:1px solid var(--line-soft)}
+  .shot figcaption b{color:var(--ink);font-family:var(--sans);font-weight:600;display:block;margin-bottom:3px}
+
+  .caps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
+  .cap{background:var(--bg);padding:34px 30px;transition:background .3s ease}
+  .cap:hover{background:var(--bg-2)}
+  .cap .n{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:.1em}
+  .cap h3{font-size:22px;margin:14px 0 10px}
+  .cap p{font-size:15px;color:var(--ink-soft)}
+
+  /* operator section */
+  .operator{background:var(--bg-2);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+  .operator .two{align-items:center}
+  .op-points{list-style:none;margin-top:26px;display:grid;gap:14px}
+  .op-points li{padding-left:26px;position:relative;color:var(--ink-soft);font-size:15.5px}
+  .op-points li::before{content:"";position:absolute;left:0;top:11px;width:12px;height:1px;background:var(--gold)}
+  .op-points li b{color:var(--ink)}
+
+  /* stack chips */
+  .stack{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+  .chip{
+    font-family:var(--mono);font-size:13px;color:var(--ink-soft);
+    border:1px solid var(--line-soft);border-radius:2px;padding:9px 16px;
+    transition:border-color .3s ease,color .3s ease;
+  }
+  .chip:hover{border-color:var(--line);color:var(--gold-bright)}
+
+  .final{text-align:center;position:relative;overflow:hidden}
+  .final .hero-glow{top:auto;bottom:-360px;right:50%;transform:translateX(50%)}
+  .final h2{margin-top:18px}
+  .final .lead{margin:20px auto 34px}
+  .final .hero-cta{justify-content:center}
+
+  footer{border-top:1px solid var(--line-soft);padding:34px 0;font-size:13.5px;color:var(--ink-faint)}
+  footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+  footer .brand{font-size:17px}
+
+  /* reveal */
+  .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .js .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:900px){
+    .hero-grid,.two{grid-template-columns:1fr}
+    .trust-row{grid-template-columns:repeat(2,1fr)}
+    .trust-item:nth-child(2){border-right:0}
+    .trust-item:nth-child(-n+2){border-bottom:1px solid var(--line-soft)}
+    .gallery{grid-template-columns:1fr 1fr}
+    .caps{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:640px){
+    .gallery{grid-template-columns:1fr}
+    .caps{grid-template-columns:1fr}
+    .shot.feature img{aspect-ratio:16/9}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto !important}
+    .js .reveal{opacity:1;transform:none;transition:none}
+    .btn:hover,.shot:hover{transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/">Maegami<b>Dev</b></a>
+    <div style="display:flex;align-items:center;gap:12px">
+      <button type="button" id="langToggle" aria-label="Switch language / Сменить язык" style="font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-soft);background:transparent;border:1px solid var(--line-soft);border-radius:2px;padding:9px 13px;cursor:pointer;transition:border-color .25s ease,color .25s ease">EN</button>
+      <a class="btn btn-gold" href="https://t.me/maegamidev">Написать в Telegram</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">Кейс · интернет-магазин</span>
+      <h1>Euphoria: нишевая парфюмерия, <em>работающая в продакшене</em>.</h1>
+      <p class="lead">Мой собственный магазин арабской парфюмерии. Спроектировал, собрал и оперирую сам: от каталога и оплаты до доставки и поддержки. Сайт и витрина в Telegram работают из единой базы. Ниже разбор того, что именно построено.</p>
+      <div class="hero-cta">
+        <a class="btn btn-gold" href="https://www.euphoria-parfum.com.ua" target="_blank" rel="noopener">Открыть живой магазин →</a>
+        <a class="btn btn-ghost" href="https://t.me/maegamidev">Обсудить свой проект</a>
+      </div>
+    </div>
+    <div class="reveal">
+      <figure class="vitrine">
+        <img src="assets/home-desktop.png" alt="Главная страница интернет-магазина Euphoria — тёмный премиальный дизайн с золотом">
+        <figcaption class="tag">euphoria-parfum.com.ua</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <!-- FACTS -->
+  <div class="trust">
+    <div class="wrap trust-row">
+      <div class="trust-item"><b>Май 2026</b><span>в продакшене с запуска</span></div>
+      <div class="trust-item"><b>88</b><span>ароматов в каталоге</span></div>
+      <div class="trust-item"><b>332</b><span>автоматических теста</span></div>
+      <div class="trust-item"><b>1–2 дня</b><span>доставка по Украине</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTEXT -->
+<section>
+  <div class="wrap two">
+    <div class="reveal">
+      <span class="eyebrow">Задача</span>
+      <h2>Продавать парфюмерию без директа.</h2>
+      <p class="lead" style="margin-top:18px">Парфюмерия в украинском Instagram продаётся перепиской: наличие в хайлайтах, заказ в директ, оплата по реквизитам. Euphoria строилась как ответ: магазин, где клиент сам находит аромат, видит цену и наличие и оформляет заказ без единого сообщения.</p>
+    </div>
+    <ul class="pains reveal">
+      <li>Каталог должен отвечать на вопросы сам: ноты, объёмы, наличие. <b>Ноль «сколько стоит?» в директ.</b></li>
+      <li>Покупатель из Instagram не должен теряться по пути. <b>Витрина работает и внутри Telegram.</b></li>
+      <li>Заказ, оплата и доставка оформляются без менеджера. <b>Продажа идёт, пока я пишу код.</b></li>
+    </ul>
+  </div>
+</section>
+
+<!-- WHAT WAS BUILT -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Что построено</span>
+      <h2>Полный цикл продажи.</h2>
+    </div>
+    <div class="caps reveal">
+      <div class="cap">
+        <div class="n">01</div>
+        <h3>Витрина и каталог</h3>
+        <p>88 ароматов: поиск, шесть категорий по нотам, фильтры по брендам и полу. Метки «остался последний флакон» подталкивают к покупке.</p>
+      </div>
+      <div class="cap">
+        <div class="n">02</div>
+        <h3>Интерактивный подбор</h3>
+        <p>Квиз из пяти вопросов ведёт от «не знаю, чего хочу» к конкретному аромату и добавлению в корзину.</p>
+      </div>
+      <div class="cap">
+        <div class="n">03</div>
+        <h3>Корзина и доставка</h3>
+        <p>Оформление с интеграцией Nova Poshta: поиск отделения с автозаполнением, доставка по Украине за 1–2 дня.</p>
+      </div>
+      <div class="cap">
+        <div class="n">04</div>
+        <h3>Оплата и подтверждение</h3>
+        <p>Онлайн-оплата через Monobank на сайте и в Mini App. Каждый заказ подтверждается в Telegram в течение пары часов.</p>
+      </div>
+      <div class="cap">
+        <div class="n">05</div>
+        <h3>Telegram Mini App</h3>
+        <p>Полная витрина внутри мессенджера из той же базы: каталог, корзина, заказ и трекинг статусов, не выходя из Telegram.</p>
+      </div>
+      <div class="cap">
+        <div class="n">06</div>
+        <h3>Блог и SEO</h3>
+        <p>Блог, семантическая разметка и чистая индексация: магазин собирает органический трафик из Google без рекламного бюджета.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENS -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Интерфейс</span>
+      <h2>Реальные экраны.</h2>
+      <p class="lead">Не макеты и не шаблон: скриншоты действующего магазина, через которые ежедневно проходят покупатели.</p>
+    </div>
+
+    <div class="gallery">
+      <figure class="shot feature reveal">
+        <img src="assets/catalogue-desktop.png" alt="Каталог магазина Euphoria с фильтрами и категориями" loading="lazy" decoding="async">
+        <figcaption><b>Каталог</b>Поиск, категории по нотам и фильтрация — нужный аромат находится за секунды.</figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <img src="assets/product-desktop.png" alt="Карточка товара Euphoria" loading="lazy" decoding="async">
+        <figcaption><b>Карточка товара</b>Галерея, ноты, цена и добавление в корзину на одном экране.</figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <img src="assets/cart-desktop.png" alt="Корзина и оформление заказа Euphoria" loading="lazy" decoding="async">
+        <figcaption><b>Корзина и оформление</b>Отделение Nova Poshta подтягивается автоматически.</figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <img src="assets/quiz-desktop.png" alt="Интерактивный подбор аромата Euphoria" loading="lazy" decoding="async">
+        <figcaption><b>Интерактивный подбор</b>Пять вопросов — и клиент получает свой аромат.</figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <img src="assets/blog-desktop.png" alt="Блог магазина Euphoria" loading="lazy" decoding="async">
+        <figcaption><b>Блог</b>Контент под SEO: органический трафик из поиска.</figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <img src="assets/success-desktop.png" alt="Экран успешного заказа Euphoria" loading="lazy" decoding="async">
+        <figcaption><b>Заказ оформлен</b>Подтверждение, оплата и дальнейшие шаги на одном экране.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- OPERATOR -->
+<section class="operator">
+  <div class="wrap two">
+    <div class="reveal">
+      <span class="eyebrow">Почему это не обычное портфолио</span>
+      <h2>Я не сдал этот проект. Я им управляю.</h2>
+    </div>
+    <div class="reveal">
+      <p class="lead">Euphoria — не работа «под заказчика», которую забыли через месяц. Это мой действующий бизнес, и это меняет всё:</p>
+      <ul class="op-points">
+        <li><b>Каждый экран проверен живыми покупателями.</b> Если что-то мешает покупке, я узнаю об этом первым и чиню.</li>
+        <li><b>332 автотеста</b> — потому что падение магазина стоит мне реальных денег, а не звёздочки в отзыве.</li>
+        <li><b>Решения принимаются по данным:</b> аналитика, поведение покупателей, брошенные корзины.</li>
+        <li><b>Для вашего проекта это значит:</b> я знаю, что работает в e-commerce, до того, как беру ваши деньги.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Технологии</span>
+      <h2>Современный стек, без легаси.</h2>
+      <p class="lead">Тот же стек использую в клиентских проектах: быстрый, типизированный, дешёвый в поддержке.</p>
+    </div>
+    <div class="stack reveal">
+      <span class="chip">Next.js</span>
+      <span class="chip">TypeScript</span>
+      <span class="chip">React</span>
+      <span class="chip">Tailwind CSS</span>
+      <span class="chip">Supabase</span>
+      <span class="chip">Vercel</span>
+      <span class="chip">Telegram Bot API · Mini App</span>
+      <span class="chip">332 tests · CI</span>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="hero-glow"></div>
+  <div class="wrap reveal">
+    <span class="eyebrow">Следующий проект</span>
+    <h2>Нужен такой же — под вашу нишу?</h2>
+    <p class="lead">Напишите, чем торгуете и где продаёте сейчас. Отвечу в течение дня и предложу, как это будет работать у вас.</p>
+    <div class="hero-cta">
+      <a class="btn btn-gold" href="https://t.me/maegamidev">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.4 18.6 20c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6 14 1.1 12.5c-1-.3-1.1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.4z"/></svg>
+        Написать в Telegram
+      </a>
+      <a class="btn btn-ghost" href="https://www.euphoria-parfum.com.ua" target="_blank" rel="noopener">Открыть живой магазин →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="/">Maegami<b>Dev</b></a>
+    <div>Разработка интернет-магазинов под ключ · сайт + Telegram · @maegamidev</div>
+  </div>
+</footer>
+
+<script>
+  // ---- reveal on scroll ----
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('in')}); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    },{threshold:.12});
+    els.forEach(function(e){ io.observe(e); });
+  })();
+
+  // ---- RU/EN language toggle (text-node swap, no markup changes) ----
+  (function(){
+    var EN = {
+      "Написать в Telegram":"Message on Telegram",
+      "Кейс · интернет-магазин":"Case study · online store",
+      "Euphoria: нишевая парфюмерия,":"Euphoria: niche perfumery,",
+      "работающая в продакшене":"running in production",
+      ".":".",
+      "Мой собственный магазин арабской парфюмерии. Спроектировал, собрал и оперирую сам: от каталога и оплаты до доставки и поддержки. Сайт и витрина в Telegram работают из единой базы. Ниже разбор того, что именно построено.":"My own Arabian perfumery store. I designed it, built it and operate it myself: from catalogue and payments to shipping and support. The site and the Telegram storefront run from one database. Below is a breakdown of what exactly was built.",
+      "Открыть живой магазин →":"Open the live store →",
+      "Обсудить свой проект":"Discuss your project",
+      "в продакшене с запуска":"in production since launch",
+      "Май 2026":"May 2026",
+      "ароматов в каталоге":"fragrances in the catalogue",
+      "автоматических теста":"automated tests",
+      "1–2 дня":"1–2 days",
+      "доставка по Украине":"delivery across Ukraine",
+      "Задача":"The goal",
+      "Продавать парфюмерию без директа.":"Sell perfume without DMs.",
+      "Парфюмерия в украинском Instagram продаётся перепиской: наличие в хайлайтах, заказ в директ, оплата по реквизитам. Euphoria строилась как ответ: магазин, где клиент сам находит аромат, видит цену и наличие и оформляет заказ без единого сообщения.":"Perfume on Ukrainian Instagram is sold over chat: stock lives in highlights, orders in DMs, payment by bank transfer. Euphoria was built as the answer: a store where the customer finds the fragrance, sees the price and stock, and places the order without a single message.",
+      "Каталог должен отвечать на вопросы сам: ноты, объёмы, наличие.":"The catalogue answers questions by itself: notes, sizes, stock.",
+      "Ноль «сколько стоит?» в директ.":"Zero “how much?” DMs.",
+      "Покупатель из Instagram не должен теряться по пути.":"An Instagram buyer must not get lost on the way.",
+      "Витрина работает и внутри Telegram.":"The storefront also works inside Telegram.",
+      "Заказ, оплата и доставка оформляются без менеджера.":"Order, payment and shipping happen without a manager.",
+      "Продажа идёт, пока я пишу код.":"Sales run while I write code.",
+      "Что построено":"What was built",
+      "Полный цикл продажи.":"The full sales cycle.",
+      "Витрина и каталог":"Storefront & catalogue",
+      "88 ароматов: поиск, шесть категорий по нотам, фильтры по брендам и полу. Метки «остался последний флакон» подталкивают к покупке.":"88 fragrances: search, six note-based categories, brand and gender filters. “Last bottle” badges nudge the purchase.",
+      "Интерактивный подбор":"Interactive finder",
+      "Квиз из пяти вопросов ведёт от «не знаю, чего хочу» к конкретному аромату и добавлению в корзину.":"A five-question quiz leads from “not sure what I want” to a specific fragrance and add-to-cart.",
+      "Корзина и доставка":"Cart & shipping",
+      "Оформление с интеграцией Nova Poshta: поиск отделения с автозаполнением, доставка по Украине за 1–2 дня.":"Checkout with Nova Poshta integration: pickup-point search with autofill, delivery across Ukraine in 1–2 days.",
+      "Оплата и подтверждение":"Payment & confirmation",
+      "Онлайн-оплата через Monobank на сайте и в Mini App. Каждый заказ подтверждается в Telegram в течение пары часов.":"Online payment via Monobank on the site and in the Mini App. Every order is confirmed in Telegram within a couple of hours.",
+      "Полная витрина внутри мессенджера из той же базы: каталог, корзина, заказ и трекинг статусов, не выходя из Telegram.":"A full storefront inside the messenger from the same database: catalogue, cart, ordering and status tracking without leaving Telegram.",
+      "Блог и SEO":"Blog & SEO",
+      "Блог, семантическая разметка и чистая индексация: магазин собирает органический трафик из Google без рекламного бюджета.":"A blog, semantic markup and clean indexing: the store earns organic Google traffic with zero ad budget.",
+      "Интерфейс":"Interface",
+      "Реальные экраны.":"Real screens.",
+      "Не макеты и не шаблон: скриншоты действующего магазина, через которые ежедневно проходят покупатели.":"Not mockups and not a template: screenshots of a working store that real buyers go through daily.",
+      "Каталог":"Catalogue",
+      "Поиск, категории по нотам и фильтрация — нужный аромат находится за секунды.":"Search, note-based categories and filters: the right fragrance is found in seconds.",
+      "Карточка товара":"Product page",
+      "Галерея, ноты, цена и добавление в корзину на одном экране.":"Gallery, notes, price and add-to-cart on one screen.",
+      "Корзина и оформление":"Cart & checkout",
+      "Отделение Nova Poshta подтягивается автоматически.":"The Nova Poshta pickup point is filled in automatically.",
+      "Пять вопросов — и клиент получает свой аромат.":"Five questions, and the client gets their fragrance.",
+      "Блог":"Blog",
+      "Контент под SEO: органический трафик из поиска.":"SEO content: organic traffic from search.",
+      "Заказ оформлен":"Order placed",
+      "Подтверждение, оплата и дальнейшие шаги на одном экране.":"Confirmation, payment and next steps on one screen.",
+      "Почему это не обычное портфолио":"Why this is not a usual portfolio piece",
+      "Я не сдал этот проект. Я им управляю.":"I didn't hand this project off. I run it.",
+      "Euphoria — не работа «под заказчика», которую забыли через месяц. Это мой действующий бизнес, и это меняет всё:":"Euphoria is not client work forgotten a month later. It is my working business, and that changes everything:",
+      "Каждый экран проверен живыми покупателями.":"Every screen is tested by real buyers.",
+      "Если что-то мешает покупке, я узнаю об этом первым и чиню.":"If something blocks a purchase, I'm the first to know, and I fix it.",
+      "332 автотеста":"332 automated tests",
+      "— потому что падение магазина стоит мне реальных денег, а не звёздочки в отзыве.":"— because downtime costs me real money, not a star in a review.",
+      "Решения принимаются по данным:":"Decisions are made on data:",
+      "аналитика, поведение покупателей, брошенные корзины.":"analytics, buyer behaviour, abandoned carts.",
+      "Для вашего проекта это значит:":"For your project this means:",
+      "я знаю, что работает в e-commerce, до того, как беру ваши деньги.":"I know what works in e-commerce before I take your money.",
+      "Технологии":"Technology",
+      "Современный стек, без легаси.":"A modern stack, no legacy.",
+      "Тот же стек использую в клиентских проектах: быстрый, типизированный, дешёвый в поддержке.":"The same stack I use for client projects: fast, typed, cheap to maintain.",
+      "Следующий проект":"Next project",
+      "Нужен такой же — под вашу нишу?":"Want one like this, for your niche?",
+      "Напишите, чем торгуете и где продаёте сейчас. Отвечу в течение дня и предложу, как это будет работать у вас.":"Tell me what you sell and where you sell now. I'll reply within a day with how it would work for you.",
+      "Разработка интернет-магазинов под ключ · сайт + Telegram · @maegamidev":"Turnkey online stores · site + Telegram · @maegamidev"
+    };
+    var TITLE = { ru: document.title, en: "Case study: Euphoria — niche perfumery online store · MaegamiDev" };
+    function norm(s){ return s.replace(/ /g,' ').replace(/\s+/g,' ').trim(); }
+    var nodes = [];
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(n){
+        var t = n.parentNode && n.parentNode.nodeName;
+        if(t==='SCRIPT'||t==='STYLE') return NodeFilter.FILTER_REJECT;
+        return (n.nodeValue && n.nodeValue.trim()) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    var n;
+    while((n = walker.nextNode())){
+      var key = norm(n.nodeValue);
+      if(Object.prototype.hasOwnProperty.call(EN, key)){
+        n.__ru = n.nodeValue;
+        n.__lead = (n.nodeValue.match(/^\s*/)||[''])[0];
+        n.__trail = (n.nodeValue.match(/\s*$/)||[''])[0];
+        n.__key = key;
+        nodes.push(n);
+      }
+    }
+    var btn = document.getElementById('langToggle');
+    function setLang(lang){
+      nodes.forEach(function(node){
+        node.nodeValue = (lang==='en') ? (node.__lead + EN[node.__key] + node.__trail) : node.__ru;
+      });
+      document.documentElement.lang = lang;
+      document.title = TITLE[lang] || TITLE.ru;
+      if(btn) btn.textContent = (lang==='en') ? 'RU' : 'EN';
+      try{ localStorage.setItem('lang', lang); }catch(e){}
+    }
+    var saved = null;
+    try{ saved = localStorage.getItem('lang'); }catch(e){}
+    var initial = saved || (/^(ru|uk|be)/i.test(navigator.language || '') ? 'ru' : 'en');
+    setLang(initial);
+    if(btn) btn.addEventListener('click', function(){
+      setLang(document.documentElement.lang==='en' ? 'ru' : 'en');
+    });
+  })();
+</script>
+</body>
+</html>
