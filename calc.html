@@ -133,7 +133,7 @@ class Component extends DCLogic {
     const ease = x => 1 - Math.pow(1 - x, 3);
     if (this._raf) cancelAnimationFrame(this._raf);
     const step = now => {
-      const k = Math.min(1, (now - t0) / dur), e = ease(k);
+      const k = Math.max(0, Math.min(1, (now - t0) / dur)), e = ease(k);
       this.setState({
         dispLow: Math.round(s0.low + (t.low - s0.low) * e),
         dispHigh: Math.round(s0.high + (t.high - s0.high) * e),
@@ -204,5 +204,34 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script>
+window.I18N_EN = {
+  "Отметьте нужные опции — вилка цены и ориентир по сроку обновятся ниже.": "Tick the options you need and the price range and timeline below will update.",
+  "База": "Base",
+  "Бот-витрина с каталогом, карточками товаров и приёмом заказов.": "A bot storefront with a catalogue, product cards and order taking.",
+  "Дополнительно": "Add-ons",
+  "Входит в расчёт": "Included",
+  "Примерно": "Approx.",
+  "Срок": "Timeline",
+  "Обсудить в Telegram": "Discuss on Telegram",
+  "Ориентир, точную смету назову после брифа.": "A ballpark; I'll give the exact quote after a brief.",
+  "Telegram-магазин": "Telegram store",
+  "Полноценный сайт-магазин": "Full website store",
+  "Отдельный сайт с каталогом, корзиной и страницами товаров — не только бот.": "A standalone site with a catalogue, cart and product pages, not just a bot.",
+  "Админ-панель и учёт": "Admin panel and inventory",
+  "Управление заказами, товарами и остатками из удобной панели.": "Manage orders, products and stock from a handy panel.",
+  "Блог и SEO": "Blog and SEO",
+  "Раздел статей и SEO-оптимизация под поиск Google — чтобы магазин находили в выдаче.": "An articles section and SEO for Google search, so the store gets found.",
+  "Маркетинг и аналитика": "Marketing and analytics",
+  "Пиксели, цели и наглядные дашборды — видно, откуда приходят клиенты.": "Pixels, goals and clear dashboards, so you see where customers come from.",
+  "Интеграция оплаты": "Payment integration",
+  "Онлайн-оплата картой, Apple Pay и Google Pay — приём платежей прямо в боте или на сайте.": "Card, Apple Pay and Google Pay, taking payments right in the bot or on the site."
+};
+window.I18N_PAT = [
+  { re: /от \$/g, to: "from $" },
+  { re: /недел[ьяи]+/g, to: "weeks" }
+];
+</script>
+<script src="./i18n-embed.js"></script>
 </body>
 </html>

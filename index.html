@@ -335,7 +335,10 @@
 <header>
   <div class="wrap nav">
     <div class="brand">Maegami<b>Dev</b></div>
-    <a class="btn btn-gold" href="https://t.me/maegamidev">Написать в Telegram</a>
+    <div style="display:flex;align-items:center;gap:12px">
+      <button type="button" id="langToggle" aria-label="Switch language / Сменить язык" style="font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-soft);background:transparent;border:1px solid var(--line-soft);border-radius:2px;padding:9px 13px;cursor:pointer;transition:border-color .25s ease,color .25s ease">EN</button>
+      <a class="btn btn-gold" href="https://t.me/maegamidev">Написать в Telegram</a>
+    </div>
   </div>
 </header>
 
@@ -615,6 +618,117 @@
     items.forEach(x => x.fr.addEventListener('load', () => applyOne(x)));
     let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(applyAll, 150); });
     applyAll();
+  })();
+
+  // ---- RU/EN language toggle (text-node swap, no markup changes) ----
+  (function(){
+    var EN = {
+      "Написать в Telegram":"Message on Telegram",
+      "Разработка интернет-магазинов под ключ":"Turnkey online store development",
+      "Интернет-магазин, который продаёт":"An online store that sells",
+      "сам":"itself",
+      "— пока вы заняты делом.":"— while you focus on business.",
+      "Полноценная e-commerce платформа: каталог, корзина, онлайн-оплата и интеграция служб доставки. Дополнительная витрина в Telegram — покупка завершается прямо в мессенджере, а заказы поступают в реальном времени. Реализованный проект — Euphoria, нишевая арабская парфюмерия.":"A full e-commerce platform: catalogue, cart, online payments and carrier integration. A second storefront lives inside Telegram, so the purchase finishes right in the messenger and orders arrive in real time. Shipped project: Euphoria, niche Arabian perfumery.",
+      "Открыть живой магазин →":"Open the live store →",
+      "Euphoria · вживую":"Euphoria · live",
+      "В продакшене":"In production",
+      "действующий коммерческий проект":"a live commercial project",
+      "автоматических теста":"automated tests",
+      "Доставка":"Delivery",
+      "интеграция служб и трекинг":"carrier integration & tracking",
+      "Омниканально":"Omnichannel",
+      "сайт и Telegram из единой базы":"site & Telegram from one database",
+      "Демонстрация":"Demo",
+      "Магазин в действии.":"The store in action.",
+      "Реальный пользовательский сценарий Euphoria — путь покупателя от витрины до оформления заказа. Полностью самостоятельно, без ручного участия с вашей стороны.":"A real Euphoria user flow: the buyer's path from storefront to checkout. Fully self-serve, with no manual work on your side.",
+      "Знакомая ситуация":"Sound familiar?",
+      "Продажи в переписке":"Sales over DMs",
+      "упираются в потолок.":"hit a ceiling.",
+      "Аудитория есть, но каждая продажа — это ручная переписка. Заказы собираются вручную, а часть клиентов уходит, не дождавшись ответа.":"You have an audience, but every sale is a manual chat. Orders are pieced together by hand, and some customers leave before you reply.",
+      "«Скиньте фото», «сколько стоит?», «куда оплатить?» —":"“Send a photo”, “how much?”, “where do I pay?” —",
+      "десятки раз в день вручную.":"dozens of times a day, by hand.",
+      "Оплата и логистика оформляются руками: реквизиты, ТТН, подтверждения.":"Payments and shipping are done by hand: bank details, waybills, confirmations.",
+      "Медленно, и часть заказов теряется.":"Slow, and some orders get lost.",
+      "Переход из мессенджера на сторонний сайт —":"Jumping from the messenger to an external site —",
+      "обрывает покупку.":"breaks the purchase.",
+      "Заказы и остатки живут в переписке.":"Orders and stock live in the chat.",
+      "Нет учёта — есть потери.":"No records means losses.",
+      "Интерфейс":"Interface",
+      "Внимание к каждому экрану.":"Care on every screen.",
+      "Реальные экраны Euphoria: каталог, карточка товара, оформление заказа и интерактивный подбор. Каждый экран проработан до детали.":"Real Euphoria screens: catalogue, product page, checkout and an interactive finder. Every screen is worked out to the detail.",
+      "Каталог":"Catalogue",
+      "Поиск, категории и фильтрация — нужный товар находится за секунды.":"Search, categories and filters: the right product is found in seconds.",
+      "Карточка товара":"Product page",
+      "Галерея, характеристики, цена и добавление в корзину на одном экране.":"Gallery, specs, price and add-to-cart on one screen.",
+      "Корзина и оформление":"Cart & checkout",
+      "Интеграция служб доставки — отделение подтягивается автоматически.":"Carrier integration: the pickup point is filled in automatically.",
+      "Интерактивный подбор":"Interactive finder",
+      "Помогает выбрать товар, вовлекает и повышает конверсию.":"Helps pick a product, engages, and lifts conversion.",
+      "Функциональность":"Features",
+      "Не просто сайт — инструмент продаж.":"Not just a site, a sales tool.",
+      "Витрина и каталог":"Storefront & catalogue",
+      "Каталог, карточки, поиск, блог и подбор по параметрам. Адаптивно и быстро на любом устройстве.":"Catalogue, product cards, search, blog and a parameter finder. Responsive and fast on any device.",
+      "Полноценная витрина внутри мессенджера — продажа там, где клиент уже находится.":"A full storefront inside the messenger: selling where the customer already is.",
+      "Приём платежей":"Payments",
+      "Онлайн-оплата картой (LiqPay/эквайринг) и альтернативные методы — под ваш бизнес и юридический статус.":"Card payments (LiqPay/acquiring) and alternative methods, matched to your business and legal status.",
+      "Интеграция доставки":"Shipping integration",
+      "Поиск отделения, автозаполнение, формирование ТТН. Минимум ручных операций по каждому заказу.":"Pickup-point search, autofill, waybill generation. Minimal manual work per order.",
+      "Админ-панель и учёт":"Admin panel & records",
+      "Товары, заказы, промокоды, рассылки. Уведомление о заказе — в Telegram с быстрыми действиями.":"Products, orders, promo codes, campaigns. Order alerts in Telegram with quick actions.",
+      "Маркетинг и аналитика":"Marketing & analytics",
+      "Брошенные корзины, email-цепочки, SEO и сквозная аналитика — чтобы возвращать тех, кто не купил.":"Abandoned carts, email flows, SEO and end-to-end analytics, to win back those who didn't buy.",
+      "Форматы":"Packages",
+      "Выберите масштаб.":"Choose your scope.",
+      "Стоимость зависит от объёма каталога и набора функций. Точную смету назову после короткого брифа по вашему проекту.":"Pricing depends on catalogue size and the feature set. I'll give an exact quote after a short brief on your project.",
+      "Нужна поддержка и развитие после запуска? Ретейнер —":"Need support and growth after launch? Retainer:",
+      "от $300/мес":"from $300/mo",
+      ", по желанию.":", optional.",
+      "Не только e-commerce":"Beyond e-commerce",
+      "Решаю и сложные задачи.":"I take on hard problems too.",
+      "Full-stack dApp на Solana со смарт-контрактом escrow (Rust): подключение кошельков, on-chain логика, безопасные сделки.":"Full-stack Solana dApp with an escrow smart contract (Rust): wallet connection, on-chain logic, safe deals.",
+      "Десктопное приложение (Tauri/Rust) с интеграцией AI — локальный анализ переписок на признаки мошенничества.":"A desktop app (Tauri/Rust) with AI: local analysis of chats for signs of fraud.",
+      "Расскажите о вашем проекте.":"Tell me about your project.",
+      "Напишите, чем торгуете и где продаёте сейчас — отвечу в течение дня и предложу, как это будет работать у вас.":"Tell me what you sell and where you sell now, and I'll reply within a day with how it would work for you.",
+      "Разработка интернет-магазинов под ключ · сайт + Telegram ·":"Turnkey online stores · site + Telegram ·"
+    };
+    var TITLE = { ru: document.title, en: "MaegamiDev — turnkey online stores · Euphoria case" };
+    function norm(s){ return s.replace(/ /g,' ').replace(/\s+/g,' ').trim(); }
+    var nodes = [];
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(n){
+        var t = n.parentNode && n.parentNode.nodeName;
+        if(t==='SCRIPT'||t==='STYLE') return NodeFilter.FILTER_REJECT;
+        return (n.nodeValue && n.nodeValue.trim()) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    var n;
+    while((n = walker.nextNode())){
+      var key = norm(n.nodeValue);
+      if(Object.prototype.hasOwnProperty.call(EN, key)){
+        n.__ru = n.nodeValue;
+        n.__lead = (n.nodeValue.match(/^\s*/)||[''])[0];
+        n.__trail = (n.nodeValue.match(/\s*$/)||[''])[0];
+        n.__key = key;
+        nodes.push(n);
+      }
+    }
+    var btn = document.getElementById('langToggle');
+    function setLang(lang){
+      nodes.forEach(function(node){
+        node.nodeValue = (lang==='en') ? (node.__lead + EN[node.__key] + node.__trail) : node.__ru;
+      });
+      document.documentElement.lang = lang;
+      document.title = TITLE[lang] || TITLE.ru;
+      if(btn) btn.textContent = (lang==='en') ? 'RU' : 'EN';
+      try{ localStorage.setItem('lang', lang); }catch(e){}
+    }
+    var saved = null;
+    try{ saved = localStorage.getItem('lang'); }catch(e){}
+    var initial = saved || (/^(ru|uk|be)/i.test(navigator.language || '') ? 'ru' : 'en');
+    setLang(initial);
+    if(btn) btn.addEventListener('click', function(){
+      setLang(document.documentElement.lang==='en' ? 'ru' : 'en');
+    });
   })();
 </script>
 </body>
