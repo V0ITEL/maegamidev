@@ -15,7 +15,7 @@ desktop.ini
 # Vercel
 .vercel
 
-# Локальные внутренние файлы — только в рабочей папке, не в репо
+# Local working files, kept out of the repo
 PLAN.md
 outreach.md
 chat-radar-shots/
