@@ -1,35 +1,39 @@
-# MaegamiDev — лендинг · кейс Euphoria
+# maegamidev
 
-Маркетинговый лендинг студии **MaegamiDev** (интернет-магазины под ключ: сайт + витрина в Telegram) с реализованным кейсом **Euphoria** — нишевая парфюмерия.
+Source of my studio site: https://maegamidev.vercel.app
 
-## Что внутри
-- Живые интерактивные демо магазина (путь покупателя, анимация «из хаоса в магазин»)
-- Галерея реальных экранов (2560×1440)
-- Интерактивный калькулятор стоимости
-- Доп. кейсы: Roborio (Solana dApp) и Chat Radar (Tauri/Rust + AI)
+Static HTML/CSS/JS. No framework, no build step, no dependencies. Two main pages: the landing and a technical case study of [euphoria-parfum.com.ua](https://euphoria-parfum.com.ua), the e-commerce store I built and operate myself.
 
-## Стек
-Чистый статический HTML/CSS/JS — без сборки и зависимостей. Встроенные компоненты (Claude Design) подключаются через `iframe` и `support.js`.
+## i18n without a framework
 
-## Структура
-| Файл | Назначение |
+The site runs in three languages (UA/RU/EN). Russian is the source of truth in the DOM, English and Ukrainian live in plain dictionaries keyed by normalized source strings, switching a language rewrites text nodes and nothing else. Language detection order: saved manual choice first, then country by IP (1.5s timeout), then browser language as an instant fallback so nothing blinks.
+
+Write-up on the approach: https://dev.to/maegamidev/adding-a-third-language-to-a-static-html-site-60-lines-of-vanilla-js-43p2
+
+## Structure
+
+| File | Purpose |
 |---|---|
-| `index.html` | лендинг |
-| `calc.html` | калькулятор стоимости (встроен в лендинг) |
-| `demo.html`, `flow.html` | демо и анимация e-commerce |
-| `roborio.html`, `chatradar.html` | демо доп. проектов |
-| `support.js` | рантайм встроенных компонентов |
-| `assets/` | скриншоты интерфейса + og-обложка |
+| `index.html` | landing, UA/RU/EN |
+| `euphoria.html` | Euphoria case study: how the store is built and run |
+| `calc.html` | interactive pricing calculator (embedded) |
+| `demo.html`, `flow.html` | e-commerce demos (embedded) |
+| `roborio.html`, `chatradar.html` | side project demos (Solana dApp, Tauri + Claude API app) |
+| `i18n-embed.js`, `demo-i18n.js`, `roborio-i18n.js` | translations for the embedded demos |
+| `support.js` | runtime for embedded components |
+| `before.html` | pre-redesign snapshot kept for before/after comparison, noindex |
+| `assets/` | interface screenshots (2560x1440) + og cover |
 
-## Локальный запуск
-Любой статический сервер, например:
+## Run locally
+
+Any static server:
 
 ```bash
 python -m http.server 4173
 ```
 
-Открыть → http://127.0.0.1:4173/
+Open http://127.0.0.1:4173/
 
-## Деплой
-Статика — разворачивается на Vercel / Netlify / GitHub Pages как есть (корень = эта папка).
-После деплоя в `index.html` указать абсолютный URL обложки в `og:image` / добавить `og:url`.
+## Deploy
+
+Plain static files, deployed on Vercel as is.
