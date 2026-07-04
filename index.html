@@ -790,7 +790,8 @@
       if(lang!=='ru' && lang!=='en' && lang!=='uk') lang = 'en';
       var dict = lang==='en' ? EN : (lang==='uk' ? UK : null);
       nodes.forEach(function(node){
-        node.nodeValue = dict ? (node.__lead + (dict[node.__key] || node.__ru) + node.__trail) : node.__ru;
+        var v = dict ? (node.__lead + (dict[node.__key] || node.__ru) + node.__trail) : node.__ru;
+        if (node.nodeValue !== v) node.nodeValue = v;
       });
       document.documentElement.lang = lang;
       document.title = TITLE[lang] || TITLE.ru;

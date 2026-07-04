@@ -151,7 +151,7 @@
     const rootName = rootNameForDocument(doc, location);
     runtime.markFetched(rootName);
     runtime.adoptParsed(rootName, parsed);
-    fetch(location.href).then((res) => res.ok ? res.text() : "").then((t) => {
+    fetch(location.href, { cache: "force-cache" }).then((res) => res.ok ? res.text() : "").then((t) => {
       const raw = t ? parseDcText(t) : null;
       if (raw?.template) runtime.updateHtml(rootName, raw.template);
     }).catch(() => {
