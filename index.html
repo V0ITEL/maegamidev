@@ -390,7 +390,7 @@
       <p class="lead">Реальный пользовательский сценарий Euphoria — путь покупателя от витрины до оформления заказа. Полностью самостоятельно, без ручного участия с вашей стороны.</p>
     </div>
     <div class="demo-embed reveal">
-      <iframe src="demo.html" title="Демонстрация магазина Euphoria: каталог, товар, корзина, оплата" loading="lazy" scrolling="no"></iframe>
+      <iframe data-src="demo.html" title="Демонстрация магазина Euphoria: каталог, товар, корзина, оплата" loading="lazy" scrolling="no"></iframe>
     </div>
   </div>
 </section>
@@ -411,7 +411,7 @@
     </ul>
   </div>
   <div class="wrap" style="margin-top:clamp(38px,5vw,58px)">
-    <div class="flow-embed reveal"><iframe src="flow.html" title="Из личной переписки — в магазин" loading="lazy" scrolling="no"></iframe></div>
+    <div class="flow-embed reveal"><iframe data-src="flow.html" title="Из личной переписки — в магазин" loading="lazy" scrolling="no"></iframe></div>
   </div>
 </section>
 
@@ -471,7 +471,7 @@
       <h2>Выберите масштаб.</h2>
       <p class="lead">Стоимость зависит от объёма каталога и набора функций. Точную смету назову после короткого брифа по вашему проекту.</p>
     </div>
-    <div class="calc-embed reveal"><iframe src="calc.html" title="Калькулятор услуг — соберите свой проект" loading="lazy"></iframe></div>
+    <div class="calc-embed reveal"><iframe data-src="calc.html" title="Калькулятор услуг — соберите свой проект" loading="lazy"></iframe></div>
     <p class="lead" style="text-align:center;max-width:none;margin:24px auto 0;color:var(--ink-faint)">Нужна поддержка и развитие после запуска? Ретейнер — <strong style="color:var(--ink-soft)">от&nbsp;$300/мес</strong>, по желанию.</p>
   </div>
 </section>
@@ -485,13 +485,13 @@
     </div>
     <div class="also">
       <div class="also-card reveal">
-        <div class="demo-mini"><iframe src="roborio.html" title="Roborio — Solana dApp" loading="lazy" scrolling="no"></iframe></div>
+        <div class="demo-mini"><iframe data-src="roborio.html" title="Roborio — Solana dApp" loading="lazy" scrolling="no"></iframe></div>
         <div class="k">Web3 · Solana</div>
         <h3>Roborio</h3>
         <p>Full-stack dApp на Solana со смарт-контрактом escrow (Rust): подключение кошельков, on-chain логика, безопасные сделки.</p>
       </div>
       <div class="also-card reveal">
-        <div class="demo-mini"><iframe src="chatradar.html" title="Chat Radar — детектор мошенничества" loading="lazy" scrolling="no"></iframe></div>
+        <div class="demo-mini"><iframe data-src="chatradar.html" title="Chat Radar — детектор мошенничества" loading="lazy" scrolling="no"></iframe></div>
         <div class="k">Desktop · AI</div>
         <h3>Chat Radar</h3>
         <p>Десктопное приложение (Tauri/Rust) с интеграцией AI — локальный анализ переписок на признаки мошенничества.</p>
@@ -828,6 +828,16 @@
       setLang(sel.value, true);
     });
   })();
+</script>
+<script>
+/* embeds: src only after full load, so their runtimes don't steal the first paint */
+window.addEventListener('load', function () {
+  requestAnimationFrame(function () {
+    document.querySelectorAll('iframe[data-src]').forEach(function (f) {
+      f.src = f.getAttribute('data-src');
+    });
+  });
+});
 </script>
 </body>
 </html>
