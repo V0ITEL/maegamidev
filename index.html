@@ -328,6 +328,91 @@
     .reveal{opacity:1;transform:none;transition:none}
     .btn:hover,.shot:hover{transform:none}
   }
+
+  /* ═══════ ATMOSPHERE — свет, фактура, глубина (десктоп-полировка) ═══════ */
+  /* дыхание фона: три золотых облака за контентом */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:
+      radial-gradient(58% 44% at 84% -8%,rgba(201,167,92,.13),transparent 62%),
+      radial-gradient(46% 40% at -10% 34%,rgba(140,112,58,.08),transparent 60%),
+      radial-gradient(70% 55% at 50% 120%,rgba(201,167,92,.06),transparent 66%);
+  }
+  /* киноплёнка: едва заметное зерно поверх всего */
+  body::after{
+    content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .offer{background:transparent}
+  /* чертёжная сетка в hero: инженерный характер */
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(242,239,232,.04) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(242,239,232,.04) 1px,transparent 1px);
+    background-size:56px 56px;
+    -webkit-mask-image:radial-gradient(72% 64% at 62% 18%,#000 28%,transparent 74%);
+    mask-image:radial-gradient(72% 64% at 62% 18%,#000 28%,transparent 74%);
+  }
+  /* заголовки: свет сверху, золото в глубине */
+  h1,h2{
+    background:linear-gradient(180deg,#FBF8F0 0%,#EFE8D5 52%,#CBB27A 118%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  h1 em,h2 em{
+    background:linear-gradient(180deg,var(--gold-bright),#A8853F);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  /* золотой шов под шапкой */
+  header::after{
+    content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;pointer-events:none;
+    background:linear-gradient(90deg,transparent 4%,rgba(201,167,92,.55),transparent 96%);
+  }
+  /* спотлайт: карточки отвечают на курсор */
+  .cap,.plan,.also-card,.pains li,.op-points li,.trust-item{position:relative}
+  .cap::after,.plan::after,.also-card::after,.pains li::after,.op-points li::after,.trust-item::after{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:0;border-radius:inherit;
+    background:radial-gradient(300px 220px at var(--mx,50%) var(--my,-20%),rgba(201,167,92,.14),transparent 62%);
+    transition:opacity .45s ease;
+  }
+  .cap:hover::after,.plan:hover::after,.also-card:hover::after,.pains li:hover::after,.op-points li:hover::after,.trust-item:hover::after{opacity:1}
+  /* скриншоты: золотая кромка при наведении */
+  .shot{box-shadow:0 24px 60px -38px rgba(0,0,0,.85)}
+  .shot:hover{border-color:rgba(201,167,92,.45);box-shadow:0 30px 70px -34px rgba(0,0,0,.9),0 0 0 1px rgba(201,167,92,.12)}
+  /* кнопки: пробегающий блик + золотое свечение */
+  .btn{position:relative;overflow:hidden}
+  .btn-gold::before{
+    content:"";position:absolute;top:0;bottom:0;left:-70%;width:45%;
+    background:linear-gradient(105deg,transparent,rgba(255,252,240,.55),transparent);
+    transform:skewX(-18deg);transition:left .65s ease;pointer-events:none;
+  }
+  .btn-gold:hover::before{left:125%}
+  .btn-gold:hover{box-shadow:0 14px 38px -12px rgba(201,167,92,.55)}
+  /* витрина: лёгкий объём при наведении */
+  @media(hover:hover){
+    .vitrine{transition:transform .6s cubic-bezier(.2,.6,.2,1),box-shadow .6s ease}
+    .vitrine:hover{transform:perspective(1100px) rotateX(1.6deg) rotateY(-2.2deg) translateY(-3px);box-shadow:0 60px 120px -55px rgba(0,0,0,.95),inset 0 1px 0 rgba(231,203,124,.12)}
+  }
+  /* появление: из мягкого фокуса */
+  .js .reveal{filter:blur(9px);transition:opacity .8s ease,transform .8s ease,filter .8s ease}
+  .js .reveal.in{filter:blur(0)}
+  /* тонкий фирменный скроллбар */
+  ::-webkit-scrollbar{width:11px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:#2A2C33;border-radius:6px;border:3px solid var(--bg)}
+  ::-webkit-scrollbar-thumb:hover{background:#584A2C}
+  /* фикс шапки на узких экранах: кнопка в одну строку, не выше навбара */
+  @media(max-width:640px){
+    .nav{gap:10px}
+    .nav .btn{padding:10px 14px;font-size:13.5px;white-space:nowrap;flex-shrink:0}
+    .brand{white-space:nowrap}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .js .reveal{filter:none;transition:none}
+    .btn-gold::before{display:none}
+    .vitrine,.vitrine:hover{transform:none}
+    .cap::after,.plan::after,.also-card::after,.pains li::after,.op-points li::after,.trust-item::after{transition:none}
+  }
 </style>
 </head>
 <body>
@@ -879,6 +964,18 @@ window.addEventListener('load', function () {
     });
   });
 });
+</script>
+<script>
+(function(){
+  if(!matchMedia('(hover:hover)').matches || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  document.addEventListener('pointermove',function(e){
+    var t = e.target.closest('.cap,.plan,.also-card,.pains li,.op-points li,.trust-item');
+    if(!t) return;
+    var r = t.getBoundingClientRect();
+    t.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    t.style.setProperty('--my',(e.clientY-r.top)+'px');
+  },{passive:true});
+})();
 </script>
 </body>
 </html>
