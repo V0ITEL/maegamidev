@@ -384,11 +384,33 @@
   .dnote{padding:30px 30px 30px 28px;display:flex;flex-direction:column;justify-content:center}
   .dnote h3{font-size:22px;margin-bottom:10px}
   .dnote p{font-size:15px;color:var(--ink-soft)}
+  .dlive{margin-left:auto;display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  .dlive i{width:6px;height:6px;border-radius:50%;background:#8FBC7F;box-shadow:0 0 8px rgba(143,188,127,.8);animation:dpulse 2.4s ease-in-out infinite}
+  @keyframes dpulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .cur{display:inline-block;width:7px;height:15px;margin-left:5px;vertical-align:-2px;background:var(--gold-bright);animation:dblink 1.15s steps(1) infinite}
+  @keyframes dblink{50%{opacity:0}}
+  .dspec{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line-soft)}
+  .dspec span{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--ink-faint);border:1px solid var(--line-soft);border-radius:3px;padding:5px 9px;white-space:nowrap}
+  .dcard{margin-top:20px;border:1px solid var(--line);border-radius:6px;background:linear-gradient(160deg,var(--bg-3),var(--bg-2));padding:16px 18px;box-shadow:inset 0 1px 0 rgba(231,203,124,.08)}
+  .dcard-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  .dcard-top b{font-family:var(--serif);font-size:17px;color:var(--ink)}
+  .dcard-top span{font-size:12px;color:var(--ink-faint);letter-spacing:.06em}
+  .dcard-bot{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+  .dcard-bot b{font-family:var(--serif);font-size:16px;color:var(--gold-bright)}
+  .dchip{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8FBC7F;border:1px solid rgba(143,188,127,.35);border-radius:999px;padding:4px 10px}
+  .devdesk-status{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;background:var(--bg-3);border-top:1px solid var(--line-soft);font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+  .dst-l{display:flex;align-items:center;gap:10px}
+  .dbranch{color:var(--gold);font-weight:400}
+  @media(prefers-reduced-motion:reduce){
+    .cur,.dlive i{animation:none}
+  }
   @media(max-width:900px){
     .dpane{grid-template-columns:1fr}
     .dcode{border-right:0;border-bottom:1px solid var(--line-soft);font-size:12px;padding:20px 14px;max-height:300px}
     .dnote{padding:22px 20px}
     .dtab{font-size:11px;padding:6px 7px}
+    .dlive{display:none}
+    .dst-r{display:none}
   }
 </style>
 </head>
@@ -571,6 +593,7 @@
         <button class="dtab" data-pane="dp1" type="button">catalogue.json</button>
         <button class="dtab" data-pane="dp3" type="button">tsconfig.json</button>
         <button class="dtab" data-pane="dp4" type="button">ci.log</button>
+        <span class="dlive"><i></i>live repo</span>
       </div>
 
       <div class="dpane active" id="dp2">
@@ -585,10 +608,11 @@
 <span class="cl"><i>9</i><b class="k">Telegram Import Mode:</b> hybrid (export → stabilize parser → API sync)</span>
 <span class="cl"><i>10</i><b class="k">Мова сайту:</b> Українська (UA)</span>
 <span class="cl"><i>11</i></span>
-<span class="cl"><i>12</i><b class="c">… ще 338 рядків</b></span></pre>
+<span class="cl"><i>12</i><b class="c">… ще 338 рядків</b><b class="cur"></b></span></pre>
         <div class="dnote">
           <h3>CLAUDE.md как память проекта</h3>
           <p>350 строк контекста: соглашения, инварианты, грабли. Агент читает файл перед каждой сессией и не изобретает проект заново.</p>
+          <div class="dspec"><span>markdown</span><span>350 lines</span><span>read: every session</span></div>
         </div>
       </div>
 
@@ -602,10 +626,15 @@
 <span class="cl"><i>7</i>  <b class="k">"slug"</b>: <b class="s">"kilian-veneno-bianco-100ml"</b></span>
 <span class="cl"><i>8</i>}</span>
 <span class="cl"><i>9</i></span>
-<span class="cl"><i>10</i><b class="c">→ euphoria-parfum.com.ua/product/kilian-veneno-bianco-100ml</b></span></pre>
+<span class="cl"><i>10</i><b class="c">→ euphoria-parfum.com.ua/product/kilian-veneno-bianco-100ml</b><b class="cur"></b></span></pre>
         <div class="dnote">
           <h3>Контент как данные</h3>
           <p>111 ароматов не зашиты в страницы, а живут записями в базе: ноты, объёмы, цены, наличие. Страницы рендерятся из данных. Новый товар = новая запись, без правки кода.</p>
+          <div class="dcard">
+            <div class="dcard-top"><b>Veneno Bianco</b><span>French Avenue</span></div>
+            <div class="dcard-bot"><b>2650 ₴</b><span class="dchip">В наявності</span></div>
+          </div>
+          <div class="dspec"><span>Supabase</span><span>111 records</span><span>render: from data</span></div>
         </div>
       </div>
 
@@ -619,10 +648,11 @@
 <span class="cl"><i>7</i>    <b class="k">"isolatedModules"</b>: <b class="g">true</b>,</span>
 <span class="cl"><i>8</i>    <b class="k">"jsx"</b>: <b class="s">"preserve"</b></span>
 <span class="cl"><i>9</i>  }</span>
-<span class="cl"><i>10</i>}</span></pre>
+<span class="cl"><i>10</i>}<b class="cur"></b></span></pre>
         <div class="dnote">
           <h3>Строгие типы</h3>
           <p>TypeScript в strict-режиме на всём проекте. Код, который у ИИ без типов тихо разъезжается, здесь останавливает компилятор.</p>
+          <div class="dspec"><span>TypeScript</span><span>strict: true</span><span>noEmit: true</span></div>
         </div>
       </div>
 
@@ -633,11 +663,17 @@
 <span class="cl"><i>4</i>Tests:       <b class="g">332 passed</b>, 332 total</span>
 <span class="cl"><i>5</i>Snapshots:   0 total</span>
 <span class="cl"><i>6</i></span>
-<span class="cl"><i>7</i>Ran all test suites.</span></pre>
+<span class="cl"><i>7</i>Ran all test suites.<b class="cur"></b></span></pre>
         <div class="dnote">
           <h3>Тесты как страховка</h3>
           <p>332 автотеста держат поведение. Агент может смело менять код: если что-то сломалось, я узнаю об этом раньше покупателя.</p>
+          <div class="dspec"><span>Jest</span><span>20 suites</span><span>332 passed</span></div>
         </div>
+      </div>
+
+      <div class="devdesk-status">
+        <span class="dst-l"><b class="dbranch">⎇ main</b>euphoria</span>
+        <span class="dst-r">TypeScript · UTF-8 · LF</span>
       </div>
     </div>
   </div>
