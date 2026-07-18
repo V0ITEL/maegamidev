@@ -413,6 +413,62 @@
     .vitrine,.vitrine:hover{transform:none}
     .cap::after,.plan::after,.also-card::after,.pains li::after,.op-points li::after,.trust-item::after{transition:none}
   }
+
+  /* ═══════ COMPOSITION — монументальная типографика, bento, ритм ═══════ */
+  /* hero: заголовок-монумент на всю ширину */
+  .hero-title{font-size:clamp(46px,8.4vw,116px);line-height:.99;letter-spacing:-.035em;margin:26px 0 clamp(30px,4vw,52px);max-width:none}
+  .hero-sub{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(32px,4vw,56px);align-items:end}
+  .hero-left .lead{margin-bottom:30px}
+  /* бегущая строка стека */
+  .marquee{overflow:hidden;margin-top:clamp(48px,6vw,80px);padding:15px 0;border-top:1px solid var(--line-soft)}
+  .marquee-track{display:flex;align-items:center;gap:44px;width:max-content;animation:mq 32s linear infinite}
+  .marquee-track span{font-family:var(--mono);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);white-space:nowrap}
+  .marquee-track i{width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.55;flex:none}
+  @keyframes mq{to{transform:translateX(-50%)}}
+  .hero .trust{margin-top:0}
+  /* trust: гигантские факты вместо мелкой полосы */
+  .trust-item{text-align:left;padding:32px 26px 30px}
+  .trust-item b{
+    font-size:clamp(34px,3.8vw,56px);line-height:1;letter-spacing:-.02em;
+    background:linear-gradient(180deg,#FBF8F0 0%,#EFE8D5 52%,#CBB27A 118%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .trust-item span{display:block;margin-top:12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em}
+  /* заголовки секций крупнее: журнальный масштаб */
+  h2{font-size:clamp(34px,5vw,64px)}
+  /* карточки: призрачные номера-водяные знаки */
+  .cap{overflow:hidden;padding-top:48px}
+  .cap .n{
+    position:absolute;top:16px;right:18px;line-height:1;letter-spacing:0;pointer-events:none;
+    font-size:clamp(52px,5vw,84px);font-weight:700;color:transparent;
+    -webkit-text-stroke:1.2px rgba(201,167,92,.30);
+  }
+  .cap h3,.cap p{position:relative;z-index:1}
+  /* bento: раскладка по числу карточек */
+  @media(min-width:901px){
+    .caps{grid-template-columns:repeat(6,1fr)}
+    .cap{grid-column:span 2}
+    /* 6 карточек: первая — большая 2x2, последняя — широкая */
+    .caps:has(.cap:nth-child(6)) .cap:first-child{
+      grid-column:span 4;grid-row:span 2;display:flex;flex-direction:column;justify-content:flex-end;min-height:380px;
+      background:
+        radial-gradient(90% 90% at 8% 0%,rgba(201,167,92,.10),transparent 55%),
+        var(--bg);
+    }
+    .caps:has(.cap:nth-child(6)) .cap:first-child h3{font-size:30px}
+    .caps:has(.cap:nth-child(6)) .cap:first-child p{font-size:16.5px;max-width:52ch}
+    /* 4 карточки: строгие 2x2 */
+    .caps:has(.cap:nth-child(4)):not(:has(.cap:nth-child(5))) .cap{grid-column:span 3}
+    /* сцепка «голова слева липнет, контент скроллится» */
+    .two>div:first-child{position:sticky;top:110px;align-self:start}
+  }
+  @media(max-width:900px){
+    .hero-sub{grid-template-columns:1fr;align-items:start}
+    .hero-title{font-size:clamp(40px,10.5vw,64px)}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .marquee-track{animation:none}
+  }
 </style>
 </head>
 <body>
@@ -434,24 +490,30 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-glow"></div>
-  <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow">Разработка интернет-магазинов под ключ</span>
-      <h1>Интернет-магазин, который продаёт <em>сам</em> — пока вы заняты делом.</h1>
-      <p class="lead">Полноценная e-commerce платформа: каталог, корзина, онлайн-оплата и интеграция служб доставки. Дополнительная витрина в Telegram — покупка завершается прямо в мессенджере, а заказы поступают в реальном времени. Реализованный проект — Euphoria, нишевая арабская парфюмерия.</p>
-      <div class="hero-cta">
-        <a class="btn btn-gold" href="https://t.me/maegamidev">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.4 18.6 20c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6 14 1.1 12.5c-1-.3-1.1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.4z"/></svg>
-          Написать в Telegram
-        </a>
-        <a class="btn btn-ghost" href="https://www.euphoria-parfum.com.ua" target="_blank" rel="noopener">Открыть живой магазин →</a>
+  <div class="wrap">
+    <span class="eyebrow">Разработка интернет-магазинов под ключ</span>
+    <h1 class="hero-title">Интернет-магазин, который продаёт <em>сам</em> — пока вы заняты делом.</h1>
+    <div class="hero-sub">
+      <div class="hero-left">
+        <p class="lead">Полноценная e-commerce платформа: каталог, корзина, онлайн-оплата и интеграция служб доставки. Дополнительная витрина в Telegram — покупка завершается прямо в мессенджере, а заказы поступают в реальном времени. Реализованный проект — Euphoria, нишевая арабская парфюмерия.</p>
+        <div class="hero-cta">
+          <a class="btn btn-gold" href="https://t.me/maegamidev">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.4 18.6 20c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6 14 1.1 12.5c-1-.3-1.1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.4z"/></svg>
+            Написать в Telegram
+          </a>
+          <a class="btn btn-ghost" href="https://www.euphoria-parfum.com.ua" target="_blank" rel="noopener">Открыть живой магазин →</a>
+        </div>
       </div>
-    </div>
-    <div>
       <figure class="vitrine">
         <img src="assets/home-desktop.webp" alt="Главная страница интернет-магазина Euphoria — тёмный премиальный дизайн с золотом" fetchpriority="high" decoding="async">
         <figcaption class="tag">Euphoria · вживую</figcaption>
       </figure>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Next.js</span><i></i><span>TypeScript</span><i></i><span>Telegram Mini App</span><i></i><span>Supabase</span><i></i><span>98/100 PageSpeed</span><i></i><span>332 tests</span><i></i><span>Monobank Pay</span><i></i><span>Nova Poshta API</span><i></i><span>SEO-ready</span><i></i><span>Claude Code</span><i></i><span>Next.js</span><i></i><span>TypeScript</span><i></i><span>Telegram Mini App</span><i></i><span>Supabase</span><i></i><span>98/100 PageSpeed</span><i></i><span>332 tests</span><i></i><span>Monobank Pay</span><i></i><span>Nova Poshta API</span><i></i><span>SEO-ready</span><i></i><span>Claude Code</span><i></i>
     </div>
   </div>
 
