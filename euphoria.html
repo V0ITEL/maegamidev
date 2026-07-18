@@ -262,15 +262,16 @@
     content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   }
+  /* гильош-розетка: гравировка, медленный ход часового механизма */
   .hero::before{
-    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
-    background-image:
-      linear-gradient(rgba(242,239,232,.04) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(242,239,232,.04) 1px,transparent 1px);
-    background-size:56px 56px;
-    -webkit-mask-image:radial-gradient(72% 64% at 62% 18%,#000 28%,transparent 74%);
-    mask-image:radial-gradient(72% 64% at 62% 18%,#000 28%,transparent 74%);
+    content:"";position:absolute;top:-300px;right:-320px;width:820px;height:820px;z-index:0;pointer-events:none;
+    background:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20840%20840%22%3E%3Cg%20fill=%22none%22%20stroke=%22%23C9A75C%22%20stroke-width=%220.55%22%20stroke-opacity=%220.32%22%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(0.0%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(8.18%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(16.36%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(24.55%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(32.73%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(40.91%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(49.09%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(57.27%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(65.45%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(73.64%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(81.82%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(90.0%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(98.18%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(106.36%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(114.55%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(122.73%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(130.91%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(139.09%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(147.27%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(155.45%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(163.64%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(171.82%20420%20420)%22/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+    opacity:.28;
+    -webkit-mask-image:radial-gradient(58% 58% at 50% 50%,#000 26%,transparent 72%);
+    mask-image:radial-gradient(58% 58% at 50% 50%,#000 26%,transparent 72%);
+    animation:rosette 240s linear infinite;
   }
+  @keyframes rosette{to{transform:rotate(360deg)}}
   h1,h2{
     background:linear-gradient(180deg,#FBF8F0 0%,#EFE8D5 52%,#CBB27A 118%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
@@ -327,12 +328,6 @@
   .hero-title{font-size:clamp(44px,7.6vw,104px);line-height:.99;letter-spacing:-.035em;margin:26px 0 clamp(30px,4vw,52px);max-width:none}
   .hero-sub{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(32px,4vw,56px);align-items:end}
   .hero-left .lead{margin-bottom:30px}
-  .marquee{overflow:hidden;margin-top:clamp(48px,6vw,80px);padding:15px 0;border-top:1px solid var(--line-soft)}
-  .marquee-track{display:flex;align-items:center;gap:44px;width:max-content;animation:mq 32s linear infinite}
-  .marquee-track span{font-family:var(--mono);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);white-space:nowrap}
-  .marquee-track i{width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.55;flex:none}
-  @keyframes mq{to{transform:translateX(-50%)}}
-  .hero .trust{margin-top:0}
   .trust-item{text-align:left;padding:32px 26px 30px}
   .trust-item b{
     font-size:clamp(30px,3.2vw,48px);line-height:1;letter-spacing:-.02em;
@@ -367,7 +362,7 @@
     .hero-title{font-size:clamp(38px,10vw,60px)}
   }
   @media(prefers-reduced-motion:reduce){
-    .marquee-track{animation:none}
+    .hero::before{animation:none}
   }
 </style>
 </head>
@@ -405,12 +400,6 @@
         <img src="assets/home-desktop.webp" alt="Главная страница интернет-магазина Euphoria — тёмный премиальный дизайн с золотом" fetchpriority="high" decoding="async">
         <figcaption class="tag">euphoria-parfum.com.ua</figcaption>
       </figure>
-    </div>
-  </div>
-
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>Next.js</span><i></i><span>TypeScript</span><i></i><span>Telegram Mini App</span><i></i><span>Supabase</span><i></i><span>98/100 PageSpeed</span><i></i><span>332 tests</span><i></i><span>Monobank Pay</span><i></i><span>Nova Poshta API</span><i></i><span>SEO-ready</span><i></i><span>Claude Code</span><i></i><span>Next.js</span><i></i><span>TypeScript</span><i></i><span>Telegram Mini App</span><i></i><span>Supabase</span><i></i><span>98/100 PageSpeed</span><i></i><span>332 tests</span><i></i><span>Monobank Pay</span><i></i><span>Nova Poshta API</span><i></i><span>SEO-ready</span><i></i><span>Claude Code</span><i></i>
     </div>
   </div>
 
