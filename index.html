@@ -431,13 +431,8 @@
   /* заголовки секций крупнее: журнальный масштаб */
   h2{font-size:clamp(34px,5vw,64px)}
   /* карточки: призрачные номера-водяные знаки */
-  .cap{overflow:hidden;padding-top:48px}
-  .cap .n{
-    position:absolute;top:16px;right:18px;line-height:1;letter-spacing:0;pointer-events:none;
-    font-size:clamp(52px,5vw,84px);font-weight:700;color:transparent;
-    -webkit-text-stroke:1.2px rgba(201,167,92,.30);
-  }
-  .cap h3,.cap p{position:relative;z-index:1}
+  .cap{overflow:hidden}
+  .cap .n{display:none}
   /* bento: раскладка по числу карточек */
   @media(min-width:901px){
     .caps{grid-template-columns:repeat(6,1fr)}
