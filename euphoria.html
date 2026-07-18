@@ -370,9 +370,9 @@
   .dtab:hover{color:var(--ink)}
   .dtab.active{color:var(--gold-bright)}
   .dtab.active::after{content:"";position:absolute;left:8px;right:8px;bottom:-13px;height:2px;background:var(--gold)}
-  .dpane{display:none;grid-template-columns:1.12fr .88fr;min-height:380px}
+  .dpane{display:none;grid-template-columns:1.18fr .82fr;min-height:640px}
   .dpane.active{display:grid}
-  .dcode{margin:0;padding:26px 22px;background:#0A0B0E;overflow:hidden;position:relative;white-space:normal;font-family:var(--mono);font-size:13px;line-height:1.75;color:var(--ink-soft);border-right:1px solid var(--line-soft)}
+  .dcode{margin:0;padding:26px 22px;background:#0A0B0E;overflow:hidden;position:relative;white-space:normal;font-family:var(--mono);font-size:13.5px;line-height:1.9;color:var(--ink-soft);border-right:1px solid var(--line-soft)}
   .dcode::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(transparent,#0A0B0E)}
   .dcode .cl{display:block;white-space:pre-wrap}
   .dcode .cl i{display:inline-block;width:2.2ch;margin-right:16px;font-style:normal;text-align:right;color:#3A3D45;user-select:none}
@@ -384,9 +384,6 @@
   .dnote{padding:30px 30px 30px 28px;display:flex;flex-direction:column;justify-content:center}
   .dnote h3{font-size:22px;margin-bottom:10px}
   .dnote p{font-size:15px;color:var(--ink-soft)}
-  .dlive{margin-left:auto;display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
-  .dlive i{width:6px;height:6px;border-radius:50%;background:#8FBC7F;box-shadow:0 0 8px rgba(143,188,127,.8);animation:dpulse 2.4s ease-in-out infinite}
-  @keyframes dpulse{0%,100%{opacity:1}50%{opacity:.35}}
   .cur{display:inline-block;width:7px;height:15px;margin-left:5px;vertical-align:-2px;background:var(--gold-bright);animation:dblink 1.15s steps(1) infinite}
   @keyframes dblink{50%{opacity:0}}
   .dspec{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line-soft)}
@@ -402,14 +399,13 @@
   .dst-l{display:flex;align-items:center;gap:10px}
   .dbranch{color:var(--gold);font-weight:400}
   @media(prefers-reduced-motion:reduce){
-    .cur,.dlive i{animation:none}
+    .cur{animation:none}
   }
   @media(max-width:900px){
     .dpane{grid-template-columns:1fr}
-    .dcode{border-right:0;border-bottom:1px solid var(--line-soft);font-size:12px;padding:20px 14px;max-height:300px}
+    .dcode{border-right:0;border-bottom:1px solid var(--line-soft);font-size:11.5px;padding:20px 14px;max-height:440px}
     .dnote{padding:22px 20px}
     .dtab{font-size:11px;padding:6px 7px}
-    .dlive{display:none}
     .dst-r{display:none}
   }
 </style>
@@ -593,22 +589,35 @@
         <button class="dtab" data-pane="dp1" type="button">catalogue.json</button>
         <button class="dtab" data-pane="dp3" type="button">tsconfig.json</button>
         <button class="dtab" data-pane="dp4" type="button">ci.log</button>
-        <span class="dlive"><i></i>live repo</span>
       </div>
 
       <div class="dpane active" id="dp2">
         <pre class="dcode"><span class="cl"><i>1</i><b class="c"># Euphoria — CLAUDE.md</b></span>
 <span class="cl"><i>2</i></span>
-<span class="cl"><i>3</i>Цей файл містить контекст проекту для Claude. Читай перед кожною сесією.</span>
+<span class="cl"><i>3</i>Project context for Claude. Read before every session.</span>
 <span class="cl"><i>4</i></span>
-<span class="cl"><i>5</i><b class="c">## Проект</b></span>
-<span class="cl"><i>6</i></span>
-<span class="cl"><i>7</i><b class="k">Назва:</b> Euphoria Exclusive Perfume</span>
-<span class="cl"><i>8</i><b class="k">Тип:</b> Нішовий інтернет-магазин арабської парфюмерії (Україна)</span>
-<span class="cl"><i>9</i><b class="k">Telegram Import Mode:</b> hybrid (export → stabilize parser → API sync)</span>
-<span class="cl"><i>10</i><b class="k">Мова сайту:</b> Українська (UA)</span>
-<span class="cl"><i>11</i></span>
-<span class="cl"><i>12</i><b class="c">… ще 338 рядків</b><b class="cur"></b></span></pre>
+<span class="cl"><i>5</i><b class="c">## Stack</b></span>
+<span class="cl"><i>6</i>Next.js 15 (App Router) · TypeScript · Supabase</span>
+<span class="cl"><i>7</i>Tailwind CSS · shadcn/ui · Zustand · Vercel</span>
+<span class="cl"><i>8</i></span>
+<span class="cl"><i>9</i><b class="c">## Routes (App Router)</b></span>
+<span class="cl"><i>10</i>/                  <b class="c">→ Home (ISR, revalidate 3600)</b></span>
+<span class="cl"><i>11</i>/catalogue         <b class="c">→ catalogue + filters</b></span>
+<span class="cl"><i>12</i>/product/[slug]    <b class="c">→ product page</b></span>
+<span class="cl"><i>13</i>/cart → /checkout  <b class="c">→ order flow</b></span>
+<span class="cl"><i>14</i></span>
+<span class="cl"><i>15</i><b class="c">## Database (Supabase)</b></span>
+<span class="cl"><i>16</i><b class="k">products</b> · <b class="k">categories</b> · <b class="k">brands</b> · <b class="k">orders</b> · <b class="k">order_items</b></span>
+<span class="cl"><i>17</i><b class="k">profiles</b> · <b class="k">addresses</b> · <b class="k">reviews</b> · <b class="k">wishlist</b></span>
+<span class="cl"><i>18</i><b class="k">subscribers</b> · <b class="k">stock_notifications</b></span>
+<span class="cl"><i>19</i></span>
+<span class="cl"><i>20</i><b class="c">## Postgres functions</b></span>
+<span class="cl"><i>21</i>get_bestsellers(limit)   <b class="c">— home bestsellers</b></span>
+<span class="cl"><i>22</i>decrement_stock(id, qty) <b class="c">— atomic, in_stock guard</b></span>
+<span class="cl"><i>23</i></span>
+<span class="cl"><i>24</i><b class="c">## Rules</b></span>
+<span class="cl"><i>25</i>Do not trust import fixtures until verified.</span>
+<span class="cl"><i>26</i><b class="c">… 320+ more lines</b><b class="cur"></b></span></pre>
         <div class="dnote">
           <h3>CLAUDE.md как память проекта</h3>
           <p>350 строк контекста: соглашения, инварианты, грабли. Агент читает файл перед каждой сессией и не изобретает проект заново.</p>
@@ -620,19 +629,29 @@
         <pre class="dcode"><span class="cl"><i>1</i>{</span>
 <span class="cl"><i>2</i>  <b class="k">"name"</b>: <b class="s">"Veneno Bianco"</b>,</span>
 <span class="cl"><i>3</i>  <b class="k">"brand"</b>: <b class="s">"French Avenue"</b>,</span>
-<span class="cl"><i>4</i>  <b class="k">"price"</b>: 2650,</span>
-<span class="cl"><i>5</i>  <b class="k">"currency"</b>: <b class="s">"UAH"</b>,</span>
-<span class="cl"><i>6</i>  <b class="k">"availability"</b>: <b class="s">"InStock"</b>,</span>
-<span class="cl"><i>7</i>  <b class="k">"slug"</b>: <b class="s">"kilian-veneno-bianco-100ml"</b></span>
-<span class="cl"><i>8</i>}</span>
-<span class="cl"><i>9</i></span>
-<span class="cl"><i>10</i><b class="c">→ euphoria-parfum.com.ua/product/kilian-veneno-bianco-100ml</b><b class="cur"></b></span></pre>
+<span class="cl"><i>4</i>  <b class="k">"volume_ml"</b>: 100,</span>
+<span class="cl"><i>5</i>  <b class="k">"price"</b>: 2650,</span>
+<span class="cl"><i>6</i>  <b class="k">"currency"</b>: <b class="s">"UAH"</b>,</span>
+<span class="cl"><i>7</i>  <b class="k">"availability"</b>: <b class="s">"InStock"</b>,</span>
+<span class="cl"><i>8</i>  <b class="k">"slug"</b>: <b class="s">"kilian-veneno-bianco-100ml"</b>,</span>
+<span class="cl"><i>9</i>  <b class="k">"notes"</b>: {</span>
+<span class="cl"><i>10</i>    <b class="k">"top"</b>:   [<b class="s">"neroli"</b>, <b class="s">"bergamot"</b>],</span>
+<span class="cl"><i>11</i>    <b class="k">"heart"</b>: [<b class="s">"tiare flower"</b>, <b class="s">"ylang-ylang"</b>],</span>
+<span class="cl"><i>12</i>    <b class="k">"base"</b>:  [<b class="s">"vanilla"</b>, <b class="s">"coconut"</b>, <b class="s">"gaiac wood"</b>]</span>
+<span class="cl"><i>13</i>  },</span>
+<span class="cl"><i>14</i>  <b class="k">"images"</b>: [<b class="s">"…/caa40b14-….webp"</b>]</span>
+<span class="cl"><i>15</i>}</span>
+<span class="cl"><i>16</i></span>
+<span class="cl"><i>17</i><b class="c">→ euphoria-parfum.com.ua/product/kilian-veneno-bianco-100ml</b></span>
+<span class="cl"><i>18</i></span>
+<span class="cl"><i>19</i><b class="c"># one record = one live product page</b></span>
+<span class="cl"><i>20</i><b class="c"># 111 records render the whole catalogue</b><b class="cur"></b></span></pre>
         <div class="dnote">
           <h3>Контент как данные</h3>
           <p>111 ароматов не зашиты в страницы, а живут записями в базе: ноты, объёмы, цены, наличие. Страницы рендерятся из данных. Новый товар = новая запись, без правки кода.</p>
           <div class="dcard">
             <div class="dcard-top"><b>Veneno Bianco</b><span>French Avenue</span></div>
-            <div class="dcard-bot"><b>2650 ₴</b><span class="dchip">В наявності</span></div>
+            <div class="dcard-bot"><b>2650 ₴</b><span class="dchip">In stock</span></div>
           </div>
           <div class="dspec"><span>Supabase</span><span>111 records</span><span>render: from data</span></div>
         </div>
@@ -642,13 +661,22 @@
         <pre class="dcode"><span class="cl"><i>1</i>{</span>
 <span class="cl"><i>2</i>  <b class="k">"compilerOptions"</b>: {</span>
 <span class="cl"><i>3</i>    <b class="k">"lib"</b>: [<b class="s">"dom"</b>, <b class="s">"dom.iterable"</b>, <b class="s">"esnext"</b>],</span>
-<span class="cl"><i>4</i>    <b class="k">"strict"</b>: <b class="g">true</b>,</span>
-<span class="cl"><i>5</i>    <b class="k">"noEmit"</b>: <b class="g">true</b>,</span>
-<span class="cl"><i>6</i>    <b class="k">"moduleResolution"</b>: <b class="s">"bundler"</b>,</span>
-<span class="cl"><i>7</i>    <b class="k">"isolatedModules"</b>: <b class="g">true</b>,</span>
-<span class="cl"><i>8</i>    <b class="k">"jsx"</b>: <b class="s">"preserve"</b></span>
-<span class="cl"><i>9</i>  }</span>
-<span class="cl"><i>10</i>}<b class="cur"></b></span></pre>
+<span class="cl"><i>4</i>    <b class="k">"allowJs"</b>: <b class="g">true</b>,</span>
+<span class="cl"><i>5</i>    <b class="k">"skipLibCheck"</b>: <b class="g">true</b>,</span>
+<span class="cl"><i>6</i>    <b class="k">"strict"</b>: <b class="g">true</b>,</span>
+<span class="cl"><i>7</i>    <b class="k">"noEmit"</b>: <b class="g">true</b>,</span>
+<span class="cl"><i>8</i>    <b class="k">"esModuleInterop"</b>: <b class="g">true</b>,</span>
+<span class="cl"><i>9</i>    <b class="k">"module"</b>: <b class="s">"esnext"</b>,</span>
+<span class="cl"><i>10</i>    <b class="k">"moduleResolution"</b>: <b class="s">"bundler"</b>,</span>
+<span class="cl"><i>11</i>    <b class="k">"resolveJsonModule"</b>: <b class="g">true</b>,</span>
+<span class="cl"><i>12</i>    <b class="k">"isolatedModules"</b>: <b class="g">true</b>,</span>
+<span class="cl"><i>13</i>    <b class="k">"jsx"</b>: <b class="s">"preserve"</b>,</span>
+<span class="cl"><i>14</i>    <b class="k">"incremental"</b>: <b class="g">true</b>,</span>
+<span class="cl"><i>15</i>    <b class="k">"plugins"</b>: [{ <b class="k">"name"</b>: <b class="s">"next"</b> }]</span>
+<span class="cl"><i>16</i>  }</span>
+<span class="cl"><i>17</i>}</span>
+<span class="cl"><i>18</i></span>
+<span class="cl"><i>19</i><b class="c"># strict mode: the compiler catches what drifts</b><b class="cur"></b></span></pre>
         <div class="dnote">
           <h3>Строгие типы</h3>
           <p>TypeScript в strict-режиме на всём проекте. Код, который у ИИ без типов тихо разъезжается, здесь останавливает компилятор.</p>
@@ -659,11 +687,26 @@
       <div class="dpane" id="dp4">
         <pre class="dcode"><span class="cl"><i>1</i><b class="c">$ npx jest --ci</b></span>
 <span class="cl"><i>2</i></span>
-<span class="cl"><i>3</i>Test Suites: <b class="g">20 passed</b>, 20 total</span>
-<span class="cl"><i>4</i>Tests:       <b class="g">332 passed</b>, 332 total</span>
-<span class="cl"><i>5</i>Snapshots:   0 total</span>
-<span class="cl"><i>6</i></span>
-<span class="cl"><i>7</i>Ran all test suites.<b class="cur"></b></span></pre>
+<span class="cl"><i>3</i><b class="g">PASS</b> __tests__/lib/store/cart.test.ts</span>
+<span class="cl"><i>4</i><b class="g">PASS</b> __tests__/lib/store/wishlist.test.ts</span>
+<span class="cl"><i>5</i><b class="g">PASS</b> __tests__/app/api/orders.test.ts</span>
+<span class="cl"><i>6</i><b class="g">PASS</b> __tests__/app/api/tma-orders.test.ts</span>
+<span class="cl"><i>7</i><b class="g">PASS</b> __tests__/app/api/telegram-webhook.test.ts</span>
+<span class="cl"><i>8</i><b class="g">PASS</b> __tests__/app/api/promo-validate.test.ts</span>
+<span class="cl"><i>9</i><b class="g">PASS</b> __tests__/app/api/stock-notify.test.ts</span>
+<span class="cl"><i>10</i><b class="g">PASS</b> __tests__/app/api/abandoned-carts.test.ts</span>
+<span class="cl"><i>11</i><b class="g">PASS</b> __tests__/lib/telegram/initdata.test.ts</span>
+<span class="cl"><i>12</i><b class="g">PASS</b> __tests__/lib/email/utils.test.ts</span>
+<span class="cl"><i>13</i><b class="g">PASS</b> __tests__/lib/seo/indexing.test.ts</span>
+<span class="cl"><i>14</i><b class="g">PASS</b> __tests__/lib/promo.test.ts</span>
+<span class="cl"><i>15</i><b class="g">PASS</b> __tests__/smoke.test.ts</span>
+<span class="cl"><i>16</i><b class="c">… 7 more suites</b></span>
+<span class="cl"><i>17</i></span>
+<span class="cl"><i>18</i>Test Suites: <b class="g">20 passed</b>, 20 total</span>
+<span class="cl"><i>19</i>Tests:       <b class="g">332 passed</b>, 332 total</span>
+<span class="cl"><i>20</i>Snapshots:   0 total</span>
+<span class="cl"><i>21</i></span>
+<span class="cl"><i>22</i>Ran all test suites.<b class="cur"></b></span></pre>
         <div class="dnote">
           <h3>Тесты как страховка</h3>
           <p>332 автотеста держат поведение. Агент может смело менять код: если что-то сломалось, я узнаю об этом раньше покупателя.</p>
