@@ -403,6 +403,21 @@
   @media(prefers-reduced-motion:reduce){
     .cur{animation:none}
   }
+  /* ── история фикса ── */
+  .fix-steps{list-style:none;counter-reset:fx;display:grid;gap:26px;align-content:start}
+  .fix-steps li{counter-increment:fx;position:relative;padding-left:56px}
+  .fix-steps li::before{
+    content:counter(fx,decimal-leading-zero);position:absolute;left:0;top:2px;
+    font-family:var(--mono);font-size:13px;color:var(--gold);
+    border:1px solid var(--line);border-radius:3px;padding:6px 8px;line-height:1;
+  }
+  .fix-steps h3{font-size:19px;margin-bottom:6px}
+  .fix-steps p{font-size:14.5px;color:var(--ink-soft)}
+  .fixwin .dcode{border-right:0;white-space:normal}
+  .dfile{margin-left:10px;font-family:var(--mono);font-size:12px;color:var(--ink-soft);letter-spacing:.04em}
+  .dl-del{color:#C98A76;background:rgba(192,86,62,.08)}
+  .dl-add{color:#A9C89A;background:rgba(143,188,127,.07)}
+  .dl-del,.dl-add{margin:0 -22px;padding:0 22px}
   @media(max-width:900px){
     .dpane{grid-template-columns:1fr}
     .dcode{border-right:0;border-bottom:1px solid var(--line-soft);font-size:11.5px;padding:20px 14px;max-height:440px}
@@ -724,6 +739,63 @@
   </div>
 </section>
 
+<!-- FIX STORY -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Разбор одного фикса</span>
+      <h2>Продажи были. Meta их не видела.</h2>
+      <p class="lead">Реальный баг из этого магазина: серверные Purchase-события молча терялись. От симптома до проверки.</p>
+    </div>
+    <div class="two">
+      <ol class="fix-steps reveal">
+        <li>
+          <h3>Симптом</h3>
+          <p>В Ads Manager покупки задваивались, а часть Purchase не долетала вовсе. Реклама оптимизировалась по мусорным данным.</p>
+        </li>
+        <li>
+          <h3>Диагноз</h3>
+          <p>Serverless замораживает функцию сразу после ответа. Запрос к Conversions API уходил без ожидания и не успевал улететь. А браузер и сервер слали одно событие без общего event_id.</p>
+        </li>
+        <li>
+          <h3>Фикс</h3>
+          <p>after() из next/server: событие уходит после ответа, но до заморозки функции. Один event_id на браузер и сервер, Meta склеивает дубль сама.</p>
+        </li>
+        <li>
+          <h3>Проверка</h3>
+          <p>Test Events в Events Manager: один заказ = один Purchase. Серверные события доезжают, задвоение исчезло.</p>
+        </li>
+      </ol>
+      <div class="devdesk reveal fixwin">
+        <div class="devdesk-bar">
+          <span class="ddot"></span><span class="ddot"></span><span class="ddot"></span>
+          <span class="dfile">app/api/orders/route.ts</span>
+        </div>
+        <pre class="dcode"><span class="cl dl-del">- // fire and forget: dropped when the function froze</span>
+<span class="cl dl-del">- void sendMetaPurchaseEvent({ orderId: order.id })</span>
+<span class="cl"></span>
+<span class="cl dl-add">+ // after() keeps the invocation alive past the</span>
+<span class="cl dl-add">+ // response, otherwise the serverless function</span>
+<span class="cl dl-add">+ // freezes and the request is dropped.</span>
+<span class="cl dl-add">+ after(async () => {</span>
+<span class="cl dl-add">+   await sendMetaPurchaseEvent({</span>
+<span class="cl dl-add">+     orderId: order.id,   <b class="c">// becomes event_id</b></span>
+<span class="cl dl-add">+     value: verifiedTotal,</span>
+<span class="cl dl-add">+     contentIds: verifiedItems.map(i => i.product_id)</span>
+<span class="cl dl-add">+   })</span>
+<span class="cl dl-add">+ })</span>
+<span class="cl"></span>
+<span class="cl"><b class="c">// lib/meta-capi.ts</b></span>
+<span class="cl"><b class="k">event_id</b>: params.orderId  <b class="c">// same id in the browser pixel</b><b class="cur"></b></span></pre>
+        <div class="devdesk-status">
+          <span class="dst-l"><b class="dbranch">⎇ main</b>euphoria</span>
+          <span class="dst-r">verified in Events Manager</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- STACK -->
 <section>
   <div class="wrap">
@@ -861,7 +933,18 @@
       "Строгие типы":"Strict types",
       "TypeScript в strict-режиме на всём проекте. Код, который у ИИ без типов тихо разъезжается, здесь останавливает компилятор.":"TypeScript in strict mode across the project. Code that quietly drifts when AI writes without types gets stopped by the compiler here.",
       "Тесты как страховка":"Tests as a safety net",
-      "332 автотеста держат поведение. Агент может смело менять код: если что-то сломалось, я узнаю об этом раньше покупателя.":"332 automated tests pin the behavior. The agent can change code boldly: if something breaks, I learn about it before a customer does."
+      "332 автотеста держат поведение. Агент может смело менять код: если что-то сломалось, я узнаю об этом раньше покупателя.":"332 automated tests pin the behavior. The agent can change code boldly: if something breaks, I learn about it before a customer does.",
+      "Разбор одного фикса":"One fix, dissected",
+      "Продажи были. Meta их не видела.":"Sales happened. Meta saw none of them.",
+      "Реальный баг из этого магазина: серверные Purchase-события молча терялись. От симптома до проверки.":"A real bug from this store: server-side Purchase events were silently lost. From symptom to proof.",
+      "Симптом":"Symptom",
+      "В Ads Manager покупки задваивались, а часть Purchase не долетала вовсе. Реклама оптимизировалась по мусорным данным.":"Purchases doubled in Ads Manager, and some never arrived at all. The ads were optimizing on garbage data.",
+      "Диагноз":"Diagnosis",
+      "Serverless замораживает функцию сразу после ответа. Запрос к Conversions API уходил без ожидания и не успевал улететь. А браузер и сервер слали одно событие без общего event_id.":"Serverless freezes the function right after the response. The Conversions API request was fired without awaiting and never left. And the browser and the server sent the same event without a shared event_id.",
+      "Фикс":"Fix",
+      "after() из next/server: событие уходит после ответа, но до заморозки функции. Один event_id на браузер и сервер, Meta склеивает дубль сама.":"after() from next/server: the event goes out after the response but before the freeze. One event_id for browser and server, Meta merges the duplicate itself.",
+      "Проверка":"Proof",
+      "Test Events в Events Manager: один заказ = один Purchase. Серверные события доезжают, задвоение исчезло.":"Test Events in Events Manager: one order = one Purchase. Server events arrive, the doubling is gone." 
     };
     var UK = {
       "Написать в Telegram":"Написати в Telegram",
@@ -942,7 +1025,18 @@
       "Строгие типы":"Суворі типи",
       "TypeScript в strict-режиме на всём проекте. Код, который у ИИ без типов тихо разъезжается, здесь останавливает компилятор.":"TypeScript у strict-режимі на всьому проєкті. Код, який у ШІ без типів тихо розповзається, тут зупиняє компілятор.",
       "Тесты как страховка":"Тести як страховка",
-      "332 автотеста держат поведение. Агент может смело менять код: если что-то сломалось, я узнаю об этом раньше покупателя.":"332 автотести тримають поведінку. Агент може сміливо міняти код: якщо щось зламалось, я дізнаюсь про це раніше за покупця."
+      "332 автотеста держат поведение. Агент может смело менять код: если что-то сломалось, я узнаю об этом раньше покупателя.":"332 автотести тримають поведінку. Агент може сміливо міняти код: якщо щось зламалось, я дізнаюсь про це раніше за покупця.",
+      "Разбор одного фикса":"Розбір одного фікса",
+      "Продажи были. Meta их не видела.":"Продажі були. Meta їх не бачила.",
+      "Реальный баг из этого магазина: серверные Purchase-события молча терялись. От симптома до проверки.":"Реальний баг із цього магазину: серверні Purchase-події мовчки губились. Від симптому до перевірки.",
+      "Симптом":"Симптом",
+      "В Ads Manager покупки задваивались, а часть Purchase не долетала вовсе. Реклама оптимизировалась по мусорным данным.":"У Ads Manager покупки задвоювались, а частина Purchase не долітала взагалі. Реклама оптимізувалась по сміттєвих даних.",
+      "Диагноз":"Діагноз",
+      "Serverless замораживает функцию сразу после ответа. Запрос к Conversions API уходил без ожидания и не успевал улететь. А браузер и сервер слали одно событие без общего event_id.":"Serverless заморожує функцію одразу після відповіді. Запит до Conversions API йшов без очікування і не встигав вилетіти. А браузер і сервер слали одну подію без спільного event_id.",
+      "Фикс":"Фікс",
+      "after() из next/server: событие уходит после ответа, но до заморозки функции. Один event_id на браузер и сервер, Meta склеивает дубль сама.":"after() з next/server: подія йде після відповіді, але до заморозки функції. Один event_id на браузер і сервер, Meta склеює дубль сама.",
+      "Проверка":"Перевірка",
+      "Test Events в Events Manager: один заказ = один Purchase. Серверные события доезжают, задвоение исчезло.":"Test Events в Events Manager: одне замовлення = один Purchase. Серверні події доїжджають, задвоєння зникло." 
     };
     var TITLE = { ru: document.title, en: "Case study: Euphoria — niche perfumery online store · MaegamiDev", uk: "Кейс Euphoria — інтернет-магазин нішевої парфумерії · MaegamiDev" };
     function norm(s){ return s.replace(/ /g,' ').replace(/\s+/g,' ').trim(); }
