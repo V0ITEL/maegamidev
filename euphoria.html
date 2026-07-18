@@ -359,6 +359,37 @@
   @media(prefers-reduced-motion:reduce){
     .hero::before{animation:none}
   }
+
+  /* ======= DEVDESK: верстак разработчика, вкладки реальных файлов ======= */
+  .devdesk{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg-2);box-shadow:0 50px 110px -60px rgba(0,0,0,.9)}
+  .devdesk-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--bg-3);border-bottom:1px solid var(--line-soft);flex-wrap:wrap}
+  .ddot{width:10px;height:10px;border-radius:50%}
+  .ddot:nth-child(1){background:#C0563E}.ddot:nth-child(2){background:#C9923E}.ddot:nth-child(3){background:#5C7A4E}
+  .dtab{margin-left:6px;background:transparent;border:0;cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--ink-faint);padding:7px 10px;border-radius:4px 4px 0 0;position:relative;transition:color .25s}
+  .dtab:first-of-type{margin-left:10px}
+  .dtab:hover{color:var(--ink)}
+  .dtab.active{color:var(--gold-bright)}
+  .dtab.active::after{content:"";position:absolute;left:8px;right:8px;bottom:-13px;height:2px;background:var(--gold)}
+  .dpane{display:none;grid-template-columns:1.12fr .88fr;min-height:380px}
+  .dpane.active{display:grid}
+  .dcode{margin:0;padding:26px 22px;background:#0A0B0E;overflow:hidden;position:relative;white-space:normal;font-family:var(--mono);font-size:13px;line-height:1.75;color:var(--ink-soft);border-right:1px solid var(--line-soft)}
+  .dcode::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(transparent,#0A0B0E)}
+  .dcode .cl{display:block;white-space:pre-wrap}
+  .dcode .cl i{display:inline-block;width:2.2ch;margin-right:16px;font-style:normal;text-align:right;color:#3A3D45;user-select:none}
+  .dcode b{font-weight:400}
+  .dcode .k{color:var(--gold-bright)}
+  .dcode .s{color:#C8CBB8}
+  .dcode .c{color:#6A6D75}
+  .dcode .g{color:#8FBC7F}
+  .dnote{padding:30px 30px 30px 28px;display:flex;flex-direction:column;justify-content:center}
+  .dnote h3{font-size:22px;margin-bottom:10px}
+  .dnote p{font-size:15px;color:var(--ink-soft)}
+  @media(max-width:900px){
+    .dpane{grid-template-columns:1fr}
+    .dcode{border-right:0;border-bottom:1px solid var(--line-soft);font-size:12px;padding:20px 14px;max-height:300px}
+    .dnote{padding:22px 20px}
+    .dtab{font-size:11px;padding:6px 7px}
+  }
 </style>
 </head>
 <body>
@@ -533,26 +564,80 @@
       <h2>Написан в паре с Claude Code.</h2>
       <p class="lead">Весь код магазина написан вместе с ИИ-агентом. Это работает не потому, что «ИИ умный», а потому, что у проекта жёсткие рамки: данные, память, типы и тесты.</p>
     </div>
-    <div class="caps reveal">
-      <div class="cap">
-        <div class="n">01</div>
-        <h3>Контент как данные</h3>
-        <p>111 ароматов не зашиты в страницы, а живут записями в базе: ноты, объёмы, цены, наличие. Страницы рендерятся из данных. Новый товар = новая запись, без правки кода.</p>
+    <div class="devdesk reveal">
+      <div class="devdesk-bar">
+        <span class="ddot"></span><span class="ddot"></span><span class="ddot"></span>
+        <button class="dtab active" data-pane="dp2" type="button">CLAUDE.md</button>
+        <button class="dtab" data-pane="dp1" type="button">catalogue.json</button>
+        <button class="dtab" data-pane="dp3" type="button">tsconfig.json</button>
+        <button class="dtab" data-pane="dp4" type="button">ci.log</button>
       </div>
-      <div class="cap">
-        <div class="n">02</div>
-        <h3>CLAUDE.md как память проекта</h3>
-        <p>350 строк контекста: соглашения, инварианты, грабли. Агент читает файл перед каждой сессией и не изобретает проект заново.</p>
+
+      <div class="dpane active" id="dp2">
+        <pre class="dcode"><span class="cl"><i>1</i><b class="c"># Euphoria — CLAUDE.md</b></span>
+<span class="cl"><i>2</i></span>
+<span class="cl"><i>3</i>Цей файл містить контекст проекту для Claude. Читай перед кожною сесією.</span>
+<span class="cl"><i>4</i></span>
+<span class="cl"><i>5</i><b class="c">## Проект</b></span>
+<span class="cl"><i>6</i></span>
+<span class="cl"><i>7</i><b class="k">Назва:</b> Euphoria Exclusive Perfume</span>
+<span class="cl"><i>8</i><b class="k">Тип:</b> Нішовий інтернет-магазин арабської парфюмерії (Україна)</span>
+<span class="cl"><i>9</i><b class="k">Telegram Import Mode:</b> hybrid (export → stabilize parser → API sync)</span>
+<span class="cl"><i>10</i><b class="k">Мова сайту:</b> Українська (UA)</span>
+<span class="cl"><i>11</i></span>
+<span class="cl"><i>12</i><b class="c">… ще 338 рядків</b></span></pre>
+        <div class="dnote">
+          <h3>CLAUDE.md как память проекта</h3>
+          <p>350 строк контекста: соглашения, инварианты, грабли. Агент читает файл перед каждой сессией и не изобретает проект заново.</p>
+        </div>
       </div>
-      <div class="cap">
-        <div class="n">03</div>
-        <h3>Строгие типы</h3>
-        <p>TypeScript в strict-режиме на всём проекте. Код, который у ИИ без типов тихо разъезжается, здесь останавливает компилятор.</p>
+
+      <div class="dpane" id="dp1">
+        <pre class="dcode"><span class="cl"><i>1</i>{</span>
+<span class="cl"><i>2</i>  <b class="k">"name"</b>: <b class="s">"Veneno Bianco"</b>,</span>
+<span class="cl"><i>3</i>  <b class="k">"brand"</b>: <b class="s">"French Avenue"</b>,</span>
+<span class="cl"><i>4</i>  <b class="k">"price"</b>: 2650,</span>
+<span class="cl"><i>5</i>  <b class="k">"currency"</b>: <b class="s">"UAH"</b>,</span>
+<span class="cl"><i>6</i>  <b class="k">"availability"</b>: <b class="s">"InStock"</b>,</span>
+<span class="cl"><i>7</i>  <b class="k">"slug"</b>: <b class="s">"kilian-veneno-bianco-100ml"</b></span>
+<span class="cl"><i>8</i>}</span>
+<span class="cl"><i>9</i></span>
+<span class="cl"><i>10</i><b class="c">→ euphoria-parfum.com.ua/product/kilian-veneno-bianco-100ml</b></span></pre>
+        <div class="dnote">
+          <h3>Контент как данные</h3>
+          <p>111 ароматов не зашиты в страницы, а живут записями в базе: ноты, объёмы, цены, наличие. Страницы рендерятся из данных. Новый товар = новая запись, без правки кода.</p>
+        </div>
       </div>
-      <div class="cap">
-        <div class="n">04</div>
-        <h3>Тесты как страховка</h3>
-        <p>332 автотеста держат поведение. Агент может смело менять код: если что-то сломалось, я узнаю об этом раньше покупателя.</p>
+
+      <div class="dpane" id="dp3">
+        <pre class="dcode"><span class="cl"><i>1</i>{</span>
+<span class="cl"><i>2</i>  <b class="k">"compilerOptions"</b>: {</span>
+<span class="cl"><i>3</i>    <b class="k">"lib"</b>: [<b class="s">"dom"</b>, <b class="s">"dom.iterable"</b>, <b class="s">"esnext"</b>],</span>
+<span class="cl"><i>4</i>    <b class="k">"strict"</b>: <b class="g">true</b>,</span>
+<span class="cl"><i>5</i>    <b class="k">"noEmit"</b>: <b class="g">true</b>,</span>
+<span class="cl"><i>6</i>    <b class="k">"moduleResolution"</b>: <b class="s">"bundler"</b>,</span>
+<span class="cl"><i>7</i>    <b class="k">"isolatedModules"</b>: <b class="g">true</b>,</span>
+<span class="cl"><i>8</i>    <b class="k">"jsx"</b>: <b class="s">"preserve"</b></span>
+<span class="cl"><i>9</i>  }</span>
+<span class="cl"><i>10</i>}</span></pre>
+        <div class="dnote">
+          <h3>Строгие типы</h3>
+          <p>TypeScript в strict-режиме на всём проекте. Код, который у ИИ без типов тихо разъезжается, здесь останавливает компилятор.</p>
+        </div>
+      </div>
+
+      <div class="dpane" id="dp4">
+        <pre class="dcode"><span class="cl"><i>1</i><b class="c">$ npx jest --ci</b></span>
+<span class="cl"><i>2</i></span>
+<span class="cl"><i>3</i>Test Suites: <b class="g">20 passed</b>, 20 total</span>
+<span class="cl"><i>4</i>Tests:       <b class="g">332 passed</b>, 332 total</span>
+<span class="cl"><i>5</i>Snapshots:   0 total</span>
+<span class="cl"><i>6</i></span>
+<span class="cl"><i>7</i>Ran all test suites.</span></pre>
+        <div class="dnote">
+          <h3>Тесты как страховка</h3>
+          <p>332 автотеста держат поведение. Агент может смело менять код: если что-то сломалось, я узнаю об этом раньше покупателя.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -854,6 +939,18 @@
     t.style.setProperty('--mx',(e.clientX-r.left)+'px');
     t.style.setProperty('--my',(e.clientY-r.top)+'px');
   },{passive:true});
+})();
+</script>
+<script>
+(function(){
+  var desk = document.querySelector('.devdesk');
+  if(!desk) return;
+  desk.addEventListener('click', function(e){
+    var t = e.target.closest('.dtab');
+    if(!t) return;
+    desk.querySelectorAll('.dtab').forEach(function(b){ b.classList.toggle('active', b===t); });
+    desk.querySelectorAll('.dpane').forEach(function(p){ p.classList.toggle('active', p.id===t.dataset.pane); });
+  });
 })();
 </script>
 </body>
