@@ -312,6 +312,7 @@
       <div class="s-body duo">
         <div class="narr rv">
           <p>Невидимая часть важнее видимой: сервер не доверяет браузеру. Сумма пересчитывается по ценам из базы, а промокод захватывается атомарно: применить одну скидку дважды не получится даже нарочно.</p>
+          <p>Онлайн-эквайринга здесь осознанно нет: для магазина, который продаёт из инсты, перевод на карту и наложка покрывают всех покупателей, а комиссия платёжки резала бы каждый чек. Ветка под эквайринг в коде при этом уже написана: обработчик заказа знает статус „online“ и ждёт подтверждение оплаты от платёжки. Подключение: вопрос ключей и договора, не переделки магазина.</p>
           <div class="gem">
             <h3>Депозит с секретом</h3>
             <p>Для наложки магазин просит депозит: 200 гривен и копейки. Копейки от 01 до 99 не случайны: свободные выбираются так, чтобы сумма в банковской выписке однозначно называла заказ. Выписка сверяет платежи сама, владелец ничего не сличает руками.</p>
@@ -324,7 +325,7 @@
           </figure>
           <div class="code-card">
             <div class="cc-bar">app/api/orders/route.ts</div>
-            <pre class="cc"><span class="c">// kopecks 01-99 are the order's code:</span>
+            <pre class="cc"><span class="c">// kopiykas 01-99 are the order's code:</span>
 <span class="c">// the amount in the bank statement</span>
 <span class="c">// identifies the order</span>
 const freeKopecks: number[] = [];
@@ -547,13 +548,14 @@ depositAmount = freeKopecks.length &gt; 0
       "Корзина без лишних вопросов":"A cart with no extra questions",
       "Гостевой заказ без регистрации: имя, телефон, город, отделение. Оплата картой или наложенным платежом.":"Guest checkout, no sign-up: name, phone, city, pickup branch. Pay by card or cash on delivery.",
       "Невидимая часть важнее видимой: сервер не доверяет браузеру. Сумма пересчитывается по ценам из базы, а промокод захватывается атомарно: применить одну скидку дважды не получится даже нарочно.":"The invisible part matters more than the visible one: the server does not trust the browser. The total is recalculated from database prices, and the promo code is claimed atomically: using one discount twice won't work even on purpose.",
+      "Онлайн-эквайринга здесь осознанно нет: для магазина, который продаёт из инсты, перевод на карту и наложка покрывают всех покупателей, а комиссия платёжки резала бы каждый чек. Ветка под эквайринг в коде при этом уже написана: обработчик заказа знает статус „online“ и ждёт подтверждение оплаты от платёжки. Подключение: вопрос ключей и договора, не переделки магазина.":"There is deliberately no online acquiring here: for a store selling from Instagram, card transfer and cash on delivery cover every buyer, while a gateway fee would cut into every receipt. The acquiring branch is already written in the code though: the order handler knows the “online” status and waits for the payment provider's confirmation. Plugging it in is a matter of keys and a contract, not a rebuild of the store.",
       "Депозит с секретом":"A deposit with a secret",
-      "Для наложки магазин просит депозит: 200 гривен и копейки. Копейки от 01 до 99 не случайны: свободные выбираются так, чтобы сумма в банковской выписке однозначно называла заказ. Выписка сверяет платежи сама, владелец ничего не сличает руками.":"For cash on delivery the store asks for a deposit: 200 hryvnias and some kopecks. The kopecks, 01 to 99, are not random: a free value is picked so that the amount in the bank statement names the order unambiguously. The statement reconciles payments by itself, the owner never matches them by hand.",
+      "Для наложки магазин просит депозит: 200 гривен и копейки. Копейки от 01 до 99 не случайны: свободные выбираются так, чтобы сумма в банковской выписке однозначно называла заказ. Выписка сверяет платежи сама, владелец ничего не сличает руками.":"For cash on delivery the store asks for a deposit: 200 hryvnias and some kopiykas. The kopiykas, 01 to 99, are not random: a free value is picked so that the amount in the bank statement names the order unambiguously. The statement reconciles payments by itself, the owner never matches them by hand.",
       "Реальный фрагмент из обработчика заказа.":"A verbatim fragment from the order handler.",
       "Оплата прошла. Дальше работает код":"Payment confirmed. The code takes over",
       "Пока покупателю грузится страница „Дякуємо“, магазин делает семь дел подряд. Порядок и имена функций: ровно как в коде.":"While the “thank you” page is loading for the buyer, the store does seven things in a row. The order and the function names are exactly as in the code.",
       "Заказ записан в базу":"The order is written to the database",
-      "Статус pending, за заказом закреплён депозит с его уникальными копейками.":"Status pending, the deposit with its unique kopecks is pinned to the order.",
+      "Статус pending, за заказом закреплён депозит с его уникальными копейками.":"Status pending, the deposit with its unique kopiykas is pinned to the order.",
       "Позиции зафиксированы":"Line items are locked in",
       "По ценам, которые проверил сервер, а не прислал браузер.":"At prices verified by the server, not sent by the browser.",
       "Остаток списан":"Stock is decremented",
@@ -579,7 +581,7 @@ depositAmount = freeKopecks.length &gt; 0
       "Пока страница „Дякуємо“ дорисовывалась, у владельца в Telegram уже лежало вот это.":"By the time the “thank you” page finished rendering, this was already waiting in the owner's Telegram.",
       "бот магазина":"store bot",
       "Формат сообщения: дословно из кода. Имя и телефон вымышлены.":"The message format is verbatim from the code. The name and the phone are made up.",
-      "Депозит уже на карте, копейки в выписке совпали с заказом. Дальше две кнопки прямо под сообщением: подтвердить депозит и отметить отправку. В админку можно не заходить.":"The deposit is already on the card, the kopecks in the statement match the order. Then two buttons right under the message: confirm the deposit and mark it shipped. No need to open the admin panel.",
+      "Депозит уже на карте, копейки в выписке совпали с заказом. Дальше две кнопки прямо под сообщением: подтвердить депозит и отметить отправку. В админку можно не заходить.":"The deposit is already on the card, the kopiykas in the statement match the order. Then two buttons right under the message: confirm the deposit and mark it shipped. No need to open the admin panel.",
       "Наличие тоже живёт в этом чате: бот перечисляет товары кнопками, одно нажатие, и аромат помечен как распроданный. Витрина обновится сама.":"Stock lives in this chat too: the bot lists the products as buttons, one tap and a fragrance is marked sold out. The storefront updates itself.",
       "Telegram-вебхук пишет в ту же базу, из которой рендерится сайт.":"The Telegram webhook writes to the same database the site renders from.",
       "Итог ночи":"The night, summed up",
@@ -625,6 +627,7 @@ depositAmount = freeKopecks.length &gt; 0
       "Корзина без лишних вопросов":"Кошик без зайвих питань",
       "Гостевой заказ без регистрации: имя, телефон, город, отделение. Оплата картой или наложенным платежом.":"Гостьове замовлення без реєстрації: ім'я, телефон, місто, відділення. Оплата карткою або накладеним платежем.",
       "Невидимая часть важнее видимой: сервер не доверяет браузеру. Сумма пересчитывается по ценам из базы, а промокод захватывается атомарно: применить одну скидку дважды не получится даже нарочно.":"Невидима частина важливіша за видиму: сервер не довіряє браузеру. Сума перераховується за цінами з бази, а промокод захоплюється атомарно: застосувати одну знижку двічі не вийде навіть навмисно.",
+      "Онлайн-эквайринга здесь осознанно нет: для магазина, который продаёт из инсты, перевод на карту и наложка покрывают всех покупателей, а комиссия платёжки резала бы каждый чек. Ветка под эквайринг в коде при этом уже написана: обработчик заказа знает статус „online“ и ждёт подтверждение оплаты от платёжки. Подключение: вопрос ключей и договора, не переделки магазина.":"Онлайн-еквайрингу тут свідомо немає: для магазину, що продає з інсти, переказ на картку і накладений платіж покривають усіх покупців, а комісія платіжки різала б кожен чек. Гілка під еквайринг у коді при цьому вже написана: обробник замовлення знає статус „online“ і чекає підтвердження оплати від платіжки. Підключення: питання ключів і договору, не переробки магазину.",
       "Депозит с секретом":"Депозит із секретом",
       "Для наложки магазин просит депозит: 200 гривен и копейки. Копейки от 01 до 99 не случайны: свободные выбираются так, чтобы сумма в банковской выписке однозначно называла заказ. Выписка сверяет платежи сама, владелец ничего не сличает руками.":"Для накладеного платежу магазин просить депозит: 200 гривень і копійки. Копійки від 01 до 99 не випадкові: вільні обираються так, щоб сума в банківській виписці однозначно називала замовлення. Виписка звіряє платежі сама, власник нічого не звіряє руками.",
       "Реальный фрагмент из обработчика заказа.":"Реальний фрагмент з обробника замовлення.",
