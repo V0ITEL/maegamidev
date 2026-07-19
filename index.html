@@ -1,39 +1,25 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>document.documentElement.className += ' js';</script>
 
-<!--
-  ╔══════════════════════════════════════════════════════════════╗
-  ║  ИЗМЕНИ ЗДЕСЬ ПЕРЕД ОТПРАВКОЙ КЛИЕНТАМ:                       ║
-  ║  1) @USERNAME  → твой реальный Telegram-логин (по всему файлу)║
-  ║  2) Бренд "VOITEL" в шапке/подвале — на своё имя, если хочешь ║
-  ║  3) Ссылка живого магазина уже стоит:                        ║
-  ║     https://t.me/euphoria_orders1_bot/Shop                   ║
-  ╚══════════════════════════════════════════════════════════════╝
--->
-
-<title>MaegamiDev — интернет-магазины под ключ · кейс Euphoria</title>
-<meta name="description" content="Разработка интернет-магазинов под ключ: e-commerce платформа, витрина в Telegram, приём онлайн-платежей, интеграция служб доставки, аналитика. Реализованный проект — Euphoria.">
-<meta name="theme-color" content="#0C0D10">
+<title>MaegamiDev: магазины, которые продают сами · сайт + Telegram</title>
+<meta name="description" content="Собираю интернет-магазины, которые сами показывают наличие, принимают оплату и оформляют доставку: сайт и витрина в Telegram из одной базы. Сам продаю со своего магазина. Плюс приложения под задачу и починка рекламных событий Meta.">
+<meta name="theme-color" content="#0A0B10">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230C0D10'/%3E%3Ccircle cx='16' cy='16' r='6.5' fill='%23C9A75C'/%3E%3C/svg%3E">
 
-<!-- Превью при отправке ссылки -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://maegamidev.vercel.app/">
 <meta property="og:site_name" content="MaegamiDev">
-<meta property="og:title" content="MaegamiDev — интернет-магазины под ключ">
-<meta property="og:description" content="E-commerce платформа: сайт + Telegram, онлайн-платежи, интеграция доставки. Реализованный проект внутри.">
-<meta property="og:image" content="https://maegamidev.vercel.app/assets/og-cover.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="MaegamiDev — интернет-магазины под ключ">
+<meta property="og:title" content="MaegamiDev: магазины, которые продают сами">
+<meta property="og:description" content="Клиенты пишут ночью. Отвечать не обязательно: магазин сам показывает наличие, принимает оплату и оформляет доставку. Живой пример внутри.">
+<meta property="og:image" content="https://maegamidev.vercel.app/assets/home-desktop.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MaegamiDev — интернет-магазины под ключ">
-<meta name="twitter:description" content="E-commerce платформа: сайт + Telegram, онлайн-платежи, интеграция доставки. Реализованный проект внутри.">
-<meta name="twitter:image" content="https://maegamidev.vercel.app/assets/og-cover.png">
+<meta name="twitter:title" content="MaegamiDev: магазины, которые продают сами">
+<meta name="twitter:description" content="Клиенты пишут ночью. Отвечать не обязательно. Живой пример внутри.">
+<meta name="twitter:image" content="https://maegamidev.vercel.app/assets/home-desktop.png">
 
 <link rel="preload" href="/fonts/manrope_v20_xn7gYHE41ni1AdIRggOxSuXd.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/manrope_v20_xn7gYHE41ni1AdIRggexSg.woff2" as="font" type="font/woff2" crossorigin>
@@ -41,422 +27,187 @@
 
 <style>
   :root{
-    --bg:#0C0D10;
-    --bg-2:#14161A;
-    --bg-3:#1B1E24;
-    --ink:#F2EFE8;
-    --ink-soft:#C3C5CB;
-    --ink-faint:#76787E;
-    --gold:#C9A75C;
-    --gold-bright:#D4AF6A;
-    --line:rgba(201,167,92,.24);
-    --line-soft:rgba(242,239,232,.10);
-    --maxw:1140px;
+    --bg:#0A0B10; --panel:#111318; --panel-2:#151823;
+    --ink:#F2EFE8; --ink-soft:#BDBFC6; --ink-faint:#7A7C83;
+    --gold:#C9A75C; --gold-bright:#D4AF6A;
+    --ok:#9FC48E; --bad:#C98A76;
+    --line:rgba(201,167,92,.22); --line-soft:rgba(242,239,232,.09);
+    --maxw:1060px;
     --serif:"Space Grotesk",system-ui,sans-serif;
     --sans:"Manrope",system-ui,-apple-system,sans-serif;
     --mono:"Space Mono",ui-monospace,monospace;
   }
-
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:var(--sans);
-    font-size:17px;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   a{color:inherit;text-decoration:none}
   img{display:block;max-width:100%}
-
-  ::selection{background:var(--gold);color:#0C0D10}
-
-  /* ---------- shared ---------- */
+  ::selection{background:var(--gold);color:#0A0B10}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  .eyebrow{
-    font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
-    color:var(--gold);font-weight:400;display:inline-block;
-  }
-  .eyebrow::before{content:"";display:inline-block;width:26px;height:1px;
-    background:var(--gold);vertical-align:middle;margin-right:14px;opacity:.7}
+  body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:
+    radial-gradient(52% 40% at 78% -6%,rgba(201,167,92,.11),transparent 62%),
+    radial-gradient(44% 38% at -8% 30%,rgba(140,112,58,.07),transparent 60%),
+    radial-gradient(70% 55% at 50% 118%,rgba(201,167,92,.05),transparent 66%)}
+  body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
   h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.06;letter-spacing:-.02em}
-  h2{font-size:clamp(30px,4.4vw,52px)}
-  .lead{color:var(--ink-soft);font-size:clamp(16px,1.5vw,19px);max-width:56ch}
+  h1,h2{background:linear-gradient(180deg,#FBF8F0 0%,#EFE8D5 52%,#CBB27A 118%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h1 em,h2 em{font-style:normal;background:linear-gradient(180deg,var(--gold-bright),#A8853F);-webkit-background-clip:text;background-clip:text;color:transparent}
   em{font-style:normal;color:var(--gold-bright)}
-
-  .btn{
-    display:inline-flex;align-items:center;gap:10px;
-    font-family:var(--sans);font-weight:600;font-size:15px;
-    padding:15px 26px;border-radius:2px;cursor:pointer;border:1px solid transparent;
-    transition:transform .25s ease,background .25s ease,border-color .25s ease,color .25s ease;
-  }
-  .btn-gold{background:var(--gold);color:#0C0D10}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);display:inline-block}
+  .eyebrow::before{content:"";display:inline-block;width:26px;height:1px;background:var(--gold);vertical-align:middle;margin-right:14px;opacity:.7}
+  .lead{color:var(--ink-soft);font-size:clamp(16px,1.5vw,18.5px);max-width:58ch}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px;padding:15px 26px;border-radius:2px;cursor:pointer;border:1px solid transparent;transition:transform .25s ease,background .25s ease,border-color .25s ease,color .25s ease;white-space:nowrap}
+  .btn-gold{background:var(--gold);color:#0A0B10}
   .btn-gold:hover{background:var(--gold-bright);transform:translateY(-2px)}
   .btn-ghost{border-color:var(--line);color:var(--ink)}
   .btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright);transform:translateY(-2px)}
   .btn svg{width:16px;height:16px}
-
-  /* embedded animations (Claude Design) */
-  .flow-embed{max-width:1000px;margin:0 auto;border:1px solid var(--line-soft);border-radius:10px;overflow:hidden;background:var(--bg)}
-  .flow-embed iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
-  .demo-mini{margin-bottom:18px;border:1px solid var(--line-soft);border-radius:8px;overflow:hidden;background:var(--bg)}
-  .demo-mini iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
-  .calc-embed{max-width:680px;margin:0 auto}
-  .calc-embed iframe{width:100%;height:1180px;border:0;display:block;background:var(--bg)}
-
   :focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}
 
-  section{padding:clamp(70px,9vw,120px) 0}
-
-  /* ---------- header ---------- */
-  header{
-    position:sticky;top:0;z-index:50;
-    backdrop-filter:blur(10px);
-    background:linear-gradient(to bottom,rgba(16,13,10,.92),rgba(16,13,10,.6));
-    border-bottom:1px solid var(--line-soft);
-  }
-  .nav{display:flex;align-items:center;justify-content:space-between;height:66px}
-  .brand{font-family:var(--serif);font-size:21px;font-weight:700;letter-spacing:.02em}
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(to bottom,rgba(10,11,16,.92),rgba(10,11,16,.6));border-bottom:1px solid var(--line-soft)}
+  header::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent 4%,rgba(201,167,92,.5),transparent 96%)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.02em}
   .brand b{color:var(--gold)}
-  .nav .btn{padding:11px 20px}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .nav .btn{padding:10px 18px;font-size:14px}
+  #langSelect{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line-soft);border-radius:2px;padding:8px 9px;cursor:pointer;appearance:auto}
 
-  /* ---------- hero ---------- */
-  .hero{position:relative;padding-top:clamp(60px,8vw,96px);overflow:hidden}
-  .hero-glow{
-    position:absolute;width:760px;height:760px;border-radius:50%;
-    top:-280px;right:-220px;pointer-events:none;z-index:0;
-    background:radial-gradient(circle,rgba(201,162,74,.20),rgba(201,162,74,0) 62%);
-    filter:blur(8px);
-  }
-  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center}
-  .hero h1{font-size:clamp(40px,6.2vw,76px);margin:22px 0 24px}
-  .hero .lead{margin-bottom:34px}
-  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  /* ── hero: вечер в директе ── */
+  .hero{position:relative;padding:clamp(56px,7vh,96px) 0 clamp(44px,6vw,72px);overflow:hidden}
+  .hero::before{content:"";position:absolute;top:-150px;right:-200px;width:660px;height:660px;z-index:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20840%20840%22%3E%3Cg%20fill=%22none%22%20stroke=%22%23C9A75C%22%20stroke-width=%220.55%22%20stroke-opacity=%220.32%22%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(0.0%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(8.18%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(16.36%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(24.55%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(32.73%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(40.91%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(49.09%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(57.27%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(65.45%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(73.64%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(81.82%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(90.0%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(98.18%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(106.36%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(114.55%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(122.73%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(130.91%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(139.09%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(147.27%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(155.45%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(163.64%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(171.82%20420%20420)%22/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;opacity:.24;-webkit-mask-image:radial-gradient(58% 58% at 50% 50%,#000 26%,transparent 72%);mask-image:radial-gradient(58% 58% at 50% 50%,#000 26%,transparent 72%);animation:rosette 240s linear infinite}
+  @keyframes rosette{to{transform:rotate(360deg)}}
+  .hero .wrap{position:relative;z-index:1}
+  .hero-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:clamp(30px,4.5vw,60px);align-items:center}
+  .hero h1{font-size:clamp(33px,4.6vw,58px);max-width:640px;margin-top:18px}
+  .hero .lead{margin-top:20px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+  .peer{margin-top:26px;font-family:var(--mono);font-size:12.5px;letter-spacing:.03em;color:var(--ink-faint)}
 
-  /* signature: vitrine (boutique display case) */
-  .vitrine{
-    position:relative;border:1px solid var(--line);border-radius:4px;
-    padding:14px;background:linear-gradient(160deg,var(--bg-3),var(--bg-2));
-    box-shadow:0 40px 90px -50px rgba(0,0,0,.9),inset 0 1px 0 rgba(231,203,124,.08);
-  }
-  .vitrine::after{
-    content:"";position:absolute;inset:0;border-radius:4px;pointer-events:none;
-    background:radial-gradient(120% 60% at 50% -10%,rgba(231,203,124,.10),transparent 60%);
-  }
-  .vitrine img{border-radius:2px;width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top center}
-  .vitrine .tag{
-    position:absolute;left:50%;bottom:-13px;transform:translateX(-50%);
-    background:var(--bg);border:1px solid var(--line);color:var(--ink-soft);
-    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-    padding:6px 16px;border-radius:2px;white-space:nowrap;
-  }
+  /* директ-мокап */
+  .dm{max-width:400px;justify-self:end;width:100%;border:1px solid var(--line-soft);border-radius:14px;background:#101318;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+  .dm-head{display:flex;gap:11px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--line-soft)}
+  .dm-ava{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#3A4150,#232830);display:grid;place-items:center;font-size:12px;color:var(--ink-soft);font-weight:700}
+  .dm-name{font-size:13.5px;font-weight:600;line-height:1.2}
+  .dm-sub{font-size:11px;color:var(--ink-faint)}
+  .dm-body{padding:14px 12px 16px;display:grid;gap:8px}
+  .dm-msg{justify-self:start;max-width:88%;background:#1A2029;border-radius:12px 12px 12px 4px;padding:9px 12px;font-size:13px;line-height:1.5}
+  .dm-msg i{display:block;font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:4px}
+  .dm-badge{margin-top:6px;font-family:var(--mono);font-size:11px;color:var(--gold);border:1px dashed var(--line);border-radius:20px;padding:5px 12px;justify-self:center}
+  .dm-cap{margin-top:10px;text-align:right}
 
-  /* ---------- trust strip ---------- */
-  .trust{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);margin-top:clamp(56px,7vw,90px)}
-  .trust-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-  .trust-item{padding:26px 22px;text-align:center;border-right:1px solid var(--line-soft)}
-  .trust-item:last-child{border-right:0}
-  .trust-item b{display:block;font-family:var(--serif);font-size:22px;color:var(--gold-bright)}
-  .trust-item span{font-size:12.5px;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase}
+  /* ── рельса сцен ── */
+  .night{padding-top:clamp(44px,6vw,72px)}
+  .scene .s-grid{display:grid;grid-template-columns:96px minmax(0,1fr);gap:0 clamp(20px,3.5vw,44px)}
+  .s-rail{position:relative;display:flex;flex-direction:column;align-items:center}
+  .s-rail::before{content:"";position:absolute;top:0;bottom:0;left:calc(50% - .5px);width:1px;background:linear-gradient(180deg,rgba(201,167,92,.36),rgba(201,167,92,.12))}
+  .night .scene:first-child .s-rail::before{top:6px}
+  .night .scene:last-child .s-rail::before{background:linear-gradient(180deg,rgba(201,167,92,.36),transparent 90%)}
+  .s-time{position:sticky;top:92px;z-index:1;font-family:var(--mono);font-size:13px;color:var(--gold);background:var(--bg);border:1px solid var(--line);border-radius:2px;padding:7px 11px;letter-spacing:.05em}
+  .s-main{padding-bottom:clamp(80px,9vw,118px);min-width:0}
+  .s-main h2{font-size:clamp(27px,3.6vw,44px);max-width:26ch}
+  .s-lead{margin-top:14px}
+  .s-body{margin-top:32px}
 
-  /* ---------- live demo (montage of real usage) ---------- */
-  .demo{max-width:980px;margin:0 auto;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg-2);box-shadow:0 50px 110px -60px rgba(0,0,0,.9)}
-  .demo-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--bg-3);border-bottom:1px solid var(--line-soft)}
-  .demo-bar .dot{width:10px;height:10px;border-radius:50%}
-  .demo-bar .dot:nth-child(1){background:#C0563E}.demo-bar .dot:nth-child(2){background:#C9923E}.demo-bar .dot:nth-child(3){background:#5C7A4E}
-  .demo-url{margin-left:14px;flex:1;font-size:12.5px;letter-spacing:.04em;color:var(--ink-faint);background:var(--bg);border:1px solid var(--line-soft);border-radius:4px;padding:5px 14px;text-align:center}
-  .demo-screen{position:relative;aspect-ratio:16/10;overflow:hidden;background:#000}
-  .demo-screen .frame{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;opacity:0;transition:opacity .7s ease}
-  .demo-screen .frame.active{opacity:1}
-  .cursor{position:absolute;left:40%;top:50%;width:26px;height:26px;transform:translate(-3px,-3px);transition:left 1s cubic-bezier(.5,0,.2,1),top 1s cubic-bezier(.5,0,.2,1);z-index:3;filter:drop-shadow(0 3px 5px rgba(0,0,0,.55));pointer-events:none}
-  .cursor svg{width:100%;height:100%}
-  .cursor.click::after{content:"";position:absolute;left:-2px;top:-2px;width:30px;height:30px;border:2px solid var(--gold-bright);border-radius:50%;animation:ring .6s ease-out}
-  @keyframes ring{from{transform:scale(.3);opacity:.9}to{transform:scale(1.7);opacity:0}}
-  .demo-steps{display:flex;border-top:1px solid var(--line-soft)}
-  .demo-steps .step{flex:1;background:var(--bg-2);border:0;border-right:1px solid var(--line-soft);color:var(--ink-soft);font-family:var(--sans);font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:14px 8px;cursor:pointer;transition:color .3s,background .3s}
-  .demo-steps .step:last-child{border-right:0}
-  .demo-steps .step.active{color:var(--gold-bright);background:var(--bg-3)}
-  .demo-steps .step:hover{color:var(--ink)}
+  .duo{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(28px,4vw,52px);align-items:start}
+  .duo>*{min-width:0}
+  .narr p{color:var(--ink-soft);font-size:15.5px}
+  .narr p+p{margin-top:14px}
+  .mini-fact{margin-top:24px;padding-top:14px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;color:var(--gold);opacity:.9}
+  .caption{font-size:13px;color:var(--ink-faint)}
 
-  /* embedded Claude Design demo (self-contained iframe) */
+  /* эмбеды (машинерия старой главной) */
   .demo-embed{max-width:1060px;margin:0 auto}
-  .demo-embed iframe{width:100%;height:680px;border:0;display:block;border-radius:8px;background:var(--bg)}
-  @media(max-width:760px){ .demo-embed iframe{height:560px} }
-  @media(max-width:430px){ .demo-embed iframe{height:520px} }
+  .demo-embed iframe{width:100%;height:680px;border:0;display:block;border-radius:8px;background:var(--bg);border:1px solid var(--line-soft)}
+  .calc-embed{max-width:680px;margin:34px auto 0}
+  .calc-embed iframe{width:100%;height:1180px;border:0;display:block;background:var(--bg)}
+  .demo-mini{margin-bottom:18px;border:1px solid var(--line-soft);border-radius:8px;overflow:hidden;background:var(--bg)}
+  .demo-mini iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
 
-  /* ---------- problem ---------- */
-  .two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
-  .pains{list-style:none;margin-top:30px;display:grid;gap:2px}
-  .pains li{padding:18px 20px;background:var(--bg-2);border-left:2px solid var(--line);color:var(--ink-soft)}
-  .pains li b{color:var(--ink);font-weight:600;font-family:var(--sans)}
+  /* ── телеграм-мок (как в кейсе) ── */
+  .tg{max-width:432px;border:1px solid var(--line-soft);border-radius:12px;background:#141922;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+  .tg-head{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line-soft)}
+  .tg-ava{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#8F7434);display:grid;place-items:center;font-family:var(--serif);font-weight:700;color:#0A0B10}
+  .tg-name{font-weight:600;font-size:14.5px;line-height:1.2}
+  .tg-sub{font-size:12px;color:var(--ink-faint)}
+  .tg-body{padding:16px 14px 18px;background:radial-gradient(120% 90% at 80% 0%,rgba(201,167,92,.05),transparent 60%)}
+  .tg-msg{background:#1B2230;border-radius:12px 12px 12px 4px;padding:13px 15px;font-size:13.5px;line-height:1.62;white-space:pre-line}
+  .tg-time{margin-top:6px;text-align:right;font-size:11px;color:var(--ink-faint);font-family:var(--mono)}
+  .tg-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px}
+  .tg-btn{background:rgba(101,163,255,.10);color:#8FB8EA;border:1px solid rgba(101,163,255,.22);border-radius:8px;padding:9px 6px;text-align:center;font-size:12.5px}
 
-  /* ---------- gallery ---------- */
-  .section-head{max-width:62ch;margin-bottom:clamp(40px,5vw,64px)}
-  .section-head h2{margin-top:18px}
-  .section-head p{margin-top:18px}
-  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-  .shot{align-self:start;border:1px solid var(--line-soft);border-radius:6px;overflow:hidden;background:var(--bg-2);transition:transform .35s ease,border-color .35s ease}
-  .shot:hover{transform:translateY(-4px);border-color:var(--line)}
-  .shot img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;object-position:top center}
-  .shot.feature{grid-column:1 / -1}
-  .shot.feature img{aspect-ratio:2.4/1}
-  .shot figcaption{padding:18px 20px;font-size:14px;color:var(--ink-soft);border-top:1px solid var(--line-soft)}
-  .shot figcaption b{color:var(--ink);font-family:var(--sans);font-weight:600;display:block;margin-bottom:3px}
+  /* ── обычные секции ── */
+  section.block{padding:clamp(66px,8vw,104px) 0;border-top:1px solid var(--line-soft)}
+  .block h2{font-size:clamp(28px,3.8vw,46px);margin-top:14px;max-width:26ch}
+  .block .lead{margin-top:16px}
 
-  /* ---------- capabilities ---------- */
-  .caps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
-  .cap{background:var(--bg);padding:34px 30px;transition:background .3s ease}
-  .cap:hover{background:var(--bg-2)}
-  .cap .n{font-family:var(--serif);font-size:15px;color:var(--gold);letter-spacing:.1em}
-  .cap h3{font-size:22px;margin:14px 0 10px}
-  .cap p{font-size:15px;color:var(--ink-soft)}
+  .proof-row{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;margin-top:36px}
+  .shot{border:1px solid var(--line-soft);border-radius:6px;overflow:hidden;background:var(--panel);box-shadow:0 18px 50px rgba(0,0,0,.35)}
+  .shot-bar{display:flex;align-items:center;gap:6px;padding:9px 13px;border-bottom:1px solid var(--line-soft)}
+  .sdot{width:8px;height:8px;border-radius:50%;background:rgba(242,239,232,.16)}
+  .shot-url{margin-left:8px;font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.03em}
+  .proof-side{display:grid;gap:18px;align-content:start}
+  .proof-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
 
-  /* ---------- offer ---------- */
-  .offer{background:var(--bg)}
-  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:clamp(40px,5vw,60px)}
-  .plan{border:1px solid var(--line-soft);border-radius:4px;padding:34px 30px;background:var(--bg);display:flex;flex-direction:column}
-  .plan.feature{border-color:var(--gold);background:linear-gradient(180deg,rgba(201,162,74,.06),var(--bg));position:relative}
-  .plan.feature::before{content:"Чаще берут";position:absolute;top:-12px;left:30px;background:var(--gold);color:#0C0D10;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:2px}
-  .plan .pname{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft)}
-  .plan .price{font-family:var(--serif);font-size:38px;margin:14px 0 4px;color:var(--ink)}
-  .plan .price small{font-size:15px;color:var(--ink-faint);font-family:var(--sans)}
-  .plan ul{list-style:none;margin:22px 0 28px;display:grid;gap:11px}
-  .plan li{font-size:14.5px;color:var(--ink-soft);padding-left:24px;position:relative}
-  .plan li::before{content:"";position:absolute;left:0;top:9px;width:10px;height:1px;background:var(--gold)}
-  .plan .btn{margin-top:auto;justify-content:center}
+  .retainer{text-align:center;max-width:none;margin:26px auto 0;color:var(--ink-faint);font-size:15px}
+  .retainer b{color:var(--ink-soft)}
 
-  /* ---------- also ---------- */
-  .also{display:grid;grid-template-columns:1fr;gap:28px;margin-top:36px}
-  .also-card{border:1px solid var(--line-soft);border-radius:4px;padding:28px 30px;background:var(--bg-2)}
-  .also-card .k{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
-  .also-card h3{font-size:21px;margin:10px 0 8px}
-  .also-card p{font-size:14.5px;color:var(--ink-soft)}
+  .branch{display:grid;grid-template-columns:1fr 1fr;gap:clamp(22px,3vw,36px);margin-top:38px}
+  .branch-card{border:1px solid var(--line-soft);border-radius:10px;background:linear-gradient(180deg,var(--panel),rgba(13,15,20,.5));padding:20px 20px 24px}
+  .branch-card .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+  .branch-card h3{font-size:20px}
+  .branch-card p{margin-top:10px;color:var(--ink-soft);font-size:14.5px}
+  .branch-note{margin-top:26px;color:var(--ink-soft);font-size:15.5px}
 
-  /* ---------- final cta ---------- */
-  .final{text-align:center;position:relative;overflow:hidden}
-  .final .hero-glow{top:auto;bottom:-360px;right:50%;transform:translateX(50%)}
-  .final h2{position:relative;z-index:1;margin-bottom:18px}
-  .final p{position:relative;z-index:1;color:var(--ink-soft);max-width:46ch;margin:0 auto 32px}
-  .final .btn{position:relative;z-index:1}
+  .px-list{margin-top:32px;display:grid;gap:18px;max-width:760px}
+  .px-list p{color:var(--ink-soft);font-size:15.5px;border-left:3px solid var(--gold);padding:2px 0 2px 18px}
+  .px-list p b{color:var(--ink)}
+  .px-note{margin-top:26px;font-size:14.5px;color:var(--ink-faint);max-width:760px}
+  .px-note a{color:var(--gold-bright);border-bottom:1px solid var(--line)}
 
-  footer{border-top:1px solid var(--line-soft);padding:40px 0;color:var(--ink-faint);font-size:14px}
-  .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .how{list-style:none;counter-reset:hw;margin-top:36px;display:grid;gap:22px;max-width:720px}
+  .how li{counter-increment:hw;position:relative;padding-left:56px}
+  .how li::before{content:counter(hw,decimal-leading-zero);position:absolute;left:0;top:2px;font-family:var(--mono);font-size:13px;color:var(--gold);border:1px solid var(--line);border-radius:3px;padding:6px 8px;line-height:1}
+  .how h3{font-size:18px}
+  .how p{margin-top:4px;font-size:14.5px;color:var(--ink-soft)}
+  .no-calls{margin-top:28px;font-family:var(--mono);font-size:13px;color:var(--gold);letter-spacing:.03em}
+
+  .cta{border-top:1px solid var(--line-soft);padding:clamp(78px,10vw,124px) 0;text-align:center}
+  .cta h2{font-size:clamp(30px,4.4vw,52px);max-width:22ch;margin:14px auto 0}
+  .cta .lead{margin:18px auto 0}
+  .cta .hero-cta{justify-content:center;margin-top:32px}
+  footer{border-top:1px solid var(--line-soft);padding:24px 0;font-size:13.5px;color:var(--ink-faint)}
+  .foot{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
   footer a:hover{color:var(--gold-bright)}
 
-  /* ---------- reveal (visible by default; hidden only when JS is present) ---------- */
-  .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
-  .reveal.in{opacity:1;transform:none}
+  .js .rv{opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s ease}
+  .js .rv.in{opacity:1;transform:none}
 
-  /* ---------- responsive ---------- */
-  @media(max-width:900px){
-    .hero-grid{grid-template-columns:1fr;gap:46px}
-    .two{grid-template-columns:1fr;gap:36px}
-    .caps{grid-template-columns:1fr 1fr}
-    .plans{grid-template-columns:1fr}
-    .also{grid-template-columns:1fr}
-    .gallery{grid-template-columns:1fr}
-    .shot.feature img{aspect-ratio:16/9}
-    .trust-row{grid-template-columns:1fr 1fr}
-    .trust-item:nth-child(2){border-right:0}
-    .trust-item{border-bottom:1px solid var(--line-soft)}
+  @media(max-width:920px){
+    .hero-grid{grid-template-columns:1fr}
+    .dm{justify-self:start}
+    .duo{grid-template-columns:1fr}
+    .proof-row{grid-template-columns:1fr}
+    .branch{grid-template-columns:1fr}
   }
-  @media(max-width:520px){
-    body{font-size:16px}
+  @media(max-width:760px){
+    .scene .s-grid{grid-template-columns:1fr}
+    .s-rail{flex-direction:row;margin-bottom:12px}
+    .s-rail::before{display:none}
+    .s-time{position:static}
+    .demo-embed iframe{height:560px}
+  }
+  @media(max-width:640px){
     .wrap{padding:0 20px}
-    .caps{grid-template-columns:1fr}
-    .nav .brand{font-size:18px}
-    .demo-steps .step{font-size:11px;letter-spacing:.03em;padding:11px 3px}
-    .demo-url{font-size:11px}
-    .also-card{padding:16px}
-    .demo-mini{margin-bottom:16px}
-    .trust-row{grid-template-columns:1fr}
-    .trust-item{border-right:0;border-bottom:1px solid var(--line-soft)}
-    .trust-item:last-child{border-bottom:0}
+    .nav .btn{padding:10px 13px;font-size:13px}
+    body{font-size:16px}
   }
-  /* ===== iOS-вид на мобиле: крупные скругления, pill-кнопки, мягкие «поп»-тени, тактильность ===== */
-  @media(max-width:640px){
-    /* Кнопки — pill + мягкое свечение + press-feedback */
-    .btn{border-radius:999px;padding:16px 30px;font-size:15.5px}
-    .btn-gold{box-shadow:0 12px 28px -8px rgba(201,167,92,.5)}
-    .btn-ghost{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12)}
-    .btn:active{transform:scale(.96)}
-    .nav .btn{padding:11px 20px}
-
-    /* Навбар — матовое стекло (frosted) */
-    header{
-      backdrop-filter:blur(22px) saturate(150%);
-      -webkit-backdrop-filter:blur(22px) saturate(150%);
-      background:linear-gradient(to bottom,rgba(12,13,16,.8),rgba(12,13,16,.46));
-      border-bottom:1px solid rgba(255,255,255,.07);
-    }
-
-    /* Eyebrow — pill-чип */
-    .eyebrow{background:rgba(201,167,92,.12);border:1px solid rgba(201,167,92,.24);border-radius:999px;padding:6px 14px}
-    .eyebrow::before{display:none}
-
-    /* Hero-мокап — крупный радиус */
-    .vitrine{border-radius:20px;overflow:hidden}
-    .vitrine::after{border-radius:20px}
-
-    /* Боли — отдельные тактильные карточки */
-    .pains{gap:12px}
-    .pains li{border-left:0;border:1px solid rgba(255,255,255,.07);border-radius:18px;background:var(--bg-2);padding:18px 20px;box-shadow:0 8px 22px -12px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.05)}
-
-    /* Функции — pop-it карточки (убираем grid-дивайдеры) */
-    .caps{grid-template-columns:1fr;gap:14px;background:transparent;border:0}
-    .cap{border-radius:20px;padding:24px 22px;background:var(--bg-2);border:1px solid rgba(255,255,255,.07);box-shadow:0 8px 22px -12px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.05)}
-
-    /* Галерея — крупный радиус + тень */
-    .shot{border-radius:22px;box-shadow:0 12px 30px -14px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.05)}
-
-    /* «Сложные задачи» — мягкие карточки */
-    .also-card{border-radius:24px;padding:18px;box-shadow:0 12px 32px -16px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.05)}
-
-    /* Встроенные демо/анимации — скруглить рамки */
-    .demo,.demo-mini,.flow-embed{border-radius:20px}
-    .demo-embed iframe{border-radius:18px}
-
-    /* Блок статистики — отдельные карточки-«поп» вместо линий */
-    .trust{border:0;margin-top:clamp(40px,7vw,90px)}
-    .trust-row{grid-template-columns:1fr;gap:12px}
-    .trust-item{border:1px solid rgba(255,255,255,.08)!important;border-radius:18px;background:var(--bg-2);padding:22px;box-shadow:0 8px 22px -12px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.05)}
-  }
+  @media(max-width:430px){ .demo-embed iframe{height:520px} }
   @media(prefers-reduced-motion:reduce){
-    *{scroll-behavior:auto !important}
-    .reveal{opacity:1;transform:none;transition:none}
-    .btn:hover,.shot:hover{transform:none}
-  }
-
-  /* ═══════ ATMOSPHERE — свет, фактура, глубина (десктоп-полировка) ═══════ */
-  /* дыхание фона: три золотых облака за контентом */
-  body::before{
-    content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background:
-      radial-gradient(58% 44% at 84% -8%,rgba(201,167,92,.13),transparent 62%),
-      radial-gradient(46% 40% at -10% 34%,rgba(140,112,58,.08),transparent 60%),
-      radial-gradient(70% 55% at 50% 120%,rgba(201,167,92,.06),transparent 66%);
-  }
-  /* киноплёнка: едва заметное зерно поверх всего */
-  body::after{
-    content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-  .offer{background:transparent}
-  /* гильош-розетка: гравировка, медленный ход часового механизма */
-  .hero::before{
-    content:"";position:absolute;top:-300px;right:-320px;width:820px;height:820px;z-index:0;pointer-events:none;
-    background:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20840%20840%22%3E%3Cg%20fill=%22none%22%20stroke=%22%23C9A75C%22%20stroke-width=%220.55%22%20stroke-opacity=%220.32%22%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(0.0%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(8.18%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(16.36%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(24.55%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(32.73%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(40.91%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(49.09%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(57.27%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(65.45%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(73.64%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(81.82%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(90.0%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(98.18%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(106.36%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(114.55%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(122.73%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(130.91%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(139.09%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(147.27%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(155.45%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(163.64%20420%20420)%22/%3E%3Cellipse%20cx=%22420%22%20cy=%22420%22%20rx=%22396%22%20ry=%22118%22%20transform=%22rotate(171.82%20420%20420)%22/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
-    opacity:.28;
-    -webkit-mask-image:radial-gradient(58% 58% at 50% 50%,#000 26%,transparent 72%);
-    mask-image:radial-gradient(58% 58% at 50% 50%,#000 26%,transparent 72%);
-    animation:rosette 240s linear infinite;
-  }
-  @keyframes rosette{to{transform:rotate(360deg)}}
-  /* заголовки: свет сверху, золото в глубине */
-  h1,h2{
-    background:linear-gradient(180deg,#FBF8F0 0%,#EFE8D5 52%,#CBB27A 118%);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  h1 em,h2 em{
-    background:linear-gradient(180deg,var(--gold-bright),#A8853F);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  /* золотой шов под шапкой */
-  header::after{
-    content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;pointer-events:none;
-    background:linear-gradient(90deg,transparent 4%,rgba(201,167,92,.55),transparent 96%);
-  }
-  /* спотлайт: карточки отвечают на курсор */
-  .cap,.plan,.also-card,.pains li,.op-points li,.trust-item{position:relative}
-  .cap::after,.plan::after,.also-card::after,.pains li::after,.op-points li::after,.trust-item::after{
-    content:"";position:absolute;inset:0;pointer-events:none;opacity:0;border-radius:inherit;
-    background:radial-gradient(300px 220px at var(--mx,50%) var(--my,-20%),rgba(201,167,92,.14),transparent 62%);
-    transition:opacity .45s ease;
-  }
-  .cap:hover::after,.plan:hover::after,.also-card:hover::after,.pains li:hover::after,.op-points li:hover::after,.trust-item:hover::after{opacity:1}
-  /* скриншоты: золотая кромка при наведении */
-  .shot{box-shadow:0 24px 60px -38px rgba(0,0,0,.85)}
-  .shot:hover{border-color:rgba(201,167,92,.45);box-shadow:0 30px 70px -34px rgba(0,0,0,.9),0 0 0 1px rgba(201,167,92,.12)}
-  /* кнопки: пробегающий блик + золотое свечение */
-  .btn{position:relative;overflow:hidden}
-  .btn-gold::before{
-    content:"";position:absolute;top:0;bottom:0;left:-70%;width:45%;
-    background:linear-gradient(105deg,transparent,rgba(255,252,240,.55),transparent);
-    transform:skewX(-18deg);transition:left .65s ease;pointer-events:none;
-  }
-  .btn-gold:hover::before{left:125%}
-  .btn-gold:hover{box-shadow:0 14px 38px -12px rgba(201,167,92,.55)}
-  /* витрина: лёгкий объём при наведении */
-  @media(hover:hover){
-    .vitrine{transition:transform .6s cubic-bezier(.2,.6,.2,1),box-shadow .6s ease}
-    .vitrine:hover{transform:perspective(1100px) rotateX(1.6deg) rotateY(-2.2deg) translateY(-3px);box-shadow:0 60px 120px -55px rgba(0,0,0,.95),inset 0 1px 0 rgba(231,203,124,.12)}
-  }
-  /* появление: из мягкого фокуса */
-  .js .reveal{filter:blur(4px);transition:opacity .5s ease,transform .5s ease,filter .45s ease}
-  .js .reveal.in{filter:blur(0)}
-  /* тонкий фирменный скроллбар */
-  ::-webkit-scrollbar{width:11px}
-  ::-webkit-scrollbar-track{background:var(--bg)}
-  ::-webkit-scrollbar-thumb{background:#2A2C33;border-radius:6px;border:3px solid var(--bg)}
-  ::-webkit-scrollbar-thumb:hover{background:#584A2C}
-  /* фикс шапки на узких экранах: кнопка в одну строку, не выше навбара */
-  @media(max-width:640px){
-    .nav{gap:10px}
-    .nav .btn{padding:10px 14px;font-size:13.5px;white-space:nowrap;flex-shrink:0}
-    .brand{white-space:nowrap}
-  }
-  @media(prefers-reduced-motion:reduce){
-    .js .reveal{filter:none;transition:none}
-    .btn-gold::before{display:none}
-    .vitrine,.vitrine:hover{transform:none}
-    .cap::after,.plan::after,.also-card::after,.pains li::after,.op-points li::after,.trust-item::after{transition:none}
-  }
-
-  /* ═══════ COMPOSITION — монументальная типографика, bento, ритм ═══════ */
-  /* hero: заголовок-монумент на всю ширину */
-  .hero-title{font-size:clamp(46px,8.4vw,116px);line-height:.99;letter-spacing:-.035em;margin:26px 0 clamp(30px,4vw,52px);max-width:none}
-  .hero-sub{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(32px,4vw,56px);align-items:end}
-  .hero-left .lead{margin-bottom:30px}
-  /* бегущая строка стека */
-  /* trust: гигантские факты вместо мелкой полосы */
-  .trust-item{text-align:left;padding:32px 26px 30px}
-  .trust-item b{
-    font-size:clamp(34px,3.8vw,56px);line-height:1;letter-spacing:-.02em;
-    background:linear-gradient(180deg,#FBF8F0 0%,#EFE8D5 52%,#CBB27A 118%);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  .trust-item span{display:block;margin-top:12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em}
-  /* заголовки секций крупнее: журнальный масштаб */
-  h2{font-size:clamp(34px,5vw,64px)}
-  /* карточки: призрачные номера-водяные знаки */
-  .cap{overflow:hidden}
-  .cap .n{display:none}
-  /* bento: раскладка по числу карточек */
-  @media(min-width:901px){
-    .caps{grid-template-columns:repeat(6,1fr)}
-    .cap{grid-column:span 2}
-    /* 6 карточек: первая — большая 2x2, последняя — широкая */
-    .caps:has(.cap:nth-child(6)) .cap:first-child{
-      grid-column:span 4;grid-row:span 2;display:flex;flex-direction:column;justify-content:flex-end;min-height:380px;
-      background:
-        radial-gradient(90% 90% at 8% 0%,rgba(201,167,92,.10),transparent 55%),
-        var(--bg);
-    }
-    .caps:has(.cap:nth-child(6)) .cap:first-child h3{font-size:30px}
-    .caps:has(.cap:nth-child(6)) .cap:first-child p{font-size:16.5px;max-width:52ch}
-    /* 4 карточки: строгие 2x2 */
-    .caps:has(.cap:nth-child(4)):not(:has(.cap:nth-child(5))) .cap{grid-column:span 3}
-    /* сцепка «голова слева липнет, контент скроллится» */
-    .two>div:first-child{position:sticky;top:110px;align-self:start}
-  }
-  @media(max-width:900px){
-    .hero-sub{grid-template-columns:1fr;align-items:start}
-    .hero-title{font-size:clamp(40px,10.5vw,64px)}
-  }
-  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
     .hero::before{animation:none}
+    .js .rv{opacity:1;transform:none;transition:none}
+    .btn{transition:none}
   }
 </style>
 </head>
@@ -465,8 +216,8 @@
 <header>
   <div class="wrap nav">
     <div class="brand">Maegami<b>Dev</b></div>
-    <div style="display:flex;align-items:center;gap:12px">
-      <select id="langSelect" aria-label="Language / Мова / Язык" style="font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--ink-soft);background:var(--bg);border:1px solid var(--line-soft);border-radius:2px;padding:9px 10px;cursor:pointer;appearance:auto;transition:border-color .25s ease,color .25s ease">
+    <div class="nav-right">
+      <select id="langSelect" aria-label="Language / Мова / Язык">
         <option value="uk">UA</option>
         <option value="ru">RU</option>
         <option value="en">EN</option>
@@ -476,261 +227,265 @@
   </div>
 </header>
 
+<main>
+
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-glow"></div>
-  <div class="wrap">
-    <span class="eyebrow">Разработка интернет-магазинов под ключ</span>
-    <h1 class="hero-title">Интернет-магазин, который продаёт <em>сам</em> — пока вы заняты делом.</h1>
-    <div class="hero-sub">
-      <div class="hero-left">
-        <p class="lead">Полноценная e-commerce платформа: каталог, корзина, онлайн-оплата и интеграция служб доставки. Дополнительная витрина в Telegram — покупка завершается прямо в мессенджере, а заказы поступают в реальном времени. Реализованный проект — Euphoria, нишевая арабская парфюмерия.</p>
-        <div class="hero-cta">
-          <a class="btn btn-gold" href="https://t.me/maegamidev">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.4 18.6 20c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6 14 1.1 12.5c-1-.3-1.1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.4z"/></svg>
-            Написать в Telegram
-          </a>
-          <a class="btn btn-ghost" href="https://www.euphoria-parfum.com.ua" target="_blank" rel="noopener">Открыть живой магазин →</a>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Интернет-магазины под ключ · сайт + Telegram</span>
+      <h1>Клиенты пишут ночью. <em>Отвечать не обязательно.</em></h1>
+      <p class="lead">Я собираю магазины, которые сами показывают наличие, принимают оплату и оформляют доставку. И сам продаю парфюмерию с такого: эту жизнь знаю изнутри, а не по чужим кейсам.</p>
+      <div class="hero-cta">
+        <a class="btn btn-gold" href="https://t.me/maegamidev">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.4 18.6 20c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6 14 1.1 12.5c-1-.3-1.1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.4z"/></svg>
+          Написать в Telegram
+        </a>
+        <a class="btn btn-ghost" href="https://www.euphoria-parfum.com.ua" target="_blank" rel="noopener">Открыть живой магазин →</a>
+      </div>
+      <p class="peer">MaegamiDev · продаю сам, собираю для других</p>
+    </div>
+    <div>
+      <div class="dm rv">
+        <div class="dm-head">
+          <span class="dm-ava">К</span>
+          <div><div class="dm-name">Директ</div><div class="dm-sub">вечер вторника</div></div>
+        </div>
+        <div class="dm-body">
+          <div class="dm-msg">Добрый вечер! Сколько стоит?<i>22:40</i></div>
+          <div class="dm-msg">А в наличии есть?<i>22:44</i></div>
+          <div class="dm-msg">Можно фото отзывов?<i>22:51</i></div>
+          <div class="dm-msg">Куда оплатить?<i>23:02</i></div>
+          <div class="dm-badge">+7 новых, пока вы читали эти</div>
         </div>
       </div>
-      <figure class="vitrine">
-        <img src="assets/home-desktop.webp" alt="Главная страница интернет-магазина Euphoria — тёмный премиальный дизайн с золотом" fetchpriority="high" decoding="async">
-        <figcaption class="tag">Euphoria · вживую</figcaption>
-      </figure>
-    </div>
-  </div>
-
-  <!-- TRUST -->
-  <div class="trust">
-    <div class="wrap trust-row">
-      <div class="trust-item"><b>В&nbsp;продакшене</b><span>действующий коммерческий проект</span></div>
-      <div class="trust-item"><b>332</b><span>автоматических теста</span></div>
-      <div class="trust-item"><b>Доставка</b><span>интеграция служб и трекинг</span></div>
-      <div class="trust-item"><b>Омниканально</b><span>сайт и Telegram из единой базы</span></div>
+      <p class="caption dm-cap">Типичный вечер в директе. Знакомо?</p>
     </div>
   </div>
 </section>
 
-<!-- LIVE DEMO -->
-<section>
+<div class="night">
+
+<!-- СЦЕНА 1 -->
+<section class="scene">
+  <div class="wrap s-grid">
+    <div class="s-rail"><span class="s-time">22:47</span></div>
+    <div class="s-main">
+      <h2 class="rv">Тот же вечер, когда у клиента есть витрина</h2>
+      <p class="lead s-lead rv">Клиент сам находит товар, видит цену и наличие, сам оформляет заказ и оплату. Ниже не видео и не макет: живой прогон настоящего магазина.</p>
+      <div class="s-body">
+        <div class="demo-embed rv">
+          <iframe data-src="demo.html" title="Демонстрация магазина Euphoria: каталог, товар, корзина, оплата" loading="lazy" scrolling="no"></iframe>
+        </div>
+        <p class="mini-fact rv">Сайт и витрина в Telegram работают из одной базы: наличие везде совпадает.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- СЦЕНА 2 -->
+<section class="scene">
+  <div class="wrap s-grid">
+    <div class="s-rail"><span class="s-time">08:30</span></div>
+    <div class="s-main">
+      <h2 class="rv">Утром заказ уже готов</h2>
+      <p class="lead s-lead rv">Пока вы спали, магазин всё оформил сам. В Telegram лежит готовый заказ с предоплатой.</p>
+      <div class="s-body duo">
+        <div class="rv">
+          <div class="tg">
+            <div class="tg-head">
+              <span class="tg-ava">E</span>
+              <div><div class="tg-name">Euphoria</div><div class="tg-sub">бот магазина</div></div>
+            </div>
+            <div class="tg-body">
+              <div class="tg-msg">🛍 Нове замовлення #EU-3B7F19C2
+
+👤 Ірина К.
+📞 +380 •• ••• 12 47
+📍 Київ, Відділення №23
+💳 Накладений платіж ⚠️ очікує депозит 200.47 ₴
+
+🧴 Veneno Bianco 100мл × 1 — 2650 ₴
+
+💰 Разом: 2650 ₴
+💬 без коментарів</div>
+              <div class="tg-btns"><span class="tg-btn">✅ Депозит отримано</span><span class="tg-btn">📦 Відправлено</span></div>
+              <div class="tg-time">23:54</div>
+            </div>
+          </div>
+          <p class="caption" style="margin-top:10px">Формат сообщения: дословно из кода. Имя и телефон вымышлены.</p>
+        </div>
+        <div class="narr rv">
+          <p>Предоплата пришла на карту и сама сверилась с заказом: сумма собрана так, что банковская выписка сразу называет его номер.</p>
+          <p>Две кнопки прямо в чате: подтвердить оплату и отметить отправку. Закончился товар: наличие переключается там же, витрина обновится сама.</p>
+          <p class="mini-fact">Ни одного вопроса в директ за весь заказ.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /night -->
+
+<!-- ПРУФ -->
+<section class="block">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Демонстрация</span>
-      <h2>Магазин в&nbsp;действии.</h2>
-      <p class="lead">Реальный пользовательский сценарий Euphoria — путь покупателя от витрины до оформления заказа. Полностью самостоятельно, без ручного участия с вашей стороны.</p>
-    </div>
-    <div class="demo-embed reveal">
-      <iframe data-src="demo.html" title="Демонстрация магазина Euphoria: каталог, товар, корзина, оплата" loading="lazy" scrolling="no"></iframe>
-    </div>
-  </div>
-</section>
-
-<!-- PROBLEM -->
-<section>
-  <div class="wrap two">
-    <div class="reveal">
-      <span class="eyebrow">Знакомая ситуация</span>
-      <h2>Продажи в переписке<br>упираются в потолок.</h2>
-      <p class="lead" style="margin-top:18px">Аудитория есть, но каждая продажа — это ручная переписка. Заказы собираются вручную, а часть клиентов уходит, не дождавшись ответа.</p>
-    </div>
-    <ul class="pains reveal">
-      <li>«Скиньте фото», «сколько стоит?», «куда оплатить?» — <b>десятки раз в день вручную.</b></li>
-      <li>Оплата и логистика оформляются руками: реквизиты, ТТН, подтверждения. <b>Медленно, и часть заказов теряется.</b></li>
-      <li>Переход из мессенджера на сторонний сайт — <b>обрывает покупку.</b></li>
-      <li>Заказы и остатки живут в переписке. <b>Нет учёта — есть потери.</b></li>
-    </ul>
-  </div>
-  <div class="wrap" style="margin-top:clamp(38px,5vw,58px)">
-    <div class="flow-embed reveal"><iframe data-src="flow.html" title="Из личной переписки — в магазин" loading="lazy" scrolling="no"></iframe></div>
-  </div>
-</section>
-
-<!-- CASE / GALLERY -->
-<section>
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Интерфейс</span>
-      <h2>Внимание к каждому экрану.</h2>
-      <p class="lead">Реальные экраны Euphoria: каталог, карточка товара, оформление заказа и интерактивный подбор. Каждый экран проработан до детали.</p>
-    </div>
-
-    <div class="gallery">
-      <figure class="shot feature reveal">
-        <img src="assets/catalogue-desktop.webp" alt="Каталог магазина с фильтрами и категориями" loading="lazy" decoding="async">
-        <figcaption><b>Каталог</b>Поиск, категории и фильтрация — нужный товар находится за секунды.</figcaption>
+    <span class="eyebrow rv">Живой пример</span>
+    <h2 class="rv">Я так продаю сам</h2>
+    <p class="lead rv">Euphoria: мой магазин арабской парфюмерии. Он не выставочный, он торгует каждый день. Откройте и потрогайте.</p>
+    <div class="proof-row">
+      <figure class="shot rv">
+        <div class="shot-bar"><span class="sdot"></span><span class="sdot"></span><span class="sdot"></span><span class="shot-url">euphoria-parfum.com.ua</span></div>
+        <img src="assets/home-desktop.webp" alt="Главная страница магазина Euphoria" loading="lazy" decoding="async">
       </figure>
-      <figure class="shot reveal">
-        <img src="assets/product-desktop.webp" alt="Карточка товара" loading="lazy" decoding="async">
-        <figcaption><b>Карточка товара</b>Галерея, характеристики, цена и добавление в корзину на одном экране.</figcaption>
-      </figure>
-      <figure class="shot reveal">
-        <img src="assets/cart-desktop.webp" alt="Корзина и оформление заказа" loading="lazy" decoding="async">
-        <figcaption><b>Корзина и оформление</b>Интеграция служб доставки — отделение подтягивается автоматически.</figcaption>
-      </figure>
-      <figure class="shot reveal">
-        <img src="assets/quiz-desktop.webp" alt="Интерактивный подбор аромата" loading="lazy" decoding="async">
-        <figcaption><b>Интерактивный подбор</b>Помогает выбрать товар, вовлекает и повышает конверсию.</figcaption>
-      </figure>
+      <div class="proof-side">
+        <figure class="shot rv"><img src="assets/catalogue-desktop.webp" alt="Каталог магазина Euphoria" loading="lazy" decoding="async"></figure>
+        <figure class="shot rv"><img src="assets/quiz-desktop.webp" alt="Интерактивный подбор аромата" loading="lazy" decoding="async"></figure>
+      </div>
     </div>
+    <div class="proof-cta rv">
+      <a class="btn btn-gold" href="https://www.euphoria-parfum.com.ua" target="_blank" rel="noopener">Открыть живой магазин →</a>
+      <a class="btn btn-ghost" href="/euphoria.html">Как это устроено внутри →</a>
+    </div>
+    <p class="mini-fact rv">За поведением магазина следят 332 автоматические проверки: ломаться молча ему не дают.</p>
   </div>
 </section>
 
-<!-- CAPABILITIES -->
-<section>
+<!-- ЦЕНЫ -->
+<section class="block">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Функциональность</span>
-      <h2>Не просто сайт — инструмент продаж.</h2>
-    </div>
-    <div class="caps">
-      <div class="cap reveal"><div class="n">01</div><h3>Витрина и каталог</h3><p>Каталог, карточки, поиск, блог и подбор по параметрам. Адаптивно и быстро на любом устройстве.</p></div>
-      <div class="cap reveal"><div class="n">02</div><h3>Telegram Mini App</h3><p>Полноценная витрина внутри мессенджера — продажа там, где клиент уже находится.</p></div>
-      <div class="cap reveal"><div class="n">03</div><h3>Приём платежей</h3><p>Онлайн-оплата картой (LiqPay/эквайринг) и альтернативные методы — под ваш бизнес и юридический статус.</p></div>
-      <div class="cap reveal"><div class="n">04</div><h3>Интеграция доставки</h3><p>Поиск отделения, автозаполнение, формирование ТТН. Минимум ручных операций по каждому заказу.</p></div>
-      <div class="cap reveal"><div class="n">05</div><h3>Админ-панель и учёт</h3><p>Товары, заказы, промокоды, рассылки. Уведомление о заказе — в Telegram с быстрыми действиями.</p></div>
-      <div class="cap reveal"><div class="n">06</div><h3>Маркетинг и аналитика</h3><p>Брошенные корзины, email-цепочки, SEO и сквозная аналитика — чтобы возвращать тех, кто не купил.</p></div>
-    </div>
+    <span class="eyebrow rv">Стоимость</span>
+    <h2 class="rv">Сколько это стоит</h2>
+    <p class="lead rv">Три ступени: от лёгкой витрины до полного магазина с оплатой. Выберите свою: состав и цена ниже, точную смету назову после короткого брифа.</p>
+    <div class="calc-embed rv"><iframe data-src="calc.html" title="Калькулятор услуг: соберите свой проект" loading="lazy"></iframe></div>
+    <p class="retainer rv">Нужна поддержка и развитие после запуска? Ретейнер: <b>от $300/мес</b>, по желанию.</p>
   </div>
 </section>
 
-<!-- OFFER -->
-<section class="offer">
+<!-- ВЕТКА: НЕ МАГАЗИН -->
+<section class="block">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Форматы</span>
-      <h2>Выберите масштаб.</h2>
-      <p class="lead">Стоимость зависит от объёма каталога и набора функций. Точную смету назову после короткого брифа по вашему проекту.</p>
-    </div>
-    <div class="calc-embed reveal"><iframe data-src="calc.html" title="Калькулятор услуг — соберите свой проект" loading="lazy"></iframe></div>
-    <p class="lead" style="text-align:center;max-width:none;margin:24px auto 0;color:var(--ink-faint)">Нужна поддержка и развитие после запуска? Ретейнер — <strong style="color:var(--ink-soft)">от&nbsp;$300/мес</strong>, по желанию.</p>
-  </div>
-</section>
-
-<!-- ALSO -->
-<section>
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Не только e-commerce</span>
-      <h2>Решаю и сложные задачи.</h2>
-    </div>
-    <div class="also">
-      <div class="also-card reveal">
-        <div class="demo-mini"><iframe data-src="roborio.html" title="Roborio — Solana dApp" loading="lazy" scrolling="no"></iframe></div>
-        <div class="k">Web3 · Solana</div>
+    <span class="eyebrow rv">Не только магазины</span>
+    <h2 class="rv">Нужна штука под задачу? Тоже ко мне</h2>
+    <p class="lead rv">Приложения под конкретную задачу: от ботов до программ для компьютера. Два примера, оба можно потрогать прямо здесь.</p>
+    <div class="branch">
+      <div class="branch-card rv">
+        <div class="demo-mini"><iframe data-src="roborio.html" title="Roborio: безопасные онлайн-сделки" loading="lazy" scrolling="no"></iframe></div>
+        <div class="k">веб-приложение · сделки</div>
         <h3>Roborio</h3>
-        <p>Full-stack dApp на Solana со смарт-контрактом escrow (Rust): подключение кошельков, on-chain логика, безопасные сделки.</p>
+        <p>Сделки онлайн, где деньги до выполнения условий держит программа, а не посредник. Внесли средства, условия выполнены: код отдал деньги. С предоплатой никто не убежит.</p>
       </div>
-      <div class="also-card reveal">
-        <div class="demo-mini"><iframe data-src="chatradar.html" title="Chat Radar — детектор мошенничества" loading="lazy" scrolling="no"></iframe></div>
-        <div class="k">Desktop · AI</div>
+      <div class="branch-card rv">
+        <div class="demo-mini"><iframe data-src="chatradar.html" title="Chat Radar: защита от мошенников в переписке" loading="lazy" scrolling="no"></iframe></div>
+        <div class="k">программа для компьютера · ИИ</div>
         <h3>Chat Radar</h3>
-        <p>Десктопное приложение (Tauri/Rust) с интеграцией AI — локальный анализ переписок на признаки мошенничества.</p>
+        <p>Читает переписку и подсвечивает признаки мошенничества до того, как вы отправите деньги. Работает прямо на компьютере: переписка никуда не отправляется.</p>
       </div>
     </div>
+    <p class="branch-note rv">Расскажите свою задачу простыми словами: отвечу, собирается ли она и сколько займёт.</p>
   </div>
 </section>
 
-<!-- PIXEL RESCUE -->
-<section id="pixel-rescue">
+<!-- ВЕТКА: ПИКСЕЛЬ -->
+<section class="block" id="pixel-rescue">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="eyebrow">Отдельная услуга</span>
-      <h2>Реклама идёт, а Meta<br>не видит продаж.</h2>
-      <p class="lead">Частая картина: пиксель стоит, но считает только заходы. Purchase не долетает или задваивается, Meta оптимизирует рекламу вслепую. Чинится это обычно за день-два.</p>
+    <span class="eyebrow rv">Отдельная услуга</span>
+    <h2 class="rv">Реклама идёт, а продаж в отчётах нет</h2>
+    <p class="lead rv">Частая история у магазинов с рекламой в Instagram и Facebook: деньги крутятся, а система не видит покупок и целится вслепую. Чинится обычно за день-два.</p>
+    <div class="px-list">
+      <p class="rv"><b>Сначала бесплатный диагноз.</b> Проверю, какие события о покупках реально доходят до Meta, и пришлю короткий разбор со скринами.</p>
+      <p class="rv"><b>Чиню на вашем сайте, без переезда.</b> Настраиваю передачу всех шагов от просмотра до покупки, без задвоений и потерь.</p>
+      <p class="rv"><b>Оплата после результата.</b> Сначала вы видите покупки в своём рекламном кабинете, потом платите.</p>
     </div>
-    <div class="caps">
-      <div class="cap reveal"><div class="n">01</div><h3>Диагноз бесплатно</h3><p>Проверяю, какие события реально доходят до Meta: браузерная воронка, серверные события, дубли. Присылаю короткий разбор со скринами.</p></div>
-      <div class="cap reveal"><div class="n">02</div><h3>Починка воронки и CAPI</h3><p>ViewContent, AddToCart, InitiateCheckout, Purchase: браузер и сервер с дедупликацией по event_id. На вашем движке, без переезда.</p></div>
-      <div class="cap reveal"><div class="n">03</div><h3>Оплата после результата</h3><p>Сначала вы видите события в своём Events Manager, потом платите. Цену называю после диагноза, до старта работ.</p></div>
-    </div>
-    <p class="lead" style="text-align:center;max-width:none;margin:26px auto 0;color:var(--ink-faint)">Свежий пример: у себя в Euphoria нашёл и закрыл потерю серверных Purchase-событий. <strong style="color:var(--ink-soft)">Полная воронка, дедупликация браузер+сервер, проверено в Events Manager.</strong></p>
+    <p class="px-note rv">У себя в Euphoria я ловил ровно эту болезнь: покупки терялись по дороге. Нашёл, починил, проверил. <a href="/euphoria.html">Разбор в кейсе</a>.</p>
   </div>
 </section>
 
-<!-- FINAL CTA -->
-<section class="final">
-  <div class="hero-glow"></div>
+<!-- КАК НАЧНЁМ -->
+<section class="block">
   <div class="wrap">
-    <h2 class="reveal">Расскажите о вашем проекте.</h2>
-    <p class="reveal">Напишите, чем торгуете и где продаёте сейчас — отвечу в течение дня и предложу, как это будет работать у вас.</p>
-    <a class="btn btn-gold reveal" href="https://t.me/maegamidev">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.4 18.6 20c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6 14 1.1 12.5c-1-.3-1.1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.4z"/></svg>
-      Написать в Telegram
-    </a>
+    <span class="eyebrow rv">Процесс</span>
+    <h2 class="rv">Как начнём</h2>
+    <ol class="how">
+      <li class="rv"><h3>Напишите</h3><p>Чем торгуете и где продаёте сейчас. Пары предложений достаточно.</p></li>
+      <li class="rv"><h3>Короткий бриф</h3><p>Десять вопросов. Отвечать можно текстом или голосовыми, как удобнее.</p></li>
+      <li class="rv"><h3>Цена и старт</h3><p>Называю точную смету и срок. Предоплата 50%, начинаю собирать.</p></li>
+      <li class="rv"><h3>Сдача</h3><p>Показываю готовое, правим детали. Остаток после сдачи.</p></li>
+    </ol>
+    <p class="no-calls rv">Всё в переписке. Созвоны не понадобятся.</p>
   </div>
 </section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap">
+    <span class="eyebrow rv">MaegamiDev</span>
+    <h2 class="rv">Расскажите о вашей задаче</h2>
+    <p class="lead rv">Чем торгуете, где продаёте сейчас, что болит. Отвечаю в течение дня.</p>
+    <div class="hero-cta rv">
+      <a class="btn btn-gold" href="https://t.me/maegamidev">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.4 18.6 20c-.2 1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.3-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6 14 1.1 12.5c-1-.3-1.1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.4z"/></svg>
+        Написать в Telegram
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
 
 <footer>
   <div class="wrap foot">
-    <div class="brand">Maegami<b>Dev</b></div>
-    <div>Разработка интернет-магазинов под ключ · сайт + Telegram · <a href="https://t.me/maegamidev">@maegamidev</a></div>
+    <span>© 2026 MaegamiDev</span>
+    <span><a href="/euphoria.html">Кейс Euphoria</a> · <a href="https://www.euphoria-parfum.com.ua" target="_blank" rel="noopener">euphoria-parfum.com.ua</a></span>
   </div>
 </footer>
 
 <script>
-  // мягкое появление при прокрутке (уважает prefers-reduced-motion)
-  const items = document.querySelectorAll('.reveal');
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    items.forEach(el => el.classList.add('in'));
-  } else {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('in'), (i % 4) * 70);
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    items.forEach(el => io.observe(el));
-  }
-
-  // живой демо-монтаж: смена реальных кадров + курсор
+  // появление блоков
   (function(){
-    const demo = document.querySelector('.demo');
-    if(!demo) return;
-    const frames = demo.querySelectorAll('.frame');
-    const steps = demo.querySelectorAll('.step');
-    const cursor = demo.querySelector('.cursor');
-    const targets = [[38,55],[72,74],[82,62]]; // % положения курсора по кадрам
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let i = 0, timer = null;
-    function show(n){
-      frames.forEach((f,k)=>f.classList.toggle('active', k===n));
-      steps.forEach((s,k)=>s.classList.toggle('active', k===n));
-      if(!reduce){
-        const [x,y] = targets[n];
-        cursor.style.left = x+'%'; cursor.style.top = y+'%';
-        cursor.classList.remove('click'); void cursor.offsetWidth; cursor.classList.add('click');
-      }
-      i = n;
+    var els = document.querySelectorAll('.rv');
+    if(!('IntersectionObserver' in window)){
+      els.forEach(function(el){ el.classList.add('in'); });
+      return;
     }
-    function next(){ show((i+1) % frames.length); }
-    function restart(){ clearInterval(timer); timer = setInterval(next, reduce ? 4500 : 2700); }
-    steps.forEach(s => s.addEventListener('click', () => { show(+s.dataset.i); restart(); }));
-    if(reduce){ cursor.style.display = 'none'; }
-    const io = new IntersectionObserver((e) => {
-      if(e[0].isIntersecting){ restart(); } else { clearInterval(timer); }
-    }, { threshold: 0.3 });
-    io.observe(demo);
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(el){ io.observe(el); });
   })();
+</script>
 
+<script>
+/* embeds: src only after full load, so their runtimes don't steal the first paint */
+window.addEventListener('load', function () {
+  requestAnimationFrame(function () {
+    document.querySelectorAll('iframe[data-src]').forEach(function (f) {
+      f.src = f.getAttribute('data-src');
+    });
+  });
+});
+</script>
+
+<script>
   // авто-высота калькулятора: iframe ровно по контенту (без внутреннего скролла)
   (function(){
-    const fr = document.querySelector('.calc-embed iframe');
+    var fr = document.querySelector('.calc-embed iframe');
     if(!fr) return;
     function fit(){
       try{
-        const d = fr.contentDocument || (fr.contentWindow && fr.contentWindow.document);
+        var d = fr.contentDocument || (fr.contentWindow && fr.contentWindow.document);
         if(!d || !d.documentElement) return;
-        const h = (d.body && d.body.scrollHeight) ? d.body.scrollHeight : d.documentElement.scrollHeight;
+        var h = (d.body && d.body.scrollHeight) ? d.body.scrollHeight : d.documentElement.scrollHeight;
         if(h > 0) fr.style.height = h + 'px';
       }catch(e){}
     }
     function hook(){
       fit();
-      let n = 0; const iv = setInterval(() => { fit(); if(++n > 12) clearInterval(iv); }, 220);
+      var n = 0; var iv = setInterval(function(){ fit(); if(++n > 12) clearInterval(iv); }, 220);
       try{
-        const d = fr.contentDocument;
+        var d = fr.contentDocument;
         if(window.ResizeObserver && d && d.body){ new ResizeObserver(fit).observe(d.body); }
         if(fr.contentWindow){ fr.contentWindow.addEventListener('resize', fit); }
       }catch(e){}
@@ -738,17 +493,25 @@
     fr.addEventListener('load', hook);
     try{ if(fr.contentDocument && fr.contentDocument.readyState === 'complete'){ hook(); } }catch(e){}
   })();
+</script>
 
+<script>
   // Демо Roborio/Chat Radar: сцены фиксированного дизайна (~1000px). На узких экранах
-  // рендерим в десктопном размере и масштабируем вниз в 16/9-рамку — иначе кропаются.
+  // рендерим в десктопном размере и масштабируем вниз в 16/9-рамку. Фильтр по data-src:
+  // src проставляется только после window.load, на момент запуска он пуст.
   (function(){
-    const LW = 1000, LH = 562, BP = 768;
-    const items = [...document.querySelectorAll('.demo-mini')]
-      .map(box => ({ box, fr: box.querySelector('iframe') }))
-      .filter(x => x.fr && /roborio|chatradar/.test(x.fr.getAttribute('src') || ''));
-    function applyOne({ box, fr }){
+    var LW = 1000, LH = 562, BP = 768;
+    var items = Array.prototype.slice.call(document.querySelectorAll('.demo-mini'))
+      .map(function(box){ return { box: box, fr: box.querySelector('iframe') }; })
+      .filter(function(x){
+        if(!x.fr) return false;
+        var s = (x.fr.getAttribute('src') || '') + (x.fr.getAttribute('data-src') || '');
+        return /roborio|chatradar/.test(s);
+      });
+    function applyOne(x){
+      var box = x.box, fr = x.fr;
       if(window.innerWidth <= BP){
-        const s = box.clientWidth / LW;            // box остаётся ~ширины колонки (iframe absolute не раздувает)
+        var s = box.clientWidth / LW;
         box.style.position = 'relative';
         box.style.height = Math.round(LH * s) + 'px';
         fr.style.position = 'absolute';
@@ -765,178 +528,160 @@
         fr.style.transformOrigin = ''; fr.style.transform = '';
       }
     }
-    const applyAll = () => items.forEach(applyOne);
-    items.forEach(x => x.fr.addEventListener('load', () => applyOne(x)));
-    let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(applyAll, 150); });
+    function applyAll(){ items.forEach(applyOne); }
+    items.forEach(function(x){ x.fr.addEventListener('load', function(){ applyOne(x); }); });
+    window.addEventListener('resize', applyAll);
     applyAll();
   })();
+</script>
 
-  // ---- RU/EN language toggle (text-node swap, no markup changes) ----
+<script>
+  // i18n: RU в разметке, EN/UK словарями по текстовым нодам
   (function(){
     var EN = {
       "Написать в Telegram":"Message on Telegram",
-      "Разработка интернет-магазинов под ключ":"Turnkey online store development",
-      "Интернет-магазин, который продаёт":"An online store that sells",
-      "сам":"itself",
-      "— пока вы заняты делом.":"— while you focus on business.",
-      "Полноценная e-commerce платформа: каталог, корзина, онлайн-оплата и интеграция служб доставки. Дополнительная витрина в Telegram — покупка завершается прямо в мессенджере, а заказы поступают в реальном времени. Реализованный проект — Euphoria, нишевая арабская парфюмерия.":"A full e-commerce platform: catalogue, cart, online payments and carrier integration. A second storefront lives inside Telegram, so the purchase finishes right in the messenger and orders arrive in real time. Shipped project: Euphoria, niche Arabian perfumery.",
+      "Интернет-магазины под ключ · сайт + Telegram":"Turnkey online stores · site + Telegram",
+      "Клиенты пишут ночью.":"Customers write at night.",
+      "Отвечать не обязательно.":"You don't have to answer.",
+      "Я собираю магазины, которые сами показывают наличие, принимают оплату и оформляют доставку. И сам продаю парфюмерию с такого: эту жизнь знаю изнутри, а не по чужим кейсам.":"I build stores that show stock, take payment and arrange shipping on their own. And I sell perfume from one myself: I know this life from the inside, not from other people's case studies.",
       "Открыть живой магазин →":"Open the live store →",
-      "Euphoria · вживую":"Euphoria · live",
-      "В продакшене":"In production",
-      "действующий коммерческий проект":"a live commercial project",
-      "автоматических теста":"automated tests",
-      "Доставка":"Delivery",
-      "интеграция служб и трекинг":"carrier integration & tracking",
-      "Омниканально":"Omnichannel",
-      "сайт и Telegram из единой базы":"site & Telegram from one database",
-      "Демонстрация":"Demo",
-      "Магазин в действии.":"The store in action.",
-      "Реальный пользовательский сценарий Euphoria — путь покупателя от витрины до оформления заказа. Полностью самостоятельно, без ручного участия с вашей стороны.":"A real Euphoria user flow: the buyer's path from storefront to checkout. Fully self-serve, with no manual work on your side.",
-      "Знакомая ситуация":"Sound familiar?",
-      "Продажи в переписке":"Sales over DMs",
-      "упираются в потолок.":"hit a ceiling.",
-      "Аудитория есть, но каждая продажа — это ручная переписка. Заказы собираются вручную, а часть клиентов уходит, не дождавшись ответа.":"You have an audience, but every sale is a manual chat. Orders are pieced together by hand, and some customers leave before you reply.",
-      "«Скиньте фото», «сколько стоит?», «куда оплатить?» —":"“Send a photo”, “how much?”, “where do I pay?” —",
-      "десятки раз в день вручную.":"dozens of times a day, by hand.",
-      "Оплата и логистика оформляются руками: реквизиты, ТТН, подтверждения.":"Payments and shipping are done by hand: bank details, waybills, confirmations.",
-      "Медленно, и часть заказов теряется.":"Slow, and some orders get lost.",
-      "Переход из мессенджера на сторонний сайт —":"Jumping from the messenger to an external site —",
-      "обрывает покупку.":"breaks the purchase.",
-      "Заказы и остатки живут в переписке.":"Orders and stock live in the chat.",
-      "Нет учёта — есть потери.":"No records means losses.",
-      "Интерфейс":"Interface",
-      "Внимание к каждому экрану.":"Care on every screen.",
-      "Реальные экраны Euphoria: каталог, карточка товара, оформление заказа и интерактивный подбор. Каждый экран проработан до детали.":"Real Euphoria screens: catalogue, product page, checkout and an interactive finder. Every screen is worked out to the detail.",
-      "Каталог":"Catalogue",
-      "Поиск, категории и фильтрация — нужный товар находится за секунды.":"Search, categories and filters: the right product is found in seconds.",
-      "Карточка товара":"Product page",
-      "Галерея, характеристики, цена и добавление в корзину на одном экране.":"Gallery, specs, price and add-to-cart on one screen.",
-      "Корзина и оформление":"Cart & checkout",
-      "Интеграция служб доставки — отделение подтягивается автоматически.":"Carrier integration: the pickup point is filled in automatically.",
-      "Интерактивный подбор":"Interactive finder",
-      "Помогает выбрать товар, вовлекает и повышает конверсию.":"Helps pick a product, engages, and lifts conversion.",
-      "Функциональность":"Features",
-      "Не просто сайт — инструмент продаж.":"Not just a site, a sales tool.",
-      "Витрина и каталог":"Storefront & catalogue",
-      "Каталог, карточки, поиск, блог и подбор по параметрам. Адаптивно и быстро на любом устройстве.":"Catalogue, product cards, search, blog and a parameter finder. Responsive and fast on any device.",
-      "Полноценная витрина внутри мессенджера — продажа там, где клиент уже находится.":"A full storefront inside the messenger: selling where the customer already is.",
-      "Приём платежей":"Payments",
-      "Онлайн-оплата картой (LiqPay/эквайринг) и альтернативные методы — под ваш бизнес и юридический статус.":"Card payments (LiqPay/acquiring) and alternative methods, matched to your business and legal status.",
-      "Интеграция доставки":"Shipping integration",
-      "Поиск отделения, автозаполнение, формирование ТТН. Минимум ручных операций по каждому заказу.":"Pickup-point search, autofill, waybill generation. Minimal manual work per order.",
-      "Админ-панель и учёт":"Admin panel & records",
-      "Товары, заказы, промокоды, рассылки. Уведомление о заказе — в Telegram с быстрыми действиями.":"Products, orders, promo codes, campaigns. Order alerts in Telegram with quick actions.",
-      "Маркетинг и аналитика":"Marketing & analytics",
-      "Брошенные корзины, email-цепочки, SEO и сквозная аналитика — чтобы возвращать тех, кто не купил.":"Abandoned carts, email flows, SEO and end-to-end analytics, to win back those who didn't buy.",
-      "Форматы":"Packages",
-      "Выберите масштаб.":"Choose your scope.",
-      "Стоимость зависит от объёма каталога и набора функций. Точную смету назову после короткого брифа по вашему проекту.":"Pricing depends on catalogue size and the feature set. I'll give an exact quote after a short brief on your project.",
-      "Нужна поддержка и развитие после запуска? Ретейнер —":"Need support and growth after launch? Retainer:",
+      "MaegamiDev · продаю сам, собираю для других":"MaegamiDev · selling from my own store, building for others",
+      "Директ":"DMs",
+      "вечер вторника":"tuesday evening",
+      "Добрый вечер! Сколько стоит?":"Good evening! How much is it?",
+      "А в наличии есть?":"Is it in stock?",
+      "Можно фото отзывов?":"Can I see review photos?",
+      "Куда оплатить?":"Where do I pay?",
+      "+7 новых, пока вы читали эти":"+7 new while you were reading these",
+      "Типичный вечер в директе. Знакомо?":"A typical evening in the DMs. Sound familiar?",
+      "Тот же вечер, когда у клиента есть витрина":"The same evening, when the customer has a storefront",
+      "Клиент сам находит товар, видит цену и наличие, сам оформляет заказ и оплату. Ниже не видео и не макет: живой прогон настоящего магазина.":"The customer finds the product, sees the price and stock, places the order and pays, all by themselves. Below is not a video and not a mockup: a live run of the real store.",
+      "Сайт и витрина в Telegram работают из одной базы: наличие везде совпадает.":"The site and the Telegram storefront run from one database: stock matches everywhere.",
+      "Утром заказ уже готов":"By morning the order is ready",
+      "Пока вы спали, магазин всё оформил сам. В Telegram лежит готовый заказ с предоплатой.":"While you slept, the store handled everything. A finished order with a deposit is waiting in Telegram.",
+      "Формат сообщения: дословно из кода. Имя и телефон вымышлены.":"The message format is verbatim from the code. The name and the phone are made up.",
+      "бот магазина":"store bot",
+      "Предоплата пришла на карту и сама сверилась с заказом: сумма собрана так, что банковская выписка сразу называет его номер.":"The deposit arrived on the card and matched itself to the order: the amount is built so the bank statement names the order right away.",
+      "Две кнопки прямо в чате: подтвердить оплату и отметить отправку. Закончился товар: наличие переключается там же, витрина обновится сама.":"Two buttons right in the chat: confirm the payment and mark it shipped. Ran out of stock: availability switches there too, the storefront updates itself.",
+      "Ни одного вопроса в директ за весь заказ.":"Not a single DM question for the whole order.",
+      "Живой пример":"A live example",
+      "Я так продаю сам":"This is how I sell myself",
+      "Euphoria: мой магазин арабской парфюмерии. Он не выставочный, он торгует каждый день. Откройте и потрогайте.":"Euphoria is my own Arabic perfume store. It's not a showcase, it trades every day. Open it and try.",
+      "Как это устроено внутри →":"How it works inside →",
+      "За поведением магазина следят 332 автоматические проверки: ломаться молча ему не дают.":"332 automated checks watch the store's behavior: it isn't allowed to break silently.",
+      "Стоимость":"Pricing",
+      "Сколько это стоит":"What it costs",
+      "Три ступени: от лёгкой витрины до полного магазина с оплатой. Выберите свою: состав и цена ниже, точную смету назову после короткого брифа.":"Three tiers: from a light storefront to a full store with payments. Pick yours: what's included and the price are below, I'll give the exact quote after a short brief.",
+      "Нужна поддержка и развитие после запуска? Ретейнер:":"Need support and growth after launch? Retainer:",
       "от $300/мес":"from $300/mo",
       ", по желанию.":", optional.",
-      "Не только e-commerce":"Beyond e-commerce",
-      "Решаю и сложные задачи.":"I take on hard problems too.",
-      "Full-stack dApp на Solana со смарт-контрактом escrow (Rust): подключение кошельков, on-chain логика, безопасные сделки.":"Full-stack Solana dApp with an escrow smart contract (Rust): wallet connection, on-chain logic, safe deals.",
-      "Десктопное приложение (Tauri/Rust) с интеграцией AI — локальный анализ переписок на признаки мошенничества.":"A desktop app (Tauri/Rust) with AI: local analysis of chats for signs of fraud.",
-      "Расскажите о вашем проекте.":"Tell me about your project.",
-      "Напишите, чем торгуете и где продаёте сейчас — отвечу в течение дня и предложу, как это будет работать у вас.":"Tell me what you sell and where you sell now, and I'll reply within a day with how it would work for you.",
-      "Разработка интернет-магазинов под ключ · сайт + Telegram ·":"Turnkey online stores · site + Telegram ·",
-      "Отдельная услуга":"Standalone service",
-      "Реклама идёт, а Meta":"Ads are running, but Meta",
-      "не видит продаж.":"can't see your sales.",
-      "Частая картина: пиксель стоит, но считает только заходы. Purchase не долетает или задваивается, Meta оптимизирует рекламу вслепую. Чинится это обычно за день-два.":"A common picture: the pixel is installed but only counts visits. Purchase never arrives or fires twice, and Meta optimizes your ads blind. Usually fixed in a day or two.",
-      "Диагноз бесплатно":"Free diagnosis",
-      "Проверяю, какие события реально доходят до Meta: браузерная воронка, серверные события, дубли. Присылаю короткий разбор со скринами.":"I check which events actually reach Meta: the browser funnel, server events, duplicates. You get a short report with screenshots.",
-      "Починка воронки и CAPI":"Funnel & CAPI repair",
-      "ViewContent, AddToCart, InitiateCheckout, Purchase: браузер и сервер с дедупликацией по event_id. На вашем движке, без переезда.":"ViewContent, AddToCart, InitiateCheckout, Purchase: browser and server with event_id deduplication. On your platform, no migration.",
-      "Оплата после результата":"You pay after the result",
-      "Сначала вы видите события в своём Events Manager, потом платите. Цену называю после диагноза, до старта работ.":"First you see the events in your own Events Manager, then you pay. I quote after the diagnosis, before any work starts.",
-      "Свежий пример: у себя в Euphoria нашёл и закрыл потерю серверных Purchase-событий.":"Fresh example: on my own store Euphoria I found and fixed a silent loss of server-side Purchase events.",
-      "Полная воронка, дедупликация браузер+сервер, проверено в Events Manager.":"Full funnel, browser+server deduplication, verified in Events Manager."
+      "Не только магазины":"Not only stores",
+      "Нужна штука под задачу? Тоже ко мне":"Need a thing built for a task? Also me",
+      "Приложения под конкретную задачу: от ботов до программ для компьютера. Два примера, оба можно потрогать прямо здесь.":"Apps built for a specific task: from bots to desktop software. Two examples, both touchable right here.",
+      "веб-приложение · сделки":"web app · deals",
+      "Сделки онлайн, где деньги до выполнения условий держит программа, а не посредник. Внесли средства, условия выполнены: код отдал деньги. С предоплатой никто не убежит.":"Online deals where the money is held by a program, not a middleman, until the terms are met. Funds in, terms met: the code releases the money. Nobody runs off with a prepayment.",
+      "программа для компьютера · ИИ":"desktop app · AI",
+      "Читает переписку и подсвечивает признаки мошенничества до того, как вы отправите деньги. Работает прямо на компьютере: переписка никуда не отправляется.":"Reads a conversation and highlights signs of fraud before you send money. Runs right on your computer: the conversation never leaves it.",
+      "Расскажите свою задачу простыми словами: отвечу, собирается ли она и сколько займёт.":"Describe your task in plain words: I'll tell you whether it can be built and how long it takes.",
+      "Отдельная услуга":"A separate service",
+      "Реклама идёт, а продаж в отчётах нет":"Ads are running, but reports show no sales",
+      "Частая история у магазинов с рекламой в Instagram и Facebook: деньги крутятся, а система не видит покупок и целится вслепую. Чинится обычно за день-два.":"A common story for stores advertising on Instagram and Facebook: money is spinning, but the system doesn't see the purchases and aims blindly. Usually fixed in a day or two.",
+      "Сначала бесплатный диагноз.":"A free diagnosis first.",
+      "Проверю, какие события о покупках реально доходят до Meta, и пришлю короткий разбор со скринами.":"I'll check which purchase events actually reach Meta and send a short breakdown with screenshots.",
+      "Чиню на вашем сайте, без переезда.":"I fix it on your site, no migration.",
+      "Настраиваю передачу всех шагов от просмотра до покупки, без задвоений и потерь.":"I set up the delivery of every step from view to purchase, without duplicates or losses.",
+      "Оплата после результата.":"Payment after the result.",
+      "Сначала вы видите покупки в своём рекламном кабинете, потом платите.":"First you see the purchases in your own ads account, then you pay.",
+      "У себя в Euphoria я ловил ровно эту болезнь: покупки терялись по дороге. Нашёл, починил, проверил.":"In my own Euphoria I caught exactly this disease: purchases were getting lost on the way. Found it, fixed it, verified it.",
+      "Разбор в кейсе":"The breakdown is in the case study",
+      "Процесс":"The process",
+      "Как начнём":"How we start",
+      "Напишите":"Write to me",
+      "Чем торгуете и где продаёте сейчас. Пары предложений достаточно.":"What you sell and where you sell it now. A couple of sentences is enough.",
+      "Короткий бриф":"A short brief",
+      "Десять вопросов. Отвечать можно текстом или голосовыми, как удобнее.":"Ten questions. Answer by text or voice messages, whichever is easier.",
+      "Цена и старт":"Price and start",
+      "Называю точную смету и срок. Предоплата 50%, начинаю собирать.":"I give the exact quote and the timeline. 50% upfront, I start building.",
+      "Сдача":"Handover",
+      "Показываю готовое, правим детали. Остаток после сдачи.":"I show the finished work, we polish the details. The balance is paid after handover.",
+      "Всё в переписке. Созвоны не понадобятся.":"Everything in chat. No calls needed.",
+      "Расскажите о вашей задаче":"Tell me about your task",
+      "Чем торгуете, где продаёте сейчас, что болит. Отвечаю в течение дня.":"What you sell, where you sell it now, what hurts. I reply within a day.",
+      "Кейс Euphoria":"Euphoria case study"
     };
     var UK = {
       "Написать в Telegram":"Написати в Telegram",
-      "Разработка интернет-магазинов под ключ":"Розробка інтернет-магазинів під ключ",
-      "Интернет-магазин, который продаёт":"Інтернет-магазин, який продає",
-      "сам":"сам",
-      "— пока вы заняты делом.":"— поки ви зайняті справою.",
-      "Полноценная e-commerce платформа: каталог, корзина, онлайн-оплата и интеграция служб доставки. Дополнительная витрина в Telegram — покупка завершается прямо в мессенджере, а заказы поступают в реальном времени. Реализованный проект — Euphoria, нишевая арабская парфюмерия.":"Повноцінна e-commerce платформа: каталог, кошик, онлайн-оплата й інтеграція служб доставки. Додаткова вітрина в Telegram — покупка завершується прямо в месенджері, а замовлення надходять у реальному часі. Реалізований проєкт — Euphoria, нішева арабська парфумерія.",
+      "Интернет-магазины под ключ · сайт + Telegram":"Інтернет-магазини під ключ · сайт + Telegram",
+      "Клиенты пишут ночью.":"Клієнти пишуть уночі.",
+      "Отвечать не обязательно.":"Відповідати не обов'язково.",
+      "Я собираю магазины, которые сами показывают наличие, принимают оплату и оформляют доставку. И сам продаю парфюмерию с такого: эту жизнь знаю изнутри, а не по чужим кейсам.":"Я збираю магазини, які самі показують наявність, приймають оплату й оформлюють доставку. І сам продаю парфуми з такого: це життя знаю зсередини, а не з чужих кейсів.",
       "Открыть живой магазин →":"Відкрити живий магазин →",
-      "Euphoria · вживую":"Euphoria · наживо",
-      "В продакшене":"У продакшені",
-      "действующий коммерческий проект":"діючий комерційний проєкт",
-      "автоматических теста":"автоматичних тестів",
-      "Доставка":"Доставка",
-      "интеграция служб и трекинг":"інтеграція служб і трекінг",
-      "Омниканально":"Омніканально",
-      "сайт и Telegram из единой базы":"сайт і Telegram з єдиної бази",
-      "Демонстрация":"Демонстрація",
-      "Магазин в действии.":"Магазин у дії.",
-      "Реальный пользовательский сценарий Euphoria — путь покупателя от витрины до оформления заказа. Полностью самостоятельно, без ручного участия с вашей стороны.":"Реальний користувацький сценарій Euphoria — шлях покупця від вітрини до оформлення замовлення. Повністю самостійно, без ручної участі з вашого боку.",
-      "Знакомая ситуация":"Знайома ситуація",
-      "Продажи в переписке":"Продажі в переписці",
-      "упираются в потолок.":"впираються в стелю.",
-      "Аудитория есть, но каждая продажа — это ручная переписка. Заказы собираются вручную, а часть клиентов уходит, не дождавшись ответа.":"Аудиторія є, але кожен продаж — це ручна переписка. Замовлення збираються вручну, а частина клієнтів іде, не дочекавшись відповіді.",
-      "«Скиньте фото», «сколько стоит?», «куда оплатить?» —":"«Скиньте фото», «скільки коштує?», «куди оплатити?» —",
-      "десятки раз в день вручную.":"десятки разів на день вручну.",
-      "Оплата и логистика оформляются руками: реквизиты, ТТН, подтверждения.":"Оплата й логістика оформлюються руками: реквізити, ТТН, підтвердження.",
-      "Медленно, и часть заказов теряется.":"Повільно, і частина замовлень губиться.",
-      "Переход из мессенджера на сторонний сайт —":"Перехід із месенджера на сторонній сайт —",
-      "обрывает покупку.":"обриває покупку.",
-      "Заказы и остатки живут в переписке.":"Замовлення й залишки живуть у переписці.",
-      "Нет учёта — есть потери.":"Немає обліку — є втрати.",
-      "Интерфейс":"Інтерфейс",
-      "Внимание к каждому экрану.":"Увага до кожного екрана.",
-      "Реальные экраны Euphoria: каталог, карточка товара, оформление заказа и интерактивный подбор. Каждый экран проработан до детали.":"Реальні екрани Euphoria: каталог, картка товару, оформлення замовлення й інтерактивний підбір. Кожен екран пропрацьований до деталі.",
-      "Каталог":"Каталог",
-      "Поиск, категории и фильтрация — нужный товар находится за секунды.":"Пошук, категорії й фільтрація — потрібний товар знаходиться за секунди.",
-      "Карточка товара":"Картка товару",
-      "Галерея, характеристики, цена и добавление в корзину на одном экране.":"Галерея, характеристики, ціна й додавання в кошик на одному екрані.",
-      "Корзина и оформление":"Кошик і оформлення",
-      "Интеграция служб доставки — отделение подтягивается автоматически.":"Інтеграція служб доставки — відділення підтягується автоматично.",
-      "Интерактивный подбор":"Інтерактивний підбір",
-      "Помогает выбрать товар, вовлекает и повышает конверсию.":"Допомагає обрати товар, залучає і підвищує конверсію.",
-      "Функциональность":"Функціональність",
-      "Не просто сайт — инструмент продаж.":"Не просто сайт — інструмент продажів.",
-      "Витрина и каталог":"Вітрина і каталог",
-      "Каталог, карточки, поиск, блог и подбор по параметрам. Адаптивно и быстро на любом устройстве.":"Каталог, картки, пошук, блог і підбір за параметрами. Адаптивно і швидко на будь-якому пристрої.",
-      "Полноценная витрина внутри мессенджера — продажа там, где клиент уже находится.":"Повноцінна вітрина всередині месенджера — продаж там, де клієнт уже знаходиться.",
-      "Приём платежей":"Приймання платежів",
-      "Онлайн-оплата картой (LiqPay/эквайринг) и альтернативные методы — под ваш бизнес и юридический статус.":"Онлайн-оплата карткою (LiqPay/еквайринг) і альтернативні методи — під ваш бізнес і юридичний статус.",
-      "Интеграция доставки":"Інтеграція доставки",
-      "Поиск отделения, автозаполнение, формирование ТТН. Минимум ручных операций по каждому заказу.":"Пошук відділення, автозаповнення, формування ТТН. Мінімум ручних операцій по кожному замовленню.",
-      "Админ-панель и учёт":"Адмін-панель і облік",
-      "Товары, заказы, промокоды, рассылки. Уведомление о заказе — в Telegram с быстрыми действиями.":"Товари, замовлення, промокоди, розсилки. Сповіщення про замовлення — у Telegram зі швидкими діями.",
-      "Маркетинг и аналитика":"Маркетинг і аналітика",
-      "Брошенные корзины, email-цепочки, SEO и сквозная аналитика — чтобы возвращать тех, кто не купил.":"Покинуті кошики, email-ланцюжки, SEO і наскрізна аналітика — щоб повертати тих, хто не купив.",
-      "Форматы":"Формати",
-      "Выберите масштаб.":"Оберіть масштаб.",
-      "Стоимость зависит от объёма каталога и набора функций. Точную смету назову после короткого брифа по вашему проекту.":"Вартість залежить від обсягу каталогу й набору функцій. Точний кошторис назву після короткого брифу по вашому проєкту.",
-      "Нужна поддержка и развитие после запуска? Ретейнер —":"Потрібна підтримка й розвиток після запуску? Ретейнер —",
+      "MaegamiDev · продаю сам, собираю для других":"MaegamiDev · продаю сам, збираю для інших",
+      "Директ":"Директ",
+      "вечер вторника":"вечір вівторка",
+      "Добрый вечер! Сколько стоит?":"Добрий вечір! Скільки коштує?",
+      "А в наличии есть?":"А в наявності є?",
+      "Можно фото отзывов?":"Можна фото відгуків?",
+      "Куда оплатить?":"Куди оплатити?",
+      "+7 новых, пока вы читали эти":"+7 нових, поки ви читали ці",
+      "Типичный вечер в директе. Знакомо?":"Типовий вечір у директі. Знайомо?",
+      "Тот же вечер, когда у клиента есть витрина":"Той самий вечір, коли у клієнта є вітрина",
+      "Клиент сам находит товар, видит цену и наличие, сам оформляет заказ и оплату. Ниже не видео и не макет: живой прогон настоящего магазина.":"Клієнт сам знаходить товар, бачить ціну й наявність, сам оформлює замовлення й оплату. Нижче не відео і не макет: живий прогін справжнього магазину.",
+      "Сайт и витрина в Telegram работают из одной базы: наличие везде совпадает.":"Сайт і вітрина в Telegram працюють з однієї бази: наявність скрізь збігається.",
+      "Утром заказ уже готов":"Вранці замовлення вже готове",
+      "Пока вы спали, магазин всё оформил сам. В Telegram лежит готовый заказ с предоплатой.":"Поки ви спали, магазин усе оформив сам. У Telegram лежить готове замовлення з передоплатою.",
+      "Формат сообщения: дословно из кода. Имя и телефон вымышлены.":"Формат повідомлення: дослівно з коду. Ім'я і телефон вигадані.",
+      "бот магазина":"бот магазину",
+      "Предоплата пришла на карту и сама сверилась с заказом: сумма собрана так, что банковская выписка сразу называет его номер.":"Передоплата прийшла на картку й сама звірилася із замовленням: сума зібрана так, що банківська виписка одразу називає його номер.",
+      "Две кнопки прямо в чате: подтвердить оплату и отметить отправку. Закончился товар: наличие переключается там же, витрина обновится сама.":"Дві кнопки прямо в чаті: підтвердити оплату й позначити відправку. Закінчився товар: наявність перемикається там само, вітрина оновиться сама.",
+      "Ни одного вопроса в директ за весь заказ.":"Жодного питання в директ за все замовлення.",
+      "Живой пример":"Живий приклад",
+      "Я так продаю сам":"Я так продаю сам",
+      "Euphoria: мой магазин арабской парфюмерии. Он не выставочный, он торгует каждый день. Откройте и потрогайте.":"Euphoria: мій магазин арабської парфумерії. Він не виставковий, він торгує щодня. Відкрийте і поторкайте.",
+      "Как это устроено внутри →":"Як це влаштовано всередині →",
+      "За поведением магазина следят 332 автоматические проверки: ломаться молча ему не дают.":"За поведінкою магазину стежать 332 автоматичні перевірки: ламатися мовчки йому не дають.",
+      "Стоимость":"Вартість",
+      "Сколько это стоит":"Скільки це коштує",
+      "Три ступени: от лёгкой витрины до полного магазина с оплатой. Выберите свою: состав и цена ниже, точную смету назову после короткого брифа.":"Три ступені: від легкої вітрини до повного магазину з оплатою. Оберіть свою: склад і ціна нижче, точний кошторис назву після короткого брифу.",
+      "Нужна поддержка и развитие после запуска? Ретейнер:":"Потрібна підтримка й розвиток після запуску? Ретейнер:",
       "от $300/мес":"від $300/міс",
       ", по желанию.":", за бажанням.",
-      "Не только e-commerce":"Не тільки e-commerce",
-      "Решаю и сложные задачи.":"Вирішую і складні задачі.",
-      "Full-stack dApp на Solana со смарт-контрактом escrow (Rust): подключение кошельков, on-chain логика, безопасные сделки.":"Full-stack dApp на Solana зі смарт-контрактом escrow (Rust): підключення гаманців, on-chain логіка, безпечні угоди.",
-      "Десктопное приложение (Tauri/Rust) с интеграцией AI — локальный анализ переписок на признаки мошенничества.":"Десктопний застосунок (Tauri/Rust) з інтеграцією AI — локальний аналіз переписок на ознаки шахрайства.",
-      "Расскажите о вашем проекте.":"Розкажіть про ваш проєкт.",
-      "Напишите, чем торгуете и где продаёте сейчас — отвечу в течение дня и предложу, как это будет работать у вас.":"Напишіть, чим торгуєте і де продаєте зараз — відповім протягом дня і запропоную, як це працюватиме у вас.",
-      "Разработка интернет-магазинов под ключ · сайт + Telegram ·":"Розробка інтернет-магазинів під ключ · сайт + Telegram ·",
+      "Не только магазины":"Не лише магазини",
+      "Нужна штука под задачу? Тоже ко мне":"Потрібна штука під задачу? Теж до мене",
+      "Приложения под конкретную задачу: от ботов до программ для компьютера. Два примера, оба можно потрогать прямо здесь.":"Застосунки під конкретну задачу: від ботів до програм для комп'ютера. Два приклади, обидва можна поторкати прямо тут.",
+      "веб-приложение · сделки":"веб-застосунок · угоди",
+      "Сделки онлайн, где деньги до выполнения условий держит программа, а не посредник. Внесли средства, условия выполнены: код отдал деньги. С предоплатой никто не убежит.":"Угоди онлайн, де гроші до виконання умов тримає програма, а не посередник. Внесли кошти, умови виконано: код віддав гроші. З передоплатою ніхто не втече.",
+      "программа для компьютера · ИИ":"програма для комп'ютера · ШІ",
+      "Читает переписку и подсвечивает признаки мошенничества до того, как вы отправите деньги. Работает прямо на компьютере: переписка никуда не отправляется.":"Читає листування і підсвічує ознаки шахрайства до того, як ви відправите гроші. Працює прямо на комп'ютері: листування нікуди не відправляється.",
+      "Расскажите свою задачу простыми словами: отвечу, собирается ли она и сколько займёт.":"Розкажіть свою задачу простими словами: відповім, чи збирається вона і скільки займе.",
       "Отдельная услуга":"Окрема послуга",
-      "Реклама идёт, а Meta":"Реклама йде, а Meta",
-      "не видит продаж.":"не бачить продажів.",
-      "Частая картина: пиксель стоит, но считает только заходы. Purchase не долетает или задваивается, Meta оптимизирует рекламу вслепую. Чинится это обычно за день-два.":"Часта картина: піксель стоїть, але рахує тільки заходи. Purchase не долітає або задвоюється, Meta оптимізує рекламу наосліп. Зазвичай лагодиться за день-два.",
-      "Диагноз бесплатно":"Діагноз безкоштовно",
-      "Проверяю, какие события реально доходят до Meta: браузерная воронка, серверные события, дубли. Присылаю короткий разбор со скринами.":"Перевіряю, які події реально доходять до Meta: браузерна воронка, серверні події, дублі. Надсилаю короткий розбір зі скрінами.",
-      "Починка воронки и CAPI":"Лагодження воронки і CAPI",
-      "ViewContent, AddToCart, InitiateCheckout, Purchase: браузер и сервер с дедупликацией по event_id. На вашем движке, без переезда.":"ViewContent, AddToCart, InitiateCheckout, Purchase: браузер і сервер з дедуплікацією по event_id. На вашому рушії, без переїзду.",
-      "Оплата после результата":"Оплата після результату",
-      "Сначала вы видите события в своём Events Manager, потом платите. Цену называю после диагноза, до старта работ.":"Спочатку ви бачите події у своєму Events Manager, потім платите. Ціну називаю після діагнозу, до старту робіт.",
-      "Свежий пример: у себя в Euphoria нашёл и закрыл потерю серверных Purchase-событий.":"Свіжий приклад: у себе в Euphoria знайшов і закрив втрату серверних Purchase-подій.",
-      "Полная воронка, дедупликация браузер+сервер, проверено в Events Manager.":"Повна воронка, дедуплікація браузер+сервер, перевірено в Events Manager."
+      "Реклама идёт, а продаж в отчётах нет":"Реклама йде, а продажів у звітах немає",
+      "Частая история у магазинов с рекламой в Instagram и Facebook: деньги крутятся, а система не видит покупок и целится вслепую. Чинится обычно за день-два.":"Часта історія в магазинів з рекламою в Instagram і Facebook: гроші крутяться, а система не бачить покупок і цілиться наосліп. Лагодиться зазвичай за день-два.",
+      "Сначала бесплатный диагноз.":"Спершу безкоштовний діагноз.",
+      "Проверю, какие события о покупках реально доходят до Meta, и пришлю короткий разбор со скринами.":"Перевірю, які події про покупки реально доходять до Meta, і надішлю короткий розбір зі скрінами.",
+      "Чиню на вашем сайте, без переезда.":"Лагоджу на вашому сайті, без переїзду.",
+      "Настраиваю передачу всех шагов от просмотра до покупки, без задвоений и потерь.":"Налаштовую передачу всіх кроків від перегляду до покупки, без задвоєнь і втрат.",
+      "Оплата после результата.":"Оплата після результату.",
+      "Сначала вы видите покупки в своём рекламном кабинете, потом платите.":"Спершу ви бачите покупки у своєму рекламному кабінеті, потім платите.",
+      "У себя в Euphoria я ловил ровно эту болезнь: покупки терялись по дороге. Нашёл, починил, проверил.":"У себе в Euphoria я ловив рівно цю хворобу: покупки губилися дорогою. Знайшов, полагодив, перевірив.",
+      "Разбор в кейсе":"Розбір у кейсі",
+      "Процесс":"Процес",
+      "Как начнём":"Як почнемо",
+      "Напишите":"Напишіть",
+      "Чем торгуете и где продаёте сейчас. Пары предложений достаточно.":"Чим торгуєте і де продаєте зараз. Пари речень достатньо.",
+      "Короткий бриф":"Короткий бриф",
+      "Десять вопросов. Отвечать можно текстом или голосовыми, как удобнее.":"Десять питань. Відповідати можна текстом або голосовими, як зручніше.",
+      "Цена и старт":"Ціна і старт",
+      "Называю точную смету и срок. Предоплата 50%, начинаю собирать.":"Називаю точний кошторис і термін. Передоплата 50%, починаю збирати.",
+      "Сдача":"Здача",
+      "Показываю готовое, правим детали. Остаток после сдачи.":"Показую готове, правимо деталі. Залишок після здачі.",
+      "Всё в переписке. Созвоны не понадобятся.":"Все в листуванні. Дзвінки не знадобляться.",
+      "Расскажите о вашей задаче":"Розкажіть про вашу задачу",
+      "Чем торгуете, где продаёте сейчас, что болит. Отвечаю в течение дня.":"Чим торгуєте, де продаєте зараз, що болить. Відповідаю протягом дня.",
+      "Кейс Euphoria":"Кейс Euphoria"
     };
-    var TITLE = { ru: document.title, en: "MaegamiDev — turnkey online stores · Euphoria case", uk: "MaegamiDev — інтернет-магазини під ключ · кейс Euphoria" };
-    function norm(s){ return s.replace(/ /g,' ').replace(/\s+/g,' ').trim(); }
+    var TITLE = { ru: document.title, en: "MaegamiDev: stores that sell on their own · site + Telegram", uk: "MaegamiDev: магазини, які продають самі · сайт + Telegram" };
+    function norm(s){ return s.replace(/ /g,' ').replace(/\s+/g,' ').trim(); }
     var nodes = [];
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
       acceptNode: function(n){
@@ -985,42 +730,20 @@
       setLang(saved);
     } else {
       setLang(saved || byBrowser());
-      var geoDone = false;
-      var geoT = setTimeout(function(){ geoDone = true; }, 1500);
+      var done = false;
+      var t = setTimeout(function(){ done = true; }, 1500);
       fetch('https://ipapi.co/json/').then(function(r){ return r.json(); }).then(function(d){
-        if(geoDone) return; clearTimeout(geoT);
+        if(done) return; clearTimeout(t);
         var c = (d && d.country_code) || '';
         if(c === 'UA') setLang('uk');
         else if(c === 'RU' || c === 'BY') setLang('ru');
         else if(c) setLang(byBrowser());
-      }).catch(function(){ clearTimeout(geoT); });
+      }).catch(function(){ clearTimeout(t); });
     }
     if(sel) sel.addEventListener('change', function(){
       setLang(sel.value, true);
     });
   })();
-</script>
-<script>
-/* embeds: src only after full load, so their runtimes don't steal the first paint */
-window.addEventListener('load', function () {
-  requestAnimationFrame(function () {
-    document.querySelectorAll('iframe[data-src]').forEach(function (f) {
-      f.src = f.getAttribute('data-src');
-    });
-  });
-});
-</script>
-<script>
-(function(){
-  if(!matchMedia('(hover:hover)').matches || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
-  document.addEventListener('pointermove',function(e){
-    var t = e.target.closest('.cap,.plan,.also-card,.pains li,.op-points li,.trust-item');
-    if(!t) return;
-    var r = t.getBoundingClientRect();
-    t.style.setProperty('--mx',(e.clientX-r.left)+'px');
-    t.style.setProperty('--my',(e.clientY-r.top)+'px');
-  },{passive:true});
-})();
 </script>
 </body>
 </html>

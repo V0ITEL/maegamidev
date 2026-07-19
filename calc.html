@@ -26,71 +26,57 @@
  <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(58% 34% at 50% -4%, rgba(201,167,92,.05), transparent 62%);z-index:1;"></div>
  <div style="width:100%;max-width:600px;position:relative;z-index:2;">
 
-  <p style="font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 20px;max-width:46ch;">Отметьте нужные опции — вилка цены и ориентир по сроку обновятся ниже.</p>
-
-  <div style="{{ baseStyle }}">
-   <span style="{{ baseBoxStyle }}"><span style="{{ baseCheckStyle }}"></span></span>
-   <span style="flex:1;min-width:0;">
-     <span style="display:flex;justify-content:space-between;gap:12px;align-items:baseline;">
-       <span style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;">
-         <span style="font-size:15.5px;font-weight:600;color:var(--cream);">{{ baseName }}</span>
-         <span style="font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:rgba(201,167,92,.14);padding:3px 8px;border-radius:5px;">База</span>
-       </span>
-       <span style="{{ basePriceStyle }}">{{ basePrice }}</span>
-     </span>
-     <span style="display:block;font-size:13px;color:var(--muted);line-height:1.5;margin-top:5px;">Бот-витрина с каталогом, карточками товаров и приёмом заказов.</span>
-   </span>
-  </div>
-
-  <div style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:24px 4px 12px;">Дополнительно</div>
+  <p style="font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 20px;max-width:46ch;">Выберите ступень: состав и цена обновятся ниже.</p>
 
   <div style="display:flex;flex-direction:column;gap:10px;">
-   <sc-for list="{{ cards }}" as="card" hint-placeholder-count="5">
+   <sc-for list="{{ cards }}" as="card" hint-placeholder-count="3">
     <label style="{{ card.cardStyle }}" style-hover="box-shadow:0 8px 22px -12px rgba(0,0,0,.75);">
       <input type="checkbox" checked="{{ card.isSelected }}" onChange="{{ card.toggle }}" style="position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none;"/>
       <span style="{{ card.boxStyle }}"><span style="{{ card.checkStyle }}"></span></span>
       <span style="flex:1;min-width:0;">
         <span style="display:flex;justify-content:space-between;gap:12px;align-items:baseline;">
-          <span style="{{ card.titleStyle }}">{{ card.name }}</span>
+          <span style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;">
+            <span style="{{ card.titleStyle }}">{{ card.name }}</span>
+            <sc-if value="{{ card.hasBadge }}" hint-placeholder-val="{{ false }}"><span style="font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:rgba(201,167,92,.14);padding:3px 8px;border-radius:5px;">{{ card.badge }}</span></sc-if>
+          </span>
           <span style="{{ card.priceStyle }}">{{ card.priceLabel }}</span>
         </span>
-        <sc-if value="{{ showDesc }}" hint-placeholder-val="{{ true }}"><span style="{{ card.descStyle }}">{{ card.desc }}</span></sc-if>
+        <span style="{{ card.descStyle }}">{{ card.desc }}</span>
       </span>
     </label>
    </sc-for>
   </div>
 
   <div style="margin-top:26px;background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;box-shadow:0 30px 60px -34px rgba(0,0,0,.8);">
-    <sc-if value="{{ showBreakdown }}" hint-placeholder-val="{{ true }}">
-     <div style="margin-bottom:16px;">
-       <div style="font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:11px;">Входит в расчёт</div>
-       <div style="display:flex;flex-direction:column;gap:9px;">
-        <sc-for list="{{ breakdown }}" as="row" hint-placeholder-count="1">
-          <div style="display:flex;justify-content:space-between;gap:14px;align-items:baseline;">
-            <span style="font-size:13.5px;color:#C3C5CB;line-height:1.35;">{{ row.name }}</span>
-            <span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--faint);white-space:nowrap;">{{ row.range }}</span>
-          </div>
-        </sc-for>
-       </div>
-     </div>
-    </sc-if>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:11px;">Что входит</div>
+      <div style="display:flex;flex-direction:column;gap:9px;">
+       <sc-for list="{{ breakdown }}" as="row" hint-placeholder-count="5">
+         <div style="display:flex;gap:10px;align-items:baseline;">
+           <span style="flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:var(--gold);position:relative;top:-3px;"></span>
+           <span style="font-size:13.5px;color:#C3C5CB;line-height:1.4;">{{ row.name }}</span>
+         </div>
+       </sc-for>
+      </div>
+    </div>
 
     <div style="height:1px;background:var(--line);margin:4px 0 16px;"></div>
 
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px;">
       <div>
-        <div style="font-size:12.5px;color:var(--faint);margin-bottom:5px;">Примерно</div>
-        <div style="font-size:clamp(28px,7vw,36px);font-weight:700;letter-spacing:-.025em;line-height:1;font-variant-numeric:tabular-nums;color:var(--cream);">{{ totalLow }} <span style="color:var(--gold);font-weight:500;">–</span> {{ totalHigh }}</div>
+        <div style="font-size:12.5px;color:var(--faint);margin-bottom:5px;">Выбрано</div>
+        <div style="font-size:clamp(20px,5vw,26px);font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--cream);">{{ tierName }}</div>
       </div>
       <div style="text-align:right;">
-        <div style="font-size:12.5px;color:var(--faint);margin-bottom:5px;">Срок</div>
-        <div style="font-size:18px;font-weight:600;letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--cream);">~{{ weeksText }}</div>
+        <div style="font-size:12.5px;color:var(--faint);margin-bottom:5px;">Цена</div>
+        <div style="font-size:clamp(24px,6vw,32px);font-weight:700;letter-spacing:-.025em;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--cream);">{{ priceText }}</div>
       </div>
     </div>
 
     <a href="{{ ctaHref }}" target="_blank" rel="noopener noreferrer" style="{{ ctaStyle }}" style-hover="filter:brightness(1.06);">Обсудить в Telegram <span style="font-size:17px;line-height:0;">→</span></a>
 
-    <p style="text-align:center;font-size:12.5px;color:var(--faint);line-height:1.5;margin:13px 0 0;">Ориентир, точную смету назову после брифа.</p>
+    <p style="text-align:center;font-size:12.5px;color:var(--faint);line-height:1.5;margin:13px 0 0;">Каталог-старт полностью засчитывается при переходе на старшие ступени.</p>
+    <p style="text-align:center;font-size:12.5px;color:var(--faint);line-height:1.5;margin:6px 0 0;">Точную смету назову после короткого брифа.</p>
   </div>
 
  </div>
@@ -98,80 +84,45 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{
  &quot;$preview&quot;: {&quot;width&quot;: 640, &quot;height&quot;: 880},
- &quot;accent&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#C9A75C&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#C9A75C&quot;, &quot;#D9B25E&quot;, &quot;#B8893A&quot;, &quot;#C8B073&quot;]},
- &quot;showBreakdown&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;},
- &quot;compact&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;}
+ &quot;accent&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#C9A75C&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#C9A75C&quot;, &quot;#D9B25E&quot;, &quot;#B8893A&quot;, &quot;#C8B073&quot;]}
 }">
 class Component extends DCLogic {
-  state = { selected: {}, dispLow: 800, dispHigh: 1200, dispWeeks: 1 };
+  state = { tier: 'store' };
 
-  BASE = { name: 'Telegram-магазин', low: 800, high: 1200, weeks: 1 };
-  OPTIONS = [
-    { id: 'site', name: 'Полноценный сайт-магазин', desc: 'Отдельный сайт с каталогом, корзиной и страницами товаров — не только бот.', low: 2500, high: 4000, weeks: 2 },
-    { id: 'admin', name: 'Админ-панель и учёт', desc: 'Управление заказами, товарами и остатками из удобной панели.', low: 400, high: 700, weeks: 1 },
-    { id: 'seo', name: 'Блог и SEO', desc: 'Раздел статей и SEO-оптимизация под поиск Google — чтобы магазин находили в выдаче.', low: 500, high: 800, weeks: 1 },
-    { id: 'mkt', name: 'Маркетинг и аналитика', desc: 'Пиксели, цели и наглядные дашборды — видно, откуда приходят клиенты.', low: 500, high: 800, weeks: 1 },
-    { id: 'pay', name: 'Интеграция оплаты', desc: 'Онлайн-оплата картой, Apple Pay и Google Pay — приём платежей прямо в боте или на сайте.', low: 300, high: 500, weeks: 1 },
+  TIERS = [
+    { id: 'store', name: 'Магазин', price: 'от 35 000 грн', badge: 'всё включено',
+      desc: 'Корзина, оплата картой, интеграция служб доставки и админ-панель. Всё, что показано на этой странице.',
+      inc: ['Каталог целиком: поиск и фильтры', 'Корзина и оформление заказа', 'Оплата картой онлайн', 'Интеграция служб доставки', 'Админ-панель: товары, заказы, остатки', 'Уведомления о заказах в Telegram'] },
+    { id: 'catalog', name: 'Каталог', price: 'от 18 000 грн', badge: '',
+      desc: 'Все товары с фото, ценами и наличием. Заказ уходит в директ или форму.',
+      inc: ['Все товары: фото, цены, наличие', 'Поиск и фильтры', 'Кнопка заказа: директ или форма', 'Мобильная версия', 'Подключение домена'] },
+    { id: 'start', name: 'Каталог-старт', price: '8 000 грн', badge: 'лёгкий старт',
+      desc: '20-30 товаров с фото, ценами и наличием. Ступенька, чтобы начать без риска.',
+      inc: ['20-30 товаров: фото, цены, наличие', 'Кнопка заказа: директ или форма', 'Мобильная версия', 'Подключение домена', 'Полный зачёт при апгрейде'] },
   ];
 
-  componentWillUnmount() { if (this._raf) cancelAnimationFrame(this._raf); clearTimeout(this._fb); }
-
-  toggle(id) {
-    this.setState(s => ({ selected: { ...s.selected, [id]: !s.selected[id] } }), () => this.animate());
-  }
-
-  targets() {
-    let low = this.BASE.low, high = this.BASE.high, weeks = this.BASE.weeks;
-    for (const o of this.OPTIONS) { if (this.state.selected[o.id]) { low += o.low; high += o.high; weeks += o.weeks; } }
-    return { low, high, weeks };
-  }
-
-  animate() {
-    const t = this.targets();
-    const s0 = { low: this.state.dispLow, high: this.state.dispHigh, weeks: this.state.dispWeeks };
-    const t0 = performance.now(), dur = 420;
-    const ease = x => 1 - Math.pow(1 - x, 3);
-    if (this._raf) cancelAnimationFrame(this._raf);
-    const step = now => {
-      const k = Math.max(0, Math.min(1, (now - t0) / dur)), e = ease(k);
-      this.setState({
-        dispLow: Math.round(s0.low + (t.low - s0.low) * e),
-        dispHigh: Math.round(s0.high + (t.high - s0.high) * e),
-        dispWeeks: s0.weeks + (t.weeks - s0.weeks) * e,
-      });
-      if (k < 1) { this._raf = requestAnimationFrame(step); }
-      else { this._raf = null; this.setState({ dispLow: t.low, dispHigh: t.high, dispWeeks: t.weeks }); }
-    };
-    clearTimeout(this._fb);
-    this._fb = setTimeout(() => this.setState({ dispLow: t.low, dispHigh: t.high, dispWeeks: t.weeks }), 520);
-    this._raf = requestAnimationFrame(step);
-  }
-
-  fmt(n) { return Math.round(n).toLocaleString('ru-RU'); }
-  plural(n, f) { const a = n % 10, b = n % 100; if (a === 1 && b !== 11) return f[0]; if (a >= 2 && a <= 4 && (b < 10 || b >= 20)) return f[1]; return f[2]; }
+  select(id) { this.setState({ tier: id }); }
 
   hexToRgb(h) { h = String(h).replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); const n = parseInt(h, 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
   mix(a, b, t) { const A = this.hexToRgb(a), B = this.hexToRgb(b); return 'rgb(' + Math.round(A[0] + (B[0] - A[0]) * t) + ',' + Math.round(A[1] + (B[1] - A[1]) * t) + ',' + Math.round(A[2] + (B[2] - A[2]) * t) + ')'; }
 
   renderVals() {
     const accent = this.props.accent || '#C9A75C';
-    const showBreakdown = this.props.showBreakdown !== false;
-    const showDesc = !this.props.compact;
     const bg = '#0C0D10', panel = '#14161A';
     const tint = this.mix(panel, accent, 0.14);
-    const tintBase = this.mix(panel, accent, 0.17);
     const selBorder = this.mix(bg, accent, 0.5);
     const bright = this.mix(accent, '#ffffff', 0.3);
 
-    const mkBox = sel => ({ flex: '0 0 auto', width: '22px', height: '22px', borderRadius: '7px', border: '1.5px solid ' + (sel ? accent : '#3A3E46'), background: sel ? accent : 'rgba(255,255,255,.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .2s', marginTop: '1px' });
+    const mkBox = sel => ({ flex: '0 0 auto', width: '22px', height: '22px', borderRadius: '50%', border: '1.5px solid ' + (sel ? accent : '#3A3E46'), background: sel ? accent : 'rgba(255,255,255,.02)', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .2s', marginTop: '1px' });
     const mkCheck = sel => ({ width: '5px', height: '9px', borderRight: '2px solid #0C0D10', borderBottom: '2px solid #0C0D10', transform: sel ? 'rotate(45deg)' : 'rotate(45deg) scale(.4)', opacity: sel ? 1 : 0, transition: 'all .2s', marginTop: '-2px' });
 
-    const cards = this.OPTIONS.map(o => {
-      const sel = !!this.state.selected[o.id];
+    const cards = this.TIERS.map(o => {
+      const sel = this.state.tier === o.id;
       return {
         id: o.id, name: o.name, desc: o.desc, isSelected: sel,
-        priceLabel: 'от $' + this.fmt(o.low),
-        toggle: () => this.toggle(o.id),
+        badge: o.badge, hasBadge: !!o.badge,
+        priceLabel: o.price,
+        toggle: () => this.select(o.id),
         cardStyle: { display: 'flex', gap: '14px', alignItems: 'flex-start', padding: '15px 17px', borderRadius: '14px', border: '1px solid ' + (sel ? selBorder : '#23262C'), background: sel ? tint : panel, cursor: 'pointer', transition: 'border-color .2s, background .2s, box-shadow .2s', position: 'relative', userSelect: 'none', textAlign: 'left' },
         boxStyle: mkBox(sel),
         checkStyle: mkCheck(sel),
@@ -181,23 +132,13 @@ class Component extends DCLogic {
       };
     });
 
-    const breakdown = [{ name: this.BASE.name, range: '$' + this.fmt(this.BASE.low) + ' – ' + this.fmt(this.BASE.high) }];
-    for (const o of this.OPTIONS) { if (this.state.selected[o.id]) breakdown.push({ name: o.name, range: '$' + this.fmt(o.low) + ' – ' + this.fmt(o.high) }); }
-
-    const wkLow = Math.round(this.state.dispWeeks);
-    const wkHigh = wkLow + Math.max(1, Math.ceil(wkLow * 0.4));
+    const cur = this.TIERS.find(o => o.id === this.state.tier) || this.TIERS[0];
+    const breakdown = cur.inc.map(name => ({ name }));
 
     return {
-      cards, showBreakdown, showDesc, breakdown,
-      baseName: this.BASE.name,
-      basePrice: 'от $' + this.fmt(this.BASE.low),
-      baseStyle: { display: 'flex', gap: '14px', alignItems: 'flex-start', padding: '15px 17px', borderRadius: '14px', border: '1px solid ' + selBorder, background: tintBase },
-      baseBoxStyle: mkBox(true),
-      baseCheckStyle: mkCheck(true),
-      basePriceStyle: { fontFamily: "'Space Mono',monospace", fontSize: '12.5px', fontWeight: 500, color: bright, whiteSpace: 'nowrap' },
-      totalLow: '$' + this.fmt(this.state.dispLow),
-      totalHigh: this.fmt(this.state.dispHigh),
-      weeksText: wkLow + '–' + wkHigh + ' ' + this.plural(wkHigh, ['неделя', 'недели', 'недель']),
+      cards, breakdown,
+      tierName: cur.name,
+      priceText: cur.price,
       ctaStyle: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: '100%', boxSizing: 'border-box', padding: '15px 22px', borderRadius: '12px', background: accent, color: '#0C0D10', fontSize: '15.5px', fontWeight: 700, textDecoration: 'none', cursor: 'pointer', transition: 'filter .15s', boxShadow: '0 14px 30px -16px ' + this.mix(accent, '#000000', 0.05) },
       ctaHref: 'https://t.me/maegamidev',
     };
@@ -206,54 +147,68 @@ class Component extends DCLogic {
 </script>
 <script>
 window.I18N_EN = {
-  "Отметьте нужные опции — вилка цены и ориентир по сроку обновятся ниже.": "Tick the options you need and the price range and timeline below will update.",
-  "База": "Base",
-  "Бот-витрина с каталогом, карточками товаров и приёмом заказов.": "A bot storefront with a catalogue, product cards and order taking.",
-  "Дополнительно": "Add-ons",
-  "Входит в расчёт": "Included",
-  "Примерно": "Approx.",
-  "Срок": "Timeline",
+  "Выберите ступень: состав и цена обновятся ниже.": "Pick a tier: what's included and the price update below.",
+  "Что входит": "What's included",
+  "Выбрано": "Selected",
+  "Цена": "Price",
   "Обсудить в Telegram": "Discuss on Telegram",
-  "Ориентир, точную смету назову после брифа.": "A ballpark; I'll give the exact quote after a brief.",
-  "Telegram-магазин": "Telegram store",
-  "Полноценный сайт-магазин": "Full website store",
-  "Отдельный сайт с каталогом, корзиной и страницами товаров — не только бот.": "A standalone site with a catalogue, cart and product pages, not just a bot.",
-  "Админ-панель и учёт": "Admin panel and inventory",
-  "Управление заказами, товарами и остатками из удобной панели.": "Manage orders, products and stock from a handy panel.",
-  "Блог и SEO": "Blog and SEO",
-  "Раздел статей и SEO-оптимизация под поиск Google — чтобы магазин находили в выдаче.": "An articles section and SEO for Google search, so the store gets found.",
-  "Маркетинг и аналитика": "Marketing and analytics",
-  "Пиксели, цели и наглядные дашборды — видно, откуда приходят клиенты.": "Pixels, goals and clear dashboards, so you see where customers come from.",
-  "Интеграция оплаты": "Payment integration",
-  "Онлайн-оплата картой, Apple Pay и Google Pay — приём платежей прямо в боте или на сайте.": "Card, Apple Pay and Google Pay, taking payments right in the bot or on the site."
+  "Каталог-старт полностью засчитывается при переходе на старшие ступени.": "Catalogue Start counts in full when you upgrade to a higher tier.",
+  "Точную смету назову после короткого брифа.": "I'll give the exact quote after a short brief.",
+  "Магазин": "Store",
+  "всё включено": "all included",
+  "Корзина, оплата картой, интеграция служб доставки и админ-панель. Всё, что показано на этой странице.": "Cart, card payments, shipping integration and an admin panel. Everything shown on this page.",
+  "Каталог целиком: поиск и фильтры": "The full catalogue: search and filters",
+  "Корзина и оформление заказа": "Cart and checkout",
+  "Оплата картой онлайн": "Online card payments",
+  "Интеграция служб доставки": "Shipping services integration",
+  "Админ-панель: товары, заказы, остатки": "Admin panel: products, orders, stock",
+  "Уведомления о заказах в Telegram": "Order notifications in Telegram",
+  "Каталог": "Catalogue",
+  "Все товары с фото, ценами и наличием. Заказ уходит в директ или форму.": "Every product with photos, prices and stock. Orders go to DMs or a form.",
+  "Все товары: фото, цены, наличие": "All products: photos, prices, stock",
+  "Поиск и фильтры": "Search and filters",
+  "Кнопка заказа: директ или форма": "Order button: DM or form",
+  "Мобильная версия": "Mobile version",
+  "Подключение домена": "Domain setup",
+  "Каталог-старт": "Catalogue Start",
+  "лёгкий старт": "easy start",
+  "20-30 товаров с фото, ценами и наличием. Ступенька, чтобы начать без риска.": "20-30 products with photos, prices and stock. A step to start without risk.",
+  "20-30 товаров: фото, цены, наличие": "20-30 products: photos, prices, stock",
+  "Полный зачёт при апгрейде": "Counts in full on upgrade"
 };
 window.I18N_PAT = [
-  { re: /от \$/g, to: "from $" },
-  { re: /недел[ьяи]+/g, to: "weeks" }
+  { re: /от (\d)/g, to: "from $1" },
+  { re: /грн/g, to: "UAH" }
 ];
 window.I18N_UK = {
-  "Отметьте нужные опции — вилка цены и ориентир по сроку обновятся ниже.": "Позначте потрібні опції, вилка ціни й орієнтир по строку оновляться нижче.",
-  "Бот-витрина с каталогом, карточками товаров и приёмом заказов.": "Бот-вітрина з каталогом, картками товарів і прийомом замовлень.",
-  "Дополнительно": "Додатково",
-  "Входит в расчёт": "Входить у розрахунок",
-  "Примерно": "Приблизно",
-  "Срок": "Строк",
+  "Выберите ступень: состав и цена обновятся ниже.": "Оберіть ступінь: склад і ціна оновляться нижче.",
+  "Что входит": "Що входить",
+  "Выбрано": "Обрано",
+  "Цена": "Ціна",
   "Обсудить в Telegram": "Обговорити в Telegram",
-  "Ориентир, точную смету назову после брифа.": "Орієнтир, точний кошторис назву після брифу.",
-  "Полноценный сайт-магазин": "Повноцінний сайт-магазин",
-  "Отдельный сайт с каталогом, корзиной и страницами товаров — не только бот.": "Окремий сайт з каталогом, кошиком і сторінками товарів, не тільки бот.",
-  "Админ-панель и учёт": "Адмін-панель і облік",
-  "Управление заказами, товарами и остатками из удобной панели.": "Керування замовленнями, товарами й залишками зі зручної панелі.",
-  "Блог и SEO": "Блог і SEO",
-  "Раздел статей и SEO-оптимизация под поиск Google — чтобы магазин находили в выдаче.": "Розділ статей і SEO-оптимізація під пошук Google, щоб магазин знаходили у видачі.",
-  "Маркетинг и аналитика": "Маркетинг і аналітика",
-  "Пиксели, цели и наглядные дашборды — видно, откуда приходят клиенты.": "Пікселі, цілі й наочні дашборди, видно, звідки приходять клієнти.",
-  "Интеграция оплаты": "Інтеграція оплати",
-  "Онлайн-оплата картой, Apple Pay и Google Pay — приём платежей прямо в боте или на сайте.": "Онлайн-оплата карткою, Apple Pay і Google Pay, приймання платежів прямо в боті або на сайті."
+  "Каталог-старт полностью засчитывается при переходе на старшие ступени.": "Каталог-старт повністю зараховується при переході на старші ступені.",
+  "Точную смету назову после короткого брифа.": "Точний кошторис назву після короткого брифу.",
+  "всё включено": "все включено",
+  "Корзина, оплата картой, интеграция служб доставки и админ-панель. Всё, что показано на этой странице.": "Кошик, оплата карткою, інтеграція служб доставки й адмін-панель. Усе, що показано на цій сторінці.",
+  "Каталог целиком: поиск и фильтры": "Каталог цілком: пошук і фільтри",
+  "Корзина и оформление заказа": "Кошик і оформлення замовлення",
+  "Оплата картой онлайн": "Оплата карткою онлайн",
+  "Интеграция служб доставки": "Інтеграція служб доставки",
+  "Админ-панель: товары, заказы, остатки": "Адмін-панель: товари, замовлення, залишки",
+  "Уведомления о заказах в Telegram": "Сповіщення про замовлення в Telegram",
+  "Все товары с фото, ценами и наличием. Заказ уходит в директ или форму.": "Усі товари з фото, цінами й наявністю. Замовлення йде в директ або форму.",
+  "Все товары: фото, цены, наличие": "Усі товари: фото, ціни, наявність",
+  "Поиск и фильтры": "Пошук і фільтри",
+  "Кнопка заказа: директ или форма": "Кнопка замовлення: директ або форма",
+  "Мобильная версия": "Мобільна версія",
+  "Подключение домена": "Підключення домену",
+  "лёгкий старт": "легкий старт",
+  "20-30 товаров с фото, ценами и наличием. Ступенька, чтобы начать без риска.": "20-30 товарів з фото, цінами й наявністю. Сходинка, щоб почати без ризику.",
+  "20-30 товаров: фото, цены, наличие": "20-30 товарів: фото, ціни, наявність",
+  "Полный зачёт при апгрейде": "Повний залік при апгрейді"
 };
 window.I18N_PAT_UK = [
-  { re: /от \$/g, to: "від $" },
-  { re: /недел[ьяи]+/g, to: "тиж." }
+  { re: /от (\d)/g, to: "від $1" }
 ];
 </script>
 <script src="./i18n-embed.js"></script>
