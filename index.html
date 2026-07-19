@@ -357,7 +357,10 @@
     <span class="eyebrow rv">Стоимость</span>
     <h2 class="rv">Сколько это стоит</h2>
     <p class="lead rv">Три ступени: от лёгкой витрины до полного магазина с оплатой. Выберите свою: состав и цена ниже, точную смету назову после короткого брифа.</p>
-    <div class="calc-embed rv"><iframe data-src="calc.html" title="Калькулятор услуг: соберите свой проект" loading="lazy"></iframe></div>
+    <!-- ?v= бампить при каждом изменении шаблона calc.html: support.js перечитывает
+         страницу через fetch(location.href, {cache:"force-cache"}), и старый кэш
+         отдаёт старый <x-dc>-шаблон поверх новой логики -->
+    <div class="calc-embed rv"><iframe data-src="calc.html?v=2" title="Калькулятор услуг: соберите свой проект" loading="lazy"></iframe></div>
     <p class="retainer rv">Нужна поддержка и развитие после запуска? Ретейнер: <b>от $300/мес</b>, по желанию.</p>
   </div>
 </section>
