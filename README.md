@@ -2,7 +2,7 @@
 
 Source of my studio site: https://maegamidev.vercel.app
 
-Static HTML/CSS/JS. No framework, no build step, no dependencies. Two main pages: the landing and a technical case study of [euphoria-parfum.com.ua](https://euphoria-parfum.com.ua), the e-commerce store I built and operate myself.
+Static HTML/CSS/JS. No framework, no build step, no dependencies. Two main pages: the landing and a technical case study of [euphoria-parfum.com.ua](https://euphoria-parfum.com.ua), the family e-commerce store I built and technically maintain.
 
 ## i18n without a framework
 
